@@ -81,17 +81,29 @@ void dae::Minigin::Run()
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
 
-		bool doContinue = true;
-		while (doContinue)
+		bool shouldContinue = true;
+		
+		// Move all this to a timer class
+		const double MILI_PER_FRAME = 16.0; // make static
+		double timeSinceLastFrame = 0.0;
+		auto previousTime = high_resolution_clock::now();
+
+		while (shouldContinue)
 		{
-			const auto currentTime = high_resolution_clock::now();
-			
-			doContinue = input.ProcessInput();
-			sceneManager.Update();
+			// Move all this to a timer class
+			auto currentTime = high_resolution_clock::now();
+			auto elapsedTime = currentTime - previousTime;
+			previousTime = currentTime;
+			std::chrono::milliseconds elapsedTimeMili = std::chrono::duration_cast<std::chrono::milliseconds>(elapsedTime);
+
+			timeSinceLastFrame += elapsedTimeMili.count();
+			shouldContinue = input.ProcessInput();
+			if (timeSinceLastFrame >= MILI_PER_FRAME)
+			{
+				sceneManager.Update();
+				timeSinceLastFrame -= MILI_PER_FRAME;
+			}
 			renderer.Render();
-			
-			auto sleepTime = duration_cast<duration<float>>(currentTime + milliseconds(MsPerFrame) - high_resolution_clock::now());
-			this_thread::sleep_for(sleepTime);
 		}
 	}
 
