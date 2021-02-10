@@ -2,7 +2,7 @@
 #include "Scene.h"
 #include "GameObject.h"
 
-using namespace dae;
+using namespace boop;
 
 unsigned int Scene::m_IdCounter = 0;
 

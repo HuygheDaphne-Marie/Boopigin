@@ -7,11 +7,11 @@
 #include "Font.h"
 #include "Texture2D.h"
 
-dae::TextObject::TextObject(const std::string& text, const std::shared_ptr<Font>& font) 
+boop::TextObject::TextObject(const std::string& text, const std::shared_ptr<Font>& font) 
 	: m_NeedsUpdate(true), m_Text(text), m_Font(font), m_Texture(nullptr)
 { }
 
-void dae::TextObject::Update()
+void boop::TextObject::Update()
 {
 	if (m_NeedsUpdate)
 	{
@@ -32,7 +32,7 @@ void dae::TextObject::Update()
 	}
 }
 
-void dae::TextObject::Render() const
+void boop::TextObject::Render() const
 {
 	if (m_Texture != nullptr)
 	{
@@ -42,13 +42,13 @@ void dae::TextObject::Render() const
 }
 
 // This implementation uses the "dirty flag" pattern
-void dae::TextObject::SetText(const std::string& text)
+void boop::TextObject::SetText(const std::string& text)
 {
 	m_Text = text;
 	m_NeedsUpdate = true;
 }
 
-void dae::TextObject::SetPosition(const float x, const float y)
+void boop::TextObject::SetPosition(const float x, const float y)
 {
 	m_Transform.SetPosition(x, y, 0.0f);
 }

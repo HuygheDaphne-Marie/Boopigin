@@ -11,10 +11,13 @@
 #include "GameObject.h"
 #include "Scene.h"
 
+#include "Time.h"
+
 using namespace std;
 using namespace std::chrono;
+using namespace boop;
 
-void dae::Minigin::Initialize()
+void boop::Minigin::Initialize()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
 	{
@@ -35,12 +38,15 @@ void dae::Minigin::Initialize()
 	}
 
 	Renderer::GetInstance().Init(m_Window);
+
+	// Own Init
+	Time::GetInstance().m_DesiredFramePerSecond = 60;
 }
 
 /**
  * Code constructing the scene world starts here
  */
-void dae::Minigin::LoadGame() const
+void boop::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
@@ -59,7 +65,7 @@ void dae::Minigin::LoadGame() const
 	scene.Add(to);
 }
 
-void dae::Minigin::Cleanup()
+void boop::Minigin::Cleanup()
 {
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
@@ -67,7 +73,7 @@ void dae::Minigin::Cleanup()
 	SDL_Quit();
 }
 
-void dae::Minigin::Run()
+void boop::Minigin::Run()
 {
 	Initialize();
 
@@ -82,27 +88,21 @@ void dae::Minigin::Run()
 		auto& input = InputManager::GetInstance();
 
 		bool shouldContinue = true;
-		
-		// Move all this to a timer class
-		const double MILI_PER_FRAME = 16.0; // make static
-		double timeSinceLastFrame = 0.0;
-		auto previousTime = high_resolution_clock::now();
 
+		double timeSinceLastFrame = 0.0;
+		Time* pTime = &Time::GetInstance();
 		while (shouldContinue)
 		{
-			// Move all this to a timer class
-			auto currentTime = high_resolution_clock::now();
-			auto elapsedTime = currentTime - previousTime;
-			previousTime = currentTime;
-			std::chrono::milliseconds elapsedTimeMili = std::chrono::duration_cast<std::chrono::milliseconds>(elapsedTime);
-
-			timeSinceLastFrame += elapsedTimeMili.count();
 			shouldContinue = input.ProcessInput();
-			if (timeSinceLastFrame >= MILI_PER_FRAME)
+			
+			timeSinceLastFrame += pTime->GetElapsedMilli();
+			if (timeSinceLastFrame >= pTime->GetMilliPerFrame())
 			{
 				sceneManager.Update();
-				timeSinceLastFrame -= MILI_PER_FRAME;
+				timeSinceLastFrame -= pTime->GetMilliPerFrame();
 			}
+
+			
 			renderer.Render();
 		}
 	}

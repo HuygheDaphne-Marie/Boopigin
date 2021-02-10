@@ -2,7 +2,7 @@
 #include "Transform.h"
 #include "SceneObject.h"
 
-namespace dae
+namespace boop
 {
 	class Texture2D;
 	class GameObject : public SceneObject
