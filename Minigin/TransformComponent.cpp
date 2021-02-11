@@ -1,13 +1,6 @@
 #include "MiniginPCH.h"
 #include "TransformComponent.h"
 
-
-
-#include "GameObject.h"
-#include "GameObject.h"
-#include "GameObject.h"
-#include "GameObject.h"
-
 void boop::TransformComponent::SetPosition(const float x, const float y, const float z)
 {
 	m_Position.x = x;
