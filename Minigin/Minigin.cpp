@@ -48,6 +48,7 @@ void boop::Minigin::Initialize()
  */
 void boop::Minigin::LoadGame() const
 {
+	// Load this all from a file later cause this is very hard coded **Yikers**
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	auto go = std::make_shared<GameObject>();
