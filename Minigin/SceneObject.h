@@ -10,6 +10,8 @@ namespace boop
 		
 		virtual void Render() const = 0;
 
+		// get a list of components, maybe a map
+
 		SceneObject() = default;
 		virtual ~SceneObject() = default;
 		SceneObject(const SceneObject& other) = delete;
