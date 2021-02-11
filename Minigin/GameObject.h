@@ -5,7 +5,7 @@
 namespace boop
 {
 	class Texture2D;
-	class GameObject : public SceneObject
+	class GameObject : public SceneObject // should just remove this class, since this could be made with components
 	{
 	public:
 		void Update() override;

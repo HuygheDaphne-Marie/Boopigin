@@ -1,7 +1,7 @@
 #pragma once
 namespace boop
 {
-	class SceneObject
+	class SceneObject // This seems like a good start for an actual GameObject class
 	{
 	public:
 		virtual void Update() = 0;
