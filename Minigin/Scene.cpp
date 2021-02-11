@@ -15,12 +15,20 @@ void Scene::Add(const std::shared_ptr<SceneObject>& object)
 	m_Objects.push_back(object);
 }
 
+void Scene::FixedUpdate()
+{
+}
+
 void Scene::Update()
 {
 	for(auto& object : m_Objects)
 	{
 		object->Update();
 	}
+}
+
+void Scene::LateUpdate()
+{
 }
 
 void Scene::Render() const

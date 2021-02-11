@@ -9,7 +9,10 @@ namespace boop
 	public:
 		Scene& CreateScene(const std::string& name);
 
+		void FixedUpdate();
 		void Update();
+		void LateUpdate();
+		
 		void Render();
 	private:
 		friend class Singleton<SceneManager>;

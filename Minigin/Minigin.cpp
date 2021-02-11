@@ -40,7 +40,7 @@ void boop::Minigin::Initialize()
 	Renderer::GetInstance().Init(m_Window);
 
 	// Own Init
-	Time::GetInstance().m_DesiredFramePerSecond = 60;
+	Time::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
 }
 
 /**
@@ -96,12 +96,18 @@ void boop::Minigin::Run()
 			shouldContinue = input.ProcessInput();
 			
 			timeSinceLastFrame += pTime->GetElapsedMilli();
-			if (timeSinceLastFrame >= pTime->GetMilliPerFrame())
+			while (timeSinceLastFrame >= pTime->GetMilliPerFrame())
 			{
-				sceneManager.Update();
+				// Fixed Update, for physics & networking
+				sceneManager.FixedUpdate();
 				timeSinceLastFrame -= pTime->GetMilliPerFrame();
 			}
 
+			// Update, this should be used by default
+			sceneManager.Update();
+
+			// Late Update, this should be used for things that depend on something which might change in update
+			sceneManager.LateUpdate();
 			
 			renderer.Render();
 		}

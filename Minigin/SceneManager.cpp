@@ -2,11 +2,27 @@
 #include "SceneManager.h"
 #include "Scene.h"
 
+void boop::SceneManager::FixedUpdate()
+{
+	for (auto& scene : m_Scenes)
+	{
+		scene->FixedUpdate();
+	}
+}
+
 void boop::SceneManager::Update()
 {
 	for(auto& scene : m_Scenes)
 	{
 		scene->Update();
+	}
+}
+
+void boop::SceneManager::LateUpdate()
+{
+	for (auto& scene : m_Scenes)
+	{
+		scene->LateUpdate();
 	}
 }
 
@@ -24,3 +40,5 @@ boop::Scene& boop::SceneManager::CreateScene(const std::string& name)
 	m_Scenes.push_back(scene);
 	return *scene;
 }
+
+
