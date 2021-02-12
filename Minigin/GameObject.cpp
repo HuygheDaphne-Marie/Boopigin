@@ -1,24 +1,69 @@
 #include "MiniginPCH.h"
-#include "GameObject.h"
-#include "ResourceManager.h"
-#include "Renderer.h"
+#include  "GameObject.h"
+#include "Component.h"
 
-boop::GameObject::~GameObject() = default;
+boop::GameObject::~GameObject()
+{
+	for (int index = static_cast<int>(m_Components.size()) - 1; index >= 0; index--)
+	{
+		delete m_Components[index];
+		m_Components.pop_back();
+	}
+}
 
-void boop::GameObject::Update(){}
+void boop::GameObject::FixedUpdate()
+{
+	for (Component* pElement : m_Components)
+	{
+		pElement->FixedUpdate();
+	}
+}
+
+void boop::GameObject::Update()
+{
+	for (Component* pElement : m_Components)
+	{
+		pElement->Update();
+	}
+}
+
+void boop::GameObject::LateUpdate()
+{
+	for (Component* pElement : m_Components)
+	{
+		pElement->LateUpdate();
+	}
+}
 
 void boop::GameObject::Render() const
 {
-	const auto pos = m_Transform.GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
+	for (const Component* pElement : m_Components)
+	{
+		pElement->Render();
+	}
 }
 
-void boop::GameObject::SetTexture(const std::string& filename)
+void boop::GameObject::AddComponent(Component* pComponentToAdd)
 {
-	m_Texture = ResourceManager::GetInstance().LoadTexture(filename);
+	const auto findItrResult = std::find_if(m_Components.begin(), m_Components.end(), 
+		[pComponentToAdd](Component* pComponent) { return pComponent == pComponentToAdd; } );
+	
+	if (findItrResult == m_Components.end())
+	{
+		m_Components.push_back(pComponentToAdd);
+		pComponentToAdd->SetOwner(this);
+	}
 }
 
-void boop::GameObject::SetPosition(float x, float y)
+void boop::GameObject::RemoveComponent(Component* pComponentToRemove)
 {
-	m_Transform.SetPosition(x, y, 0.0f);
+	for (int index = static_cast<int>(m_Components.size()) - 1; index >= 0; index--)
+	{
+		if (m_Components[index] == pComponentToRemove)
+		{
+			m_Components[index] = m_Components[m_Components.size() - 1];
+			m_Components.pop_back();
+			return;
+		}
+	}
 }

@@ -13,6 +13,11 @@
 
 #include "Time.h"
 
+#include "TransformComponent.h"
+#include "TextComponent.h"
+#include "TextureComponent.h"
+#include "FpsComponent.h"
+
 using namespace std;
 using namespace std::chrono;
 using namespace boop;
@@ -52,18 +57,28 @@ void boop::Minigin::LoadGame() const
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	auto go = std::make_shared<GameObject>();
-	go->SetTexture("background.jpg");
+	go->AddComponent(new TransformComponent(0, 0));
+	go->AddComponent(new TextureComponent("background.jpg"));
 	scene.Add(go);
 
 	go = std::make_shared<GameObject>();
-	go->SetTexture("logo.png");
-	go->SetPosition(216, 180);
+	go->AddComponent(new TransformComponent(216, 180));
+	go->AddComponent(new TextureComponent("logo.png"));
 	scene.Add(go);
 
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
-	to->SetPosition(80, 20);
-	scene.Add(to);
+	go = std::make_shared<GameObject>();
+	go->AddComponent(new TransformComponent(80, 20));
+	const auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	go->AddComponent(new TextComponent("Programming 4 Assignment", font));
+	scene.Add(go);
+
+	go = std::make_shared<GameObject>();
+	go->AddComponent(new TransformComponent(10, 10));
+	const auto fpsFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	TextComponent* pFpsTextComponent = new TextComponent("TEMP", fpsFont);
+	go->AddComponent(pFpsTextComponent);
+	go->AddComponent(new FpsComponent(pFpsTextComponent));
+	scene.Add(go);
 }
 
 void boop::Minigin::Cleanup()

@@ -30,7 +30,8 @@ void boop::ResourceManager::Init(const std::string& dataPath)
 	}
 }
 
-std::shared_ptr<boop::Texture2D> boop::ResourceManager::LoadTexture(const std::string& file) const
+/*std::shared_ptr<boop::Texture2D>*/
+boop::Texture2D* boop::ResourceManager::LoadTexture(const std::string& file) const
 {
 	const auto fullPath = m_DataPath + file;
 	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
@@ -38,10 +39,11 @@ std::shared_ptr<boop::Texture2D> boop::ResourceManager::LoadTexture(const std::s
 	{
 		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
 	}
-	return std::make_shared<Texture2D>(texture);
+	return new Texture2D(texture); // std::make_shared<Texture2D>(texture);
 }
 
-std::shared_ptr<boop::Font> boop::ResourceManager::LoadFont(const std::string& file, unsigned int size) const
+/*std::shared_ptr<boop::Font>*/
+boop::Font* boop::ResourceManager::LoadFont(const std::string& file, unsigned int size) const
 {
-	return std::make_shared<Font>(m_DataPath + file, size);
+	return new Font(m_DataPath + file, size);//std::make_shared<Font>(m_DataPath + file, size);
 }

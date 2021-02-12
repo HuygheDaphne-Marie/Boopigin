@@ -1,26 +1,34 @@
 #pragma once
-#include "SceneObject.h"
+#include "GameObject.h"
 
 namespace boop
 {
+	
 	class Component
 	{
 	public:
+		//inline static std::string m_ComponentName{"Component"};
+
+		
 		Component() = default;
-		virtual ~Component() = default;
+		virtual ~Component() = default; // probably need to notify owner of our destruction
 		Component(const Component& other) = delete;
 		Component(Component&& other) = delete;
 		Component& operator=(const Component& other) = delete;
 		Component& operator=(Component&& other) = delete;
 
-		void FixedUpdate();
-		void Update();
-		void LateUpdate();
+		//static const std::string& GetComponentName();
 
-		void Render() const;
+		virtual void FixedUpdate();
+		virtual void Update();
+		virtual void LateUpdate();
 
-	private:
-		SceneObject* m_pOwner = nullptr;
+		virtual void Render() const;
+
+		void SetOwner(GameObject* newOwner);
+
+	protected:
+		GameObject* m_pOwner = nullptr;
 };
 }
 

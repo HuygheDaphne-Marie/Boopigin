@@ -11,9 +11,13 @@ namespace boop
 	class TransformComponent final : public Component
 	{
 	public:
-		const glm::vec3& GetPosition() const { return m_Position; }
-		void SetPosition(float x, float y, float z);
-		void ChangePosition(const float deltaX, const float deltaY, const float deltaZ);
+		explicit TransformComponent(float x = 0.f, float y = 0.f, float z = 0.f);
+
+		//static const std::string& GetComponentName();
+
+		[[nodiscard]] const glm::vec3& GetPosition() const { return m_Position; }
+		void SetPosition(float x, float y, float z = 0.f);
+		void ChangePosition(const float deltaX, const float deltaY, const float deltaZ = 0.f);
 		void ChangePosition(const glm::vec3& delta);
 	private:
 		glm::vec3 m_Position;
