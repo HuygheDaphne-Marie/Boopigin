@@ -1,28 +1,42 @@
 #pragma once
-#include "Transform.h"
-#include "SceneObject.h"
+
 
 namespace boop
 {
-	class Texture2D;
-	class GameObject : public SceneObject // should just remove this class, since this could be made with components
+	class Component;
+	class GameObject final
 	{
 	public:
-		void Update() override;
-		void Render() const override;
-
-		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
+		void FixedUpdate();
+		void Update();
+		void LateUpdate();
+		
+		void Render() const;
 
 		GameObject() = default;
-		virtual ~GameObject();
+		~GameObject() = default;
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
+		void AddComponent(Component* pComponentToAdd);
+		void RemoveComponent(Component* pComponentToRemove);
+
+		template <typename TypeOfComponent>
+		inline TypeOfComponent* GetComponentOfType()
+		{
+			for (Component* component : m_Components)
+			{
+				if(typeid(TypeOfComponent).name() == typeid(*component).name())
+				{
+					return static_cast<TypeOfComponent*>(component);
+				}
+			}
+			return nullptr;
+		}
+
 	private:
-		Transform m_Transform;
-		std::shared_ptr<Texture2D> m_Texture{};
+		std::vector<Component*> m_Components{}; // Todo: might do this in a map don't know yet..
 	};
 }

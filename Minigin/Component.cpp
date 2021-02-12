@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "Component.h"
 
+// These have empty implementation so that subclasses aren't forced to make these all the time.
 void boop::Component::FixedUpdate()
 {
 }
@@ -12,4 +13,13 @@ void boop::Component::LateUpdate()
 }
 void boop::Component::Render() const
 {
+}
+
+void boop::Component::SetOwner(GameObject* newOwner)
+{
+	if (m_pOwner != nullptr)
+	{
+		// Todo: Notify old owner we have been transferred, unlikely this will ever happen
+	}
+	m_pOwner = newOwner;
 }

@@ -1,6 +1,11 @@
 #include "MiniginPCH.h"
 #include "TransformComponent.h"
 
+boop::TransformComponent::TransformComponent(float x, float y, float z)
+	: m_Position(x, y, z)
+{
+}
+
 void boop::TransformComponent::SetPosition(const float x, const float y, const float z)
 {
 	m_Position.x = x;
