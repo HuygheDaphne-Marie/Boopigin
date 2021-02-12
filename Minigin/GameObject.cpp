@@ -2,6 +2,15 @@
 #include  "GameObject.h"
 #include "Component.h"
 
+boop::GameObject::~GameObject()
+{
+	for (int index = static_cast<int>(m_Components.size()) - 1; index >= 0; index--)
+	{
+		delete m_Components[index];
+		m_Components.pop_back();
+	}
+}
+
 void boop::GameObject::FixedUpdate()
 {
 	for (Component* pElement : m_Components)
