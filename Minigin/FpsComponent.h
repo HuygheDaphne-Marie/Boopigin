@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include <chrono>
 
 namespace boop
 {
@@ -13,7 +14,7 @@ namespace boop
 
 	private:
 		TextComponent* m_pLinkedTextComponent;
-		float m_MilliPassed;
+		std::chrono::high_resolution_clock::time_point m_StartTime;
 		int m_TotalFrameCount;
 	};
 
