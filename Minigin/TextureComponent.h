@@ -7,8 +7,12 @@ namespace boop
 	class TextureComponent final : public Component
 	{
 	public:
-		TextureComponent(const std::string& texturePath);
+		explicit TextureComponent(const std::string& texturePath);
 		~TextureComponent();
+		TextureComponent(const TextureComponent& other) = delete;
+		TextureComponent(TextureComponent&& other) = delete;
+		TextureComponent& operator=(const TextureComponent& other) = delete;
+		TextureComponent& operator=(TextureComponent&& other) = delete;
 
 		void Render() const override;
 	

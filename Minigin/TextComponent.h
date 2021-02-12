@@ -12,6 +12,10 @@ namespace boop
 	public:
 		TextComponent(const std::string& text, Font* font, const SDL_Color& color = {255, 255, 255});
 		~TextComponent();
+		TextComponent(const TextComponent& other) = delete;
+		TextComponent(TextComponent&& other) = delete;
+		TextComponent& operator=(const TextComponent& other) = delete;
+		TextComponent& operator=(TextComponent&& other) = delete;
 		
 		void Update() override;
 		void Render() const override;
