@@ -13,8 +13,8 @@ namespace boop
 	public:
 		void Start();
 		void Update();
-		float GetElapsedMilli() const;
-		float GetMilliPerFrame() const;
+		[[nodiscard]] int GetElapsedMilli() const;
+		[[nodiscard]] float GetMilliPerFrame() const;
 		
 		int m_DesiredFramePerSecond;
 

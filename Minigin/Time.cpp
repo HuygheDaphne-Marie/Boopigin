@@ -19,11 +19,11 @@ void boop::Time::Update()
 	m_PreviousTime = std::chrono::high_resolution_clock::now();
 }
 
-float boop::Time::GetElapsedMilli() const
+int boop::Time::GetElapsedMilli() const
 {
 	const auto currentTime = std::chrono::high_resolution_clock::now();
 	const auto elapsedTime = currentTime - m_PreviousTime;
-	return static_cast<float>(std::chrono::duration_cast<std::chrono::milliseconds>(elapsedTime).count());
+	return static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(elapsedTime).count());
 }
 
 float boop::Time::GetMilliPerFrame() const
