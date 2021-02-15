@@ -21,10 +21,10 @@ boop::FpsComponent::FpsComponent(TextComponent* linkedTextComp)
 void boop::FpsComponent::Update()
 {
 	const auto duration = std::chrono::high_resolution_clock::now() - m_StartTime;
-	const int secondsPassedSinceStart = static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() / 1000.f);
+	const float secondsPassedSinceStart = static_cast<float>(std::chrono::duration_cast<std::chrono::milliseconds>(duration).count() / 1000.f);
 	m_TotalFrameCount++;
 
-	const int fps = static_cast<int>(static_cast<float>(m_TotalFrameCount) / static_cast<float>(secondsPassedSinceStart));
+	const int fps = static_cast<int>(static_cast<float>(m_TotalFrameCount) / secondsPassedSinceStart);
 	
-	m_pLinkedTextComponent->SetText(std::to_string(m_TotalFrameCount));
+	m_pLinkedTextComponent->SetText(std::to_string(fps));
 }
