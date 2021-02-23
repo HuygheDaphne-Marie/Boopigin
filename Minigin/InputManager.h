@@ -44,6 +44,23 @@ namespace boop
 		Command* pCommand;
 	};
 
+	enum class KeyType
+	{
+		Keyboard,
+		XInputController
+	};
+
+	struct KeyInfo
+	{
+		KeyType type;
+		union 
+		{
+			ControllerButton controllerButton;
+			// Add SDL keycode here..
+			// More types can be added too
+		};
+	};
+
 	class InputManager final : public Singleton<InputManager> 
 	{
 	public:
