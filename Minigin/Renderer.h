@@ -16,7 +16,7 @@ namespace boop
 	{
 	public:
 		void Init(SDL_Window* window);
-		void Render();
+		void Render() const;
 		void Destroy();
 
 		void RenderTexture(const Texture2D& texture, float x, float y) const;
@@ -28,7 +28,6 @@ namespace boop
 		
 		SDL_Renderer* m_pRenderer{};
 		SDL_Window* m_pWindow{};
-		bool m_ShowImGuiDemo = true;
 	};
 }
 

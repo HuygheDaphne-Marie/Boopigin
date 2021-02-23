@@ -23,7 +23,7 @@ void boop::Renderer::Init(SDL_Window* window)
 	ImGui_ImplOpenGL2_Init();
 }
 
-void boop::Renderer::Render()
+void boop::Renderer::Render() const
 {
 	SDL_RenderClear(m_pRenderer);
 
@@ -32,15 +32,13 @@ void boop::Renderer::Render()
 	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(m_pWindow);
 	ImGui::NewFrame();
-	//ImGui::Begin("Test"); // Maybe demo is just broken??
-	//ImGui::Button("Single Player");
-	//ImGui::Button("Co-op");
-	//ImGui::Button("Versus");
-	//ImGui::End();
-	if (m_ShowImGuiDemo)
-	{
-		ImGui::ShowDemoWindow(&m_ShowImGuiDemo);
-	}
+
+	ImGui::Begin("Test");
+	ImGui::Button("Single Player");
+	ImGui::Button("Co-op");
+	ImGui::Button("Versus");
+	ImGui::End();
+
 	ImGui::Render();
 	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 	
