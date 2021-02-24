@@ -1,6 +1,11 @@
 #include "MiniginPCH.h"
 #include "ControllerManager.h"
-#include "Winerror.h"
+
+#include <Windows.h>
+#include <XInput.h>
+#pragma comment(lib, "XInput.lib")
+
+//#include "Winerror.h"
 
 boop::ControllerManager::ControllerManager(int controllerId)
 	: m_ControllerId(controllerId)
@@ -16,8 +21,8 @@ bool boop::ControllerManager::ProcessInput()
 	
 	const DWORD isSuccessful = XInputGetState(m_ControllerId, &GetCurrentState());
 
-	return false;
-	//Todo: Should return whether the game loop should end, for now we'll just let it continue forever,
+	return true;
+	//Todo: Should return whether the game loop should continue, for now we'll just let it continue forever,
 	//todo:  this might also just always be handled by the inputManager
 }
 boop::KeyState boop::ControllerManager::GetKeyState(const KeyInfo& keyInfo) const

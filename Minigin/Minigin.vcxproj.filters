@@ -126,6 +126,9 @@
     <ClInclude Include="ControllerManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DieCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -217,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="ControllerManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DieCommand.cpp">
+      <Filter>Commands</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

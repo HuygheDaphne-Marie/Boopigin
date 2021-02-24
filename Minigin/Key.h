@@ -1,4 +1,5 @@
 #pragma once
+#include "MiniginPCH.h"
 #include <XInput.h>
 
 namespace boop
@@ -22,6 +23,7 @@ namespace boop
 		RightTrigger,
 		LeftTrigger,
 	};
+	// Add more enums if needed
 
 	enum class KeyState
 	{
@@ -37,13 +39,31 @@ namespace boop
 		XInputController
 	};
 	struct KeyInfo
-{
-	KeyType type;
-	union
 	{
-		ControllerButton controllerButton;
-		// Add SDL keycode here..
-		// More types can be added too
+		explicit KeyInfo(ControllerButton button)
+		{
+			type = KeyType::XInputController;
+			controllerButton = button;
+		}
+		
+		KeyType type;
+		union
+		{
+			ControllerButton controllerButton;
+			// Add SDL keycode here..
+			// More types can be added too
+		};
+
+		bool operator==(const KeyInfo& other) const
+		{
+			return type == other.type && controllerButton == other.controllerButton;
+		}
 	};
-};
+	struct KeyInfoHasher
+	{
+		size_t operator()(const KeyInfo& keyInfo) const
+		{
+			return reinterpret_cast<size_t>(&keyInfo);
+		}
+	};
 }

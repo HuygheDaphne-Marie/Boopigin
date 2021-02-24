@@ -2,6 +2,8 @@
 struct SDL_Window;
 namespace boop
 {
+	class DieCommand;
+
 	class Minigin
 	{
 	public:
@@ -12,5 +14,7 @@ namespace boop
 	private:
 		static const int m_FixedUpdateFps = 60;
 		SDL_Window* m_Window{};
+
+		DieCommand* m_pTestCommand;
 	};
 }

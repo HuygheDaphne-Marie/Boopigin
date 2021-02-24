@@ -7,6 +7,7 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include <SDL.h>
+
 #include "TextObject.h"
 #include "GameObject.h"
 #include "Scene.h"
@@ -17,6 +18,8 @@
 #include "TextComponent.h"
 #include "TextureComponent.h"
 #include "FpsComponent.h"
+
+#include "DieCommand.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -46,6 +49,9 @@ void boop::Minigin::Initialize()
 
 	// Own Init
 	Time::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
+	m_pTestCommand = new DieCommand();
+
+	InputManager::GetInstance().AddCommandToButton(KeyInfo(ControllerButton::ButtonA), m_pTestCommand, KeyState::Pressed);
 }
 
 /**
@@ -83,6 +89,8 @@ void boop::Minigin::LoadGame() const
 
 void boop::Minigin::Cleanup()
 {
+	delete m_pTestCommand;
+	
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
@@ -110,6 +118,7 @@ void boop::Minigin::Run()
 		while (shouldContinue)
 		{
 			shouldContinue = input.ProcessInput();
+			input.HandleInput();
 			
 			timeSinceLastFrame += pTime->GetElapsedMilli();
 			while (timeSinceLastFrame >= pTime->GetMilliPerFrame())
