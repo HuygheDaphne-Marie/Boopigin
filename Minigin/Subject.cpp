@@ -9,14 +9,12 @@ void boop::Subject::AddObserver(Observer* pObserver)
 	if (itr == m_pObservers.end())
 	{
 		m_pObservers.push_back(pObserver);
-		pObserver->OnAdd();
 	}
 }
 
 void boop::Subject::RemoveObserver(Observer* pObserver)
 {
 	const auto itr = std::remove(m_pObservers.begin(), m_pObservers.end(), pObserver);
-	pObserver->OnRemove();
 }
 
 void boop::Subject::Notify(const std::string& message)

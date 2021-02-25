@@ -18,7 +18,7 @@
 #include "TextComponent.h"
 #include "TextureComponent.h"
 #include "FpsComponent.h"
-#include "LivesRemainingComponent.h"
+#include "DisplayLivesComponent.h"
 #include "PlayerComponent.h"
 #include "Subject.h"
 
@@ -89,22 +89,23 @@ void boop::Minigin::LoadGame() const
 	scene.Add(go);
 
 	// Week 3
+	// QBert
+	go = std::make_shared<GameObject>();
+	auto* pPlayerComponent = new PlayerComponent();
+	go->AddComponent(pPlayerComponent);
+	scene.Add(go);
+
 	// Lives Display
 	go = std::make_shared<GameObject>();
 	go->AddComponent(new TransformComponent(10, 70));
 	const auto livesFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	TextComponent* pLifeTextComponent = new TextComponent("Current Lives: X", livesFont);
 	go->AddComponent(pLifeTextComponent);
-	LivesRemainingComponent* pLivesRemainingComponent = new LivesRemainingComponent(3, pLifeTextComponent);
+	auto* pLivesRemainingComponent = new DisplayLivesComponent(pPlayerComponent, pLifeTextComponent);
 	go->AddComponent(pLivesRemainingComponent);
 	scene.Add(go);
-
-	// QBert
-	go = std::make_shared<GameObject>();
-	auto* pPlayerComponent = new PlayerComponent();
-	pPlayerComponent->m_pSubject->AddObserver(pLivesRemainingComponent);
-	go->AddComponent(pPlayerComponent);
-	scene.Add(go);
+	
+	pPlayerComponent->m_pSubject->AddObserver(pLivesRemainingComponent->GetObserver());
 }
 
 void boop::Minigin::Cleanup()

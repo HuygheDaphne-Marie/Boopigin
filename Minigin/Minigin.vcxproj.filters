@@ -144,10 +144,10 @@
     <ClInclude Include="FpsComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="LivesRemainingComponent.h">
+    <ClInclude Include="PlayerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerComponent.h">
+    <ClInclude Include="DisplayLivesComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -257,10 +257,10 @@
     <ClCompile Include="FpsComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="LivesRemainingComponent.cpp">
+    <ClCompile Include="PlayerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerComponent.cpp">
+    <ClCompile Include="DisplayLivesComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

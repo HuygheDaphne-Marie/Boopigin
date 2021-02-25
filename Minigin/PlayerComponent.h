@@ -2,6 +2,8 @@
 #include "Component.h"
 #include <memory>
 
+#include "DisplayLivesComponent.h"
+
 namespace boop
 {
 	class Subject;
@@ -13,11 +15,13 @@ namespace boop
 		PlayerComponent();
 		~PlayerComponent();
 		
-		void OnDeath() const;
-	
+		void OnDeath();
+		[[nodiscard]] int GetLives() const;
+
 		std::shared_ptr<Subject> m_pSubject;
 	private:
 		DieCommand* m_pDieCommand;
+		int m_Lives;
 	};
 }
 
