@@ -31,6 +31,9 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{84c4dbaf-fbe5-4e07-b00f-dbdebe1061ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{db46d91b-5151-4444-8c20-77924b3a96d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -129,6 +132,21 @@
     <ClInclude Include="DieCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="EventQueue.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesRemainingComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -223,6 +241,21 @@
     </ClCompile>
     <ClCompile Include="DieCommand.cpp">
       <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="EventQueue.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesRemainingComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

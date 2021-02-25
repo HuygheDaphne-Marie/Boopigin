@@ -85,6 +85,12 @@ void boop::Minigin::LoadGame() const
 	go->AddComponent(pFpsTextComponent);
 	go->AddComponent(new FpsComponent(pFpsTextComponent));
 	scene.Add(go);
+
+	go = std::make_shared<GameObject>();
+	go->AddComponent(new TransformComponent(10, 50));
+	const auto livesFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	TextComponent* pLifeTextComponent = new TextComponent("Current Lives: X", livesFont);
+	go->AddComponent(pLifeTextComponent);
 }
 
 void boop::Minigin::Cleanup()

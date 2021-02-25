@@ -30,7 +30,9 @@ namespace boop
 		
 		std::unordered_map<KeyInfo, CommandInfo, KeyInfoHasher> m_Commands;
 
+		//Todo: Should get rid of superclass, make ControllerManager actually handle multiple controllers
 		ControllerManager m_Controller;
+		//Todo: Add Keyboard & Mouse managers, these will only handle one device so they should be easier
 		
 	};
 
