@@ -84,9 +84,6 @@
     <ClInclude Include="Printer.h">
       <Filter>Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="FpsComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
@@ -144,8 +141,14 @@
     <ClInclude Include="Event.h">
       <Filter>Events</Filter>
     </ClInclude>
+    <ClInclude Include="FpsComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
     <ClInclude Include="LivesRemainingComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -196,9 +199,6 @@
     </ClCompile>
     <ClCompile Include="Printer.cpp">
       <Filter>Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="FpsComponent.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Managers</Filter>
@@ -254,8 +254,14 @@
     <ClCompile Include="Event.cpp">
       <Filter>Events</Filter>
     </ClCompile>
+    <ClCompile Include="FpsComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
     <ClCompile Include="LivesRemainingComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

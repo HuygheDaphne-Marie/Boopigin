@@ -18,8 +18,11 @@
 #include "TextComponent.h"
 #include "TextureComponent.h"
 #include "FpsComponent.h"
+#include "LivesRemainingComponent.h"
+#include "PlayerComponent.h"
+#include "Subject.h"
 
-#include "DieCommand.h"
+//#include "DieCommand.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -49,9 +52,8 @@ void boop::Minigin::Initialize()
 
 	// Own Init
 	Time::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
-	m_pTestCommand = new DieCommand();
-
-	InputManager::GetInstance().AddCommandToButton(KeyInfo(ControllerButton::ButtonA), m_pTestCommand, KeyState::Pressed);
+	//m_pTestCommand = new DieCommand();
+	//InputManager::GetInstance().AddCommandToButton(KeyInfo(ControllerButton::ButtonA), m_pTestCommand, KeyState::Pressed);
 }
 
 /**
@@ -86,16 +88,28 @@ void boop::Minigin::LoadGame() const
 	go->AddComponent(new FpsComponent(pFpsTextComponent));
 	scene.Add(go);
 
+	// Week 3
+	// Lives Display
 	go = std::make_shared<GameObject>();
-	go->AddComponent(new TransformComponent(10, 50));
+	go->AddComponent(new TransformComponent(10, 70));
 	const auto livesFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	TextComponent* pLifeTextComponent = new TextComponent("Current Lives: X", livesFont);
 	go->AddComponent(pLifeTextComponent);
+	LivesRemainingComponent* pLivesRemainingComponent = new LivesRemainingComponent(3, pLifeTextComponent);
+	go->AddComponent(pLivesRemainingComponent);
+	scene.Add(go);
+
+	// QBert
+	go = std::make_shared<GameObject>();
+	auto* pPlayerComponent = new PlayerComponent();
+	pPlayerComponent->m_pSubject->AddObserver(pLivesRemainingComponent);
+	go->AddComponent(pPlayerComponent);
+	scene.Add(go);
 }
 
 void boop::Minigin::Cleanup()
 {
-	delete m_pTestCommand;
+	//delete m_pTestCommand;
 	
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);

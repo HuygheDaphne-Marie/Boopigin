@@ -1,5 +1,4 @@
 #pragma once
-#include <memory>
 
 namespace boop
 {
@@ -8,13 +7,13 @@ namespace boop
 	class Subject
 	{
 	public:
-		void AddObserver(std::weak_ptr<Observer> pObserver);
-		void RemoveObserver(std::weak_ptr<Observer> pObserver);
+		void AddObserver(Observer* pObserver);
+		void RemoveObserver(Observer* pObserver);
 
 		void Notify(const std::string& message);
 
 	private:
-		std::vector<std::weak_ptr<Observer>> m_pObservers{};
+		std::vector<Observer*> m_pObservers{};
 	};
 }
 
