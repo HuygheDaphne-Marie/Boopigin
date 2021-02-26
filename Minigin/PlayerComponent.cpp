@@ -21,7 +21,7 @@ boop::PlayerComponent::~PlayerComponent()
 void boop::PlayerComponent::OnDeath()
 {
 	m_Lives--;
-	m_pSubject->Notify("PlayerDied");
+	m_pSubject->Notify(Event("PlayerDied", m_Lives));
 }
 
 int boop::PlayerComponent::GetLives() const

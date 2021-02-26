@@ -1,4 +1,5 @@
 #pragma once
+#include "Event.h"
 
 namespace boop
 {
@@ -10,7 +11,7 @@ namespace boop
 		void AddObserver(Observer* pObserver);
 		void RemoveObserver(Observer* pObserver);
 
-		void Notify(const std::string& message);
+		void Notify(const Event& event);
 
 	private:
 		std::vector<Observer*> m_pObservers{};

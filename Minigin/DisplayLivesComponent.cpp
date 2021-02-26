@@ -8,6 +8,7 @@ boop::DisplayLivesComponent::DisplayLivesComponent(PlayerComponent* pLinkedPlaye
 	: m_pTextComponent(pLinkedTextComponent)
 	, m_PlayerComponent(pLinkedPlayer)
 	, m_LivesChanged(true)
+	, m_LivesLeft(0) 
 	, m_pObserver(new Observer())
 {
 	if (m_pTextComponent == nullptr)
@@ -19,14 +20,21 @@ boop::DisplayLivesComponent::DisplayLivesComponent(PlayerComponent* pLinkedPlaye
 	m_pObserver->AddEventCallback("PlayerDied", this, &DisplayLivesComponent::OnDeath);
 }
 
+boop::DisplayLivesComponent::~DisplayLivesComponent()
+{
+	delete m_pObserver;
+}
+
+
 boop::Observer* boop::DisplayLivesComponent::GetObserver() const
 {
 	return m_pObserver;
 }
 
-void boop::DisplayLivesComponent::OnDeath()
+void boop::DisplayLivesComponent::OnDeath(const Event& event)
 {
-		m_LivesChanged = true;
+	m_LivesLeft = static_cast<EventData<int>*>(event.pEventData)->data;
+	m_LivesChanged = true;
 }
 
 void boop::DisplayLivesComponent::Update()
