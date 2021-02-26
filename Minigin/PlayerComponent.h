@@ -2,7 +2,7 @@
 #include "Component.h"
 #include <memory>
 
-#include "DisplayLivesComponent.h"
+#include "LifeDisplayComponent.h"
 
 namespace boop
 {
@@ -14,14 +14,20 @@ namespace boop
 	public:
 		PlayerComponent();
 		~PlayerComponent();
+
+		void Update() override;
 		
 		void OnDeath();
+		void OnScoreGained(int amount) const; // this would be in some other function obviously
+		
 		[[nodiscard]] int GetLives() const;
 
 		std::shared_ptr<Subject> m_pSubject;
 	private:
 		DieCommand* m_pDieCommand;
 		int m_Lives;
+
+		bool m_FirstUpdate = true;
 	};
 }
 

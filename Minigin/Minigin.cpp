@@ -18,11 +18,10 @@
 #include "TextComponent.h"
 #include "TextureComponent.h"
 #include "FpsComponent.h"
-#include "DisplayLivesComponent.h"
+#include "LifeDisplayComponent.h"
+#include "ScoreDisplayComponent.h"
 #include "PlayerComponent.h"
 #include "Subject.h"
-
-//#include "DieCommand.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -52,8 +51,6 @@ void boop::Minigin::Initialize()
 
 	// Own Init
 	Time::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
-	//m_pTestCommand = new DieCommand();
-	//InputManager::GetInstance().AddCommandToButton(KeyInfo(ControllerButton::ButtonA), m_pTestCommand, KeyState::Pressed);
 }
 
 /**
@@ -101,17 +98,27 @@ void boop::Minigin::LoadGame() const
 	const auto livesFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 	TextComponent* pLifeTextComponent = new TextComponent("Current Lives: X", livesFont);
 	go->AddComponent(pLifeTextComponent);
-	auto* pLivesRemainingComponent = new DisplayLivesComponent(pPlayerComponent, pLifeTextComponent);
+	auto* pLivesRemainingComponent = new LifeDisplayComponent(pPlayerComponent, pLifeTextComponent);
 	go->AddComponent(pLivesRemainingComponent);
 	scene.Add(go);
 	
 	pPlayerComponent->m_pSubject->AddObserver(pLivesRemainingComponent->GetObserver());
+
+	// Score Display
+	go = std::make_shared<GameObject>();
+	go->AddComponent(new TransformComponent(10, 100));
+	const auto scoreFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	TextComponent* pScoreText = new TextComponent("Current Score: X", scoreFont);
+	go->AddComponent(pScoreText);
+	auto* pScoreDisplay = new ScoreDisplayComponent(pScoreText);
+	go->AddComponent(pScoreDisplay);
+	scene.Add(go);
+
+	pPlayerComponent->m_pSubject->AddObserver(pScoreDisplay->GetObserver());
 }
 
 void boop::Minigin::Cleanup()
-{
-	//delete m_pTestCommand;
-	
+{	
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;

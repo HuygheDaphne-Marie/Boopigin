@@ -18,10 +18,30 @@ boop::PlayerComponent::~PlayerComponent()
 	delete m_pDieCommand;
 }
 
+void boop::PlayerComponent::Update()
+{
+	if (m_FirstUpdate) //Todo: bind this to a button once I have a controller, or a key once keyboardManager is implemented
+	{
+		// Color change
+		OnScoreGained(25);
+
+		// Kill Coily
+		OnScoreGained(500);
+
+		// ...
+		
+		m_FirstUpdate = false;
+	}
+}
+
 void boop::PlayerComponent::OnDeath()
 {
 	m_Lives--;
 	m_pSubject->Notify(Event("PlayerDied", m_Lives));
+}
+void boop::PlayerComponent::OnScoreGained(int amount) const
+{
+	m_pSubject->Notify(Event("ScoreGained", amount));
 }
 
 int boop::PlayerComponent::GetLives() const

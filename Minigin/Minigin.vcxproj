@@ -212,7 +212,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Font.h" />
     <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="InputManager.h" />
-    <ClInclude Include="DisplayLivesComponent.h" />
+    <ClInclude Include="LifeDisplayComponent.h" />
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="MiniginPCH.h" />
     <ClInclude Include="GameObject.h" />
@@ -223,6 +223,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ScoreDisplayComponent.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="TextComponent.h" />
@@ -287,7 +288,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Key.h" />
-    <ClCompile Include="DisplayLivesComponent.cpp" />
+    <ClCompile Include="LifeDisplayComponent.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="MiniginPCH.cpp">
@@ -304,6 +305,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ScoreDisplayComponent.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="TextObject.cpp" />

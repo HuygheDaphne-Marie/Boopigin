@@ -123,9 +123,6 @@
     <ClInclude Include="DeviceManager.h">
       <Filter>Input</Filter>
     </ClInclude>
-    <ClInclude Include="ControllerManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DieCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
@@ -147,7 +144,13 @@
     <ClInclude Include="PlayerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="DisplayLivesComponent.h">
+    <ClInclude Include="ScoreDisplayComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerManager.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeDisplayComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -236,9 +239,6 @@
     <ClCompile Include="Key.h">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="ControllerManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DieCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
@@ -260,7 +260,13 @@
     <ClCompile Include="PlayerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="DisplayLivesComponent.cpp">
+    <ClCompile Include="ControllerManager.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreDisplayComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeDisplayComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

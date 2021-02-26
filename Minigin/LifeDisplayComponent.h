@@ -7,11 +7,11 @@ namespace boop
 	class TextComponent;
 	class PlayerComponent;
 	
-	class DisplayLivesComponent final : public Component
+	class LifeDisplayComponent final : public Component
 	{
 	public:
-		explicit DisplayLivesComponent(PlayerComponent* pLinkedPlayer, TextComponent* pLinkedTextComponent = nullptr);
-		~DisplayLivesComponent();
+		explicit LifeDisplayComponent(PlayerComponent* pLinkedPlayer, TextComponent* pLinkedTextComponent = nullptr);
+		~LifeDisplayComponent();
 		
 		[[nodiscard]] Observer* GetObserver() const;
 		void OnDeath(const Event& event);

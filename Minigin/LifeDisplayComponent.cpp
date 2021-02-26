@@ -1,10 +1,10 @@
 #include "MiniginPCH.h"
-#include "DisplayLivesComponent.h"
+#include "LifeDisplayComponent.h"
 
 #include "TextComponent.h"
 #include "PlayerComponent.h"
 
-boop::DisplayLivesComponent::DisplayLivesComponent(PlayerComponent* pLinkedPlayer, TextComponent* pLinkedTextComponent)
+boop::LifeDisplayComponent::LifeDisplayComponent(PlayerComponent* pLinkedPlayer, TextComponent* pLinkedTextComponent)
 	: m_pTextComponent(pLinkedTextComponent)
 	, m_PlayerComponent(pLinkedPlayer)
 	, m_LivesChanged(true)
@@ -17,27 +17,27 @@ boop::DisplayLivesComponent::DisplayLivesComponent(PlayerComponent* pLinkedPlaye
 		// todo: if it's still null now there's no TextComponent, we should throw
 	}
 
-	m_pObserver->AddEventCallback("PlayerDied", this, &DisplayLivesComponent::OnDeath);
+	m_pObserver->AddEventCallback("PlayerDied", this, &LifeDisplayComponent::OnDeath);
 }
 
-boop::DisplayLivesComponent::~DisplayLivesComponent()
+boop::LifeDisplayComponent::~LifeDisplayComponent()
 {
 	delete m_pObserver;
 }
 
 
-boop::Observer* boop::DisplayLivesComponent::GetObserver() const
+boop::Observer* boop::LifeDisplayComponent::GetObserver() const
 {
 	return m_pObserver;
 }
 
-void boop::DisplayLivesComponent::OnDeath(const Event& event)
+void boop::LifeDisplayComponent::OnDeath(const Event& event)
 {
 	m_LivesLeft = static_cast<EventData<int>*>(event.pEventData)->data;
 	m_LivesChanged = true;
 }
 
-void boop::DisplayLivesComponent::Update()
+void boop::LifeDisplayComponent::Update()
 {
 	if (m_LivesChanged)
 	{
