@@ -50,11 +50,11 @@ void boop::Minigin::Initialize()
 
 	Renderer::GetInstance().Init(m_Window);
 
-	// Own Init
-	Time::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
-	
 	// tell the resource manager where he can find the game data
 	ResourceManager::GetInstance().Init("../Data/");
+	
+	// Own Init
+	Time::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
 }
 
 /**

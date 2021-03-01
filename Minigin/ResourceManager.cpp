@@ -66,18 +66,6 @@ std::shared_ptr<boop::Font> boop::ResourceManager::LoadFont(const std::string& f
 	
 	return font;
 }
-//std::shared_ptr<boop::Font> boop::ResourceManager::LoadFont(const std::string& file, unsigned size) const
-//{
-//	const std::string fontName = GetFontName(file, size);
-//
-//	const auto findItr = std::find(m_Fonts.begin(), m_Fonts.end(), fontName);
-//	if (findItr != m_Fonts.end())
-//	{
-//		return findItr->second;
-//	}
-//
-//	return nullptr; // Todo: is this smart? 
-//}
 
 std::string boop::ResourceManager::GetFontName(const std::string& file, unsigned size) const
 {

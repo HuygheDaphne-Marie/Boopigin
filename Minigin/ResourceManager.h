@@ -6,7 +6,6 @@
 
 namespace boop
 {
-	// Todo: make this actually manage, just about.. anything.
 	class Texture2D;
 	class Font;
 	class ResourceManager final : public Singleton<ResourceManager>
@@ -15,7 +14,6 @@ namespace boop
 		void Init(const std::string& data);
 		[[nodiscard]] std::shared_ptr<Texture2D> LoadTexture(const std::string& file);
 		[[nodiscard]] std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size);
-		//[[nodiscard]] std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size) const;
 	private:
 		friend class Singleton<ResourceManager>;
 		ResourceManager() = default;

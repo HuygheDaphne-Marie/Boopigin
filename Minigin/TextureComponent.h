@@ -17,7 +17,7 @@ namespace boop
 		void Render() const override;
 	
 	private:
-		std::shared_ptr<Texture2D> m_pTexture;
+		std::shared_ptr<Texture2D> m_pTexture{};
 	};
 }
 
