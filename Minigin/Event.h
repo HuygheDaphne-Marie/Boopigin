@@ -14,7 +14,7 @@ struct EventData : IEventData
 	explicit EventData(DataType data)
 		: data(data)
 	{
-	}
+	}	
 	
 	DataType data;
 };
@@ -35,6 +35,12 @@ struct Event
 	~Event()
 	{
 		delete pEventData;
+	}
+
+	template<typename GetDataType>
+	const GetDataType& GetData() const
+	{
+		return static_cast<EventData<GetDataType>*>(pEventData)->data;
 	}
 	
 	const std::string message;

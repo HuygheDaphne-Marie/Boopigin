@@ -33,7 +33,7 @@ boop::Observer* boop::LifeDisplayComponent::GetObserver() const
 
 void boop::LifeDisplayComponent::OnDeath(const Event& event)
 {
-	m_LivesLeft = static_cast<EventData<int>*>(event.pEventData)->data;
+	m_LivesLeft = event.GetData<int>();
 	m_LivesChanged = true;
 }
 
