@@ -7,16 +7,9 @@
 #include "TransformComponent.h"
 
 boop::TextureComponent::TextureComponent(const std::string& texturePath)
-	: m_pTexture(nullptr)
+	: m_pTexture(ResourceManager::GetInstance().LoadTexture(texturePath))
 {
-	m_pTexture = ResourceManager::GetInstance().LoadTexture(texturePath);
 }
-
-boop::TextureComponent::~TextureComponent()
-{
-	delete m_pTexture; // Todo: this should be manager's responsibility, not the component's
-}
-
 void boop::TextureComponent::Render() const
 {
 	const auto pTransform = m_pOwner->GetComponentOfType<TransformComponent>();

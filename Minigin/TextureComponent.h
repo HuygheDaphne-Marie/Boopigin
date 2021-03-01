@@ -8,7 +8,7 @@ namespace boop
 	{
 	public:
 		explicit TextureComponent(const std::string& texturePath);
-		~TextureComponent();
+		~TextureComponent() = default;
 		TextureComponent(const TextureComponent& other) = delete;
 		TextureComponent(TextureComponent&& other) = delete;
 		TextureComponent& operator=(const TextureComponent& other) = delete;
@@ -17,7 +17,7 @@ namespace boop
 		void Render() const override;
 	
 	private:
-		Texture2D* m_pTexture;
+		std::shared_ptr<Texture2D> m_pTexture;
 	};
 }
 

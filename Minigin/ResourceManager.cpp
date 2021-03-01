@@ -30,16 +30,25 @@ void boop::ResourceManager::Init(const std::string& dataPath)
 	}
 }
 
-/*std::shared_ptr<boop::Texture2D>*/
-boop::Texture2D* boop::ResourceManager::LoadTexture(const std::string& file) const
+std::shared_ptr<boop::Texture2D> boop::ResourceManager::LoadTexture(const std::string& file)
 {
 	const auto fullPath = m_DataPath + file;
+
+	const auto findItr = m_Textures.find(fullPath);
+	if (findItr != m_Textures.end())
+	{
+		return findItr->second;
+	}
+	
 	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
 	if (texture == nullptr) 
 	{
 		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
 	}
-	return new Texture2D(texture); // std::make_shared<Texture2D>(texture);
+
+	m_Textures[fullPath] = std::make_shared<Texture2D>(texture);
+	
+	return m_Textures[fullPath];
 }
 
 std::shared_ptr<boop::Font> boop::ResourceManager::LoadFont(const std::string& file, unsigned int size)

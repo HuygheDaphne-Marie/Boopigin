@@ -13,7 +13,7 @@ namespace boop
 	{
 	public:
 		void Init(const std::string& data);
-		/*std::shared_ptr<Texture2D>*/ Texture2D* LoadTexture(const std::string& file) const;
+		[[nodiscard]] std::shared_ptr<Texture2D> LoadTexture(const std::string& file);
 		[[nodiscard]] std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size);
 		//[[nodiscard]] std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size) const;
 	private:
@@ -24,5 +24,6 @@ namespace boop
 		[[nodiscard]] std::string GetFontName(const std::string& file, unsigned int size) const;
 
 		std::unordered_map<std::string, std::shared_ptr<Font>> m_Fonts{};
+		std::unordered_map<std::string, std::shared_ptr<Texture2D>> m_Textures{};
 	};
 }

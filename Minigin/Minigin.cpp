@@ -52,6 +52,9 @@ void boop::Minigin::Initialize()
 
 	// Own Init
 	Time::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
+	
+	// tell the resource manager where he can find the game data
+	ResourceManager::GetInstance().Init("../Data/");
 }
 
 /**
@@ -170,9 +173,6 @@ void boop::Minigin::Cleanup()
 void boop::Minigin::Run()
 {
 	Initialize();
-
-	// tell the resource manager where he can find the game data
-	ResourceManager::GetInstance().Init("../Data/");
 
 	LoadGame();
 
