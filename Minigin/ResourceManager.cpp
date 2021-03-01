@@ -42,7 +42,35 @@ boop::Texture2D* boop::ResourceManager::LoadTexture(const std::string& file) con
 	return new Texture2D(texture); // std::make_shared<Texture2D>(texture);
 }
 
-std::shared_ptr<boop::Font> /*boop::Font**/ boop::ResourceManager::LoadFont(const std::string& file, unsigned int size) const
+std::shared_ptr<boop::Font> boop::ResourceManager::LoadFont(const std::string& file, unsigned int size)
 {
-	return std::make_shared<Font>(m_DataPath + file, size); // new Font(m_DataPath + file, size);
+	const std::string fontName = GetFontName(file, size);
+
+	const auto findItr = m_Fonts.find(fontName);
+	if (findItr != m_Fonts.end())
+	{
+		return findItr->second;
+	}
+
+	const std::shared_ptr<Font> font = std::make_shared<Font>(m_DataPath + file, size);
+	m_Fonts[fontName] = font;
+	
+	return font;
+}
+//std::shared_ptr<boop::Font> boop::ResourceManager::LoadFont(const std::string& file, unsigned size) const
+//{
+//	const std::string fontName = GetFontName(file, size);
+//
+//	const auto findItr = std::find(m_Fonts.begin(), m_Fonts.end(), fontName);
+//	if (findItr != m_Fonts.end())
+//	{
+//		return findItr->second;
+//	}
+//
+//	return nullptr; // Todo: is this smart? 
+//}
+
+std::string boop::ResourceManager::GetFontName(const std::string& file, unsigned size) const
+{
+	return file + "_" + std::to_string(size);
 }

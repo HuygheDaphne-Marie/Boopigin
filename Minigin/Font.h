@@ -9,7 +9,7 @@ namespace boop
 	class Font
 	{
 	public:
-		_TTF_Font* GetFont() const;
+		[[nodiscard]] _TTF_Font* GetFont() const;
 		explicit Font(const std::string& fullPath, unsigned int size);
 		~Font();
 
@@ -17,6 +17,7 @@ namespace boop
 		Font(Font &&) = delete;
 		Font & operator= (const Font &) = delete;
 		Font & operator= (const Font &&) = delete;
+	
 	private:
 		_TTF_Font* m_Font;
 		unsigned int m_Size;
