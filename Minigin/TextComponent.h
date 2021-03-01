@@ -10,7 +10,7 @@ namespace boop
 	class TextComponent final : public Component
 	{
 	public:
-		TextComponent(const std::string& text, Font* font, const SDL_Color& color = {255, 255, 255});
+		TextComponent(const std::string& text, std::shared_ptr<Font> font, const SDL_Color& color = {255, 255, 255});
 		~TextComponent();
 		TextComponent(const TextComponent& other) = delete;
 		TextComponent(TextComponent&& other) = delete;
@@ -22,14 +22,12 @@ namespace boop
 
 		void SetText(const std::string& text);
 
-		//inline static const std::string name = "TextComponent";
-
 	private:
 		std::string m_Text;
 		SDL_Color m_Color;
 		
 		bool m_NeedsUpdate;
-		Font* m_pFont;
+		std::shared_ptr<Font> m_pFont;
 		Texture2D* m_pTextTexture;
 	};
 }

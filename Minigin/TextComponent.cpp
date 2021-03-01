@@ -6,7 +6,7 @@
 #include "Renderer.h"
 #include "TransformComponent.h"
 
-boop::TextComponent::TextComponent(const std::string& text, Font* font, const SDL_Color& color)
+boop::TextComponent::TextComponent(const std::string& text, std::shared_ptr<Font> font, const SDL_Color& color)
 	: m_Text(text),
 	m_Color(color),
 	m_NeedsUpdate(true),
@@ -17,7 +17,6 @@ boop::TextComponent::TextComponent(const std::string& text, Font* font, const SD
 
 boop::TextComponent::~TextComponent()
 {
-	delete m_pFont; // Todo: this should be in manager
 	delete m_pTextTexture;
 }
 

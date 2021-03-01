@@ -22,6 +22,7 @@
 #include "ScoreDisplayComponent.h"
 #include "PlayerComponent.h"
 #include "Subject.h"
+#include "Key.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -86,35 +87,76 @@ void boop::Minigin::LoadGame() const
 	scene.Add(go);
 
 	// Week 3
-	// QBert
-	go = std::make_shared<GameObject>();
-	auto* pPlayerComponent = new PlayerComponent();
-	go->AddComponent(pPlayerComponent);
-	scene.Add(go);
+	const auto displayFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
-	// Lives Display
-	go = std::make_shared<GameObject>();
-	go->AddComponent(new TransformComponent(10, 70));
-	const auto livesFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
-	TextComponent* pLifeTextComponent = new TextComponent("Current Lives: X", livesFont);
-	go->AddComponent(pLifeTextComponent);
-	auto* pLivesRemainingComponent = new LifeDisplayComponent(pPlayerComponent, pLifeTextComponent);
-	go->AddComponent(pLivesRemainingComponent);
-	scene.Add(go);
+	// Player 1
+	{
+		// QBert (Player 1)
+		go = std::make_shared<GameObject>();
+		auto* pPlayerOneComponent = new PlayerComponent(ControllerButton::ButtonA, ControllerButton::ButtonB);
+		go->AddComponent(pPlayerOneComponent);
+		scene.Add(go);
+
+		// Lives Display
+		go = std::make_shared<GameObject>();
+		go->AddComponent(new TransformComponent(10, 70));
+		TextComponent* pLifeDisplayOneText = new TextComponent("Current Lives: X", displayFont);
+		go->AddComponent(pLifeDisplayOneText);
+		auto* pLifeDisplayOne = new LifeDisplayComponent(pPlayerOneComponent, pLifeDisplayOneText);
+		go->AddComponent(pLifeDisplayOne);
+		scene.Add(go);
+
+		pPlayerOneComponent->m_pSubject->AddObserver(pLifeDisplayOne->GetObserver());
+
+		// Score Display
+		go = std::make_shared<GameObject>();
+		go->AddComponent(new TransformComponent(10, 100));
+		TextComponent* pScoreOneText = new TextComponent("Current Score: X", displayFont);
+		go->AddComponent(pScoreOneText);
+		auto* pScoreDisplayOne = new ScoreDisplayComponent(pScoreOneText);
+		go->AddComponent(pScoreDisplayOne);
+		scene.Add(go);
+
+		pPlayerOneComponent->m_pSubject->AddObserver(pScoreDisplayOne->GetObserver());
+	}
 	
-	pPlayerComponent->m_pSubject->AddObserver(pLivesRemainingComponent->GetObserver());
+	// Player 2
+	{
+		// QBert
+		go = std::make_shared<GameObject>();
+		auto* pPlayerComponentTwo = new PlayerComponent(ControllerButton::ButtonX, ControllerButton::ButtonY);
+		go->AddComponent(pPlayerComponentTwo);
+		scene.Add(go);
 
-	// Score Display
+		// Lives Display
+		go = std::make_shared<GameObject>();
+		go->AddComponent(new TransformComponent(10, 200));
+		TextComponent* pLifeDisplayTwoText = new TextComponent("Current Lives: X", displayFont);
+		go->AddComponent(pLifeDisplayTwoText);
+		auto* pLifeDisplayTwo = new LifeDisplayComponent(pPlayerComponentTwo, pLifeDisplayTwoText);
+		go->AddComponent(pLifeDisplayTwo);
+		scene.Add(go);
+
+		pPlayerComponentTwo->m_pSubject->AddObserver(pLifeDisplayTwo->GetObserver());
+
+		// Score Display
+		go = std::make_shared<GameObject>();
+		go->AddComponent(new TransformComponent(10, 230));
+		TextComponent* pScoreTextTwo = new TextComponent("Current Score: X", displayFont);
+		go->AddComponent(pScoreTextTwo);
+		auto* pScoreDisplayTwo = new ScoreDisplayComponent(pScoreTextTwo);
+		go->AddComponent(pScoreDisplayTwo);
+		scene.Add(go);
+
+		pPlayerComponentTwo->m_pSubject->AddObserver(pScoreDisplayTwo->GetObserver());
+	}
+
+	// Controls
 	go = std::make_shared<GameObject>();
-	go->AddComponent(new TransformComponent(10, 100));
-	const auto scoreFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
-	TextComponent* pScoreText = new TextComponent("Current Score: X", scoreFont);
-	go->AddComponent(pScoreText);
-	auto* pScoreDisplay = new ScoreDisplayComponent(pScoreText);
-	go->AddComponent(pScoreDisplay);
+	go->AddComponent(new TransformComponent(10, 330));
+	TextComponent* pControlText = new TextComponent("Player 1: A to die, B to gain score | Player 2: X to die, Y to gain score", displayFont);
+	go->AddComponent(pControlText);
 	scene.Add(go);
-
-	pPlayerComponent->m_pSubject->AddObserver(pScoreDisplay->GetObserver());
 }
 
 void boop::Minigin::Cleanup()

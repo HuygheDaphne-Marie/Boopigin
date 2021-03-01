@@ -153,6 +153,9 @@
     <ClInclude Include="LifeDisplayComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -268,6 +271,9 @@
     </ClCompile>
     <ClCompile Include="LifeDisplayComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreCommand.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

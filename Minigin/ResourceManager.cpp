@@ -42,8 +42,7 @@ boop::Texture2D* boop::ResourceManager::LoadTexture(const std::string& file) con
 	return new Texture2D(texture); // std::make_shared<Texture2D>(texture);
 }
 
-/*std::shared_ptr<boop::Font>*/
-boop::Font* boop::ResourceManager::LoadFont(const std::string& file, unsigned int size) const
+std::shared_ptr<boop::Font> /*boop::Font**/ boop::ResourceManager::LoadFont(const std::string& file, unsigned int size) const
 {
-	return new Font(m_DataPath + file, size);//std::make_shared<Font>(m_DataPath + file, size);
+	return std::make_shared<Font>(m_DataPath + file, size); // new Font(m_DataPath + file, size);
 }
