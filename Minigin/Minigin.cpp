@@ -24,6 +24,8 @@
 #include "Subject.h"
 #include "Key.h"
 
+#include "TestCommand.h"
+
 using namespace std;
 using namespace std::chrono;
 using namespace boop;
@@ -55,6 +57,12 @@ void boop::Minigin::Initialize()
 	
 	// Own Init
 	Time::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
+	m_pTestCommand = new TestCommand();
+
+	
+	
+	
+	InputManager::GetInstance().AddCommandToButton(KeyInfo(SDLK_a), m_pTestCommand, KeyState::Pressed);
 }
 
 /**
@@ -163,7 +171,9 @@ void boop::Minigin::LoadGame() const
 }
 
 void boop::Minigin::Cleanup()
-{	
+{
+	delete m_pTestCommand;
+	
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;

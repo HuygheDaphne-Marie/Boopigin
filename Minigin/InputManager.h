@@ -4,6 +4,7 @@
 
 #include "Key.h"
 #include "ControllerManager.h"
+#include "KeyboardManager.h"
 
 namespace boop
 {
@@ -28,10 +29,11 @@ namespace boop
 
 		[[nodiscard]] KeyState GetKeyStateFromDevice(KeyInfo keyInfo) const;
 		
-		std::unordered_map<KeyInfo, CommandInfo, KeyInfoHasher> m_Commands;
+		std::unordered_map<KeyInfo, CommandInfo, KeyInfoHasher> m_Commands{};
 
 		//Todo: Should get rid of superclass, make ControllerManager actually handle multiple controllers
 		ControllerManager m_Controller;
+		KeyboardManager m_Keyboard;
 		//Todo: Add Keyboard & Mouse managers, these will only handle one device so they should be easier
 		
 	};

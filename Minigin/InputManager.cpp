@@ -1,6 +1,5 @@
 #include "MiniginPCH.h"
 #include "InputManager.h"
-#include <SDL.h>
 #include "Command.h"
 
 boop::InputManager::InputManager()
@@ -10,22 +9,11 @@ boop::InputManager::InputManager()
 
 bool boop::InputManager::ProcessInput()
 {
+	bool shouldContinue = true; // Todo: make this better later, we might get exit commands from more than just one source
+	shouldContinue = m_Keyboard.ProcessInput();
 	m_Controller.ProcessInput();
-	
-	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
-			return false;
-		}
-		if (e.type == SDL_KEYDOWN) {
 
-		}
-		if (e.type == SDL_MOUSEBUTTONDOWN) {
-
-		}
-	}
-
-	return true;
+	return shouldContinue;
 }
 void boop::InputManager::HandleInput() const
 {
@@ -51,7 +39,7 @@ boop::KeyState boop::InputManager::GetKeyStateFromDevice(KeyInfo keyInfo) const
 	switch (keyInfo.type)
 	{
 	case KeyType::Keyboard: 
-		return KeyState::BAD_INPUT; //Todo: Temp until keyboardManager is added
+		return m_Keyboard.GetKeyState(keyInfo);
 	case KeyType::XInputController: 
 		return m_Controller.GetKeyState(keyInfo);
 	default: 

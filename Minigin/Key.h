@@ -1,6 +1,7 @@
 #pragma once
 #include "MiniginPCH.h"
 #include <XInput.h>
+#include <SDL.h>
 
 namespace boop
 {
@@ -45,12 +46,17 @@ namespace boop
 			type = KeyType::XInputController;
 			controllerButton = button;
 		}
+		explicit KeyInfo(SDL_Keycode key)
+		{
+			type = KeyType::Keyboard;
+			keycode = key;
+		}
 		
 		KeyType type;
 		union
 		{
 			ControllerButton controllerButton;
-			// Add SDL keycode here..
+			SDL_Keycode keycode;
 			// More types can be added too
 		};
 

@@ -2,7 +2,7 @@
 struct SDL_Window;
 namespace boop
 {
-	class DieCommand;
+	class TestCommand;
 
 	class Minigin
 	{
@@ -15,6 +15,6 @@ namespace boop
 		static const int m_FixedUpdateFps = 60;
 		SDL_Window* m_Window{};
 
-		DieCommand* m_pTestCommand;
+		TestCommand* m_pTestCommand;
 	};
 }
