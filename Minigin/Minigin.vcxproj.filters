@@ -34,6 +34,9 @@
     <Filter Include="Events">
       <UniqueIdentifier>{db46d91b-5151-4444-8c20-77924b3a96d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Services">
+      <UniqueIdentifier>{138c93d1-af6a-473c-8988-560d1c351954}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MiniginPCH.h">
@@ -162,6 +165,12 @@
     <ClInclude Include="TestCommand.h">
       <Filter>Commands</Filter>
     </ClInclude>
+    <ClInclude Include="AudioService.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceLocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -286,6 +295,12 @@
     </ClCompile>
     <ClCompile Include="TestCommand.cpp">
       <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioService.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
