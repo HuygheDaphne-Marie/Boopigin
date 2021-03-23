@@ -228,6 +228,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="ScoreCommand.h" />
     <ClInclude Include="ScoreDisplayComponent.h" />
     <ClInclude Include="ServiceLocator.h" />
+    <ClInclude Include="SimpleSLD2AudioService.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="TestCommand.h" />
@@ -315,6 +316,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="ScoreCommand.cpp" />
     <ClCompile Include="ScoreDisplayComponent.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
+    <ClCompile Include="SimpleSLD2AudioService.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="TestCommand.cpp" />
     <ClCompile Include="TextComponent.cpp" />

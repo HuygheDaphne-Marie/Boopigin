@@ -7,15 +7,15 @@ namespace boop
 	public:
 		virtual ~AudioService() = default;
 
-		virtual void PlayMusic(const std::string& filename, int volume) = 0;
-		virtual void PlaySound(const std::string& filename, int volume) = 0;
+		virtual void PlayMusic(const std::string& filename, int volumePercentage) = 0;
+		virtual void PlaySound(const std::string& filename, int volumePercentage) = 0;
 	};
 
 	class NullAudioService final : public AudioService
 	{
 	public:
-		void PlayMusic(const std::string& filename, int volume) override {};
-		void PlaySound(const std::string& filename, int volume) override {};
+		void PlayMusic(const std::string& filename, int volumePercentage) override {};
+		void PlaySound(const std::string& filename, int volumePercentage) override {};
 	};
 }
 

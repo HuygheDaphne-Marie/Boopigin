@@ -169,6 +169,9 @@
       <Filter>Services</Filter>
     </ClInclude>
     <ClInclude Include="ServiceLocator.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleSLD2AudioService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -300,6 +303,9 @@
       <Filter>Services</Filter>
     </ClCompile>
     <ClCompile Include="ServiceLocator.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleSLD2AudioService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
