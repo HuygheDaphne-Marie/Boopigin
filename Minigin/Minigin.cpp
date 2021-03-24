@@ -26,7 +26,9 @@
 
 #include "TestCommand.h"
 
-//#include "../3rdParty/Simple-SDL2-Audio/src/audio.h"
+#include "ServiceLocator.h"
+#include "AudioService.h"
+#include "SimpleSLD2AudioService.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -34,7 +36,7 @@ using namespace boop;
 
 void boop::Minigin::Initialize()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) 
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
@@ -60,11 +62,10 @@ void boop::Minigin::Initialize()
 	// Own Init
 	Time::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
 	m_pTestCommand = new TestCommand();
-
-	
-	
 	
 	InputManager::GetInstance().AddCommandToButton(KeyInfo(SDLK_a), m_pTestCommand, KeyState::Pressed);
+	SimpleSLD2AudioService* pAudioService = new SimpleSLD2AudioService();
+	ServiceLocator::GetInstance().RegisterAudioService(pAudioService);
 }
 
 /**
@@ -170,6 +171,8 @@ void boop::Minigin::LoadGame() const
 	TextComponent* pControlText = new TextComponent("Player 1: A to die, B to gain score | Player 2: X to die, Y to gain score", displayFont);
 	go->AddComponent(pControlText);
 	scene.Add(go);
+
+	ServiceLocator::GetInstance().GetAudioService()->PlaySound("../3rdParty/Simple-SDL2-Audio/sounds/door1.wav", 100);
 }
 
 void boop::Minigin::Cleanup()

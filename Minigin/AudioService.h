@@ -14,8 +14,12 @@ namespace boop
 	class NullAudioService final : public AudioService
 	{
 	public:
+#pragma warning( push )
+#pragma warning( disable : 4100 )
 		void PlayMusic(const std::string& filename, int volumePercentage) override {};
 		void PlaySound(const std::string& filename, int volumePercentage) override {};
+#pragma warning( pop )
+
 	};
 }
 

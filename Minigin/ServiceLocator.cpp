@@ -16,13 +16,8 @@ boop::ServiceLocator::~ServiceLocator()
 		delete m_pAudioService;
 		m_pAudioService = nullptr;
 	}
-
-	if (m_pDefaultAudioService != nullptr)
-	{
-		delete m_pDefaultAudioService;
-		m_pDefaultAudioService = nullptr;
-	}
-	
+	delete m_pDefaultAudioService;
+	m_pDefaultAudioService = nullptr;
 }
 
 void boop::ServiceLocator::RegisterAudioService(AudioService* pAudioService)

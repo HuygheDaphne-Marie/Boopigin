@@ -20,7 +20,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <SDL2/SDL.h>
+//#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "audio.h"
 
@@ -261,7 +262,10 @@ Audio * createAudio(const char * filename, uint8_t loop, int volume)
     newAudio->loop = loop;
     newAudio->fade = 0;
     newAudio->free = 1;
+#pragma warning( push )
+#pragma warning( disable : 4244 )
     newAudio->volume = volume;
+#pragma warning( pop )
 
     if(SDL_LoadWAV(filename, &(newAudio->audio), &(newAudio->bufferTrue), &(newAudio->lengthTrue)) == NULL)
     {
@@ -319,7 +323,10 @@ static inline void playAudio(const char * filename, Audio * audio, uint8_t loop,
 
         memcpy(newAudio, audio, sizeof(Audio));
 
+#pragma warning( push )
+#pragma warning( disable : 4244 )
         newAudio->volume = volume;
+#pragma warning( pop )
         newAudio->loop = loop;
         newAudio->free = 0;
     }

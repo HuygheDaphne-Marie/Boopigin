@@ -3,6 +3,10 @@
 
 #pragma once
 
+//#pragma warning( push )
+//#pragma warning( disable : 4201 )
+//#pragma warning( push,3 )
+
 #include "type_vec.hpp"
 #if GLM_SWIZZLE == GLM_SWIZZLE_ENABLED
 #	if GLM_HAS_UNRESTRICTED_UNIONS
@@ -405,5 +409,6 @@ namespace glm
 }//namespace glm
 
 #ifndef GLM_EXTERNAL_TEMPLATE
+//#pragma warning( pop )
 #include "type_vec3.inl"
 #endif//GLM_EXTERNAL_TEMPLATE

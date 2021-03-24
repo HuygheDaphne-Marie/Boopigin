@@ -31,7 +31,8 @@ extern "C"
 {
 #endif
 
-#include <SDL2/SDL.h>
+//#include <SDL2/SDL.h> // Old include caused errors
+#include <SDL.h>
 
 /*
  * Queue structure for all loaded sounds
