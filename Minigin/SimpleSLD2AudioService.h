@@ -3,6 +3,7 @@
 #include "../3rdParty/Simple-SDL2-Audio/src/audio.h"
 #include <queue>
 #include <mutex>
+#include <map>
 
 namespace boop
 {
@@ -25,8 +26,8 @@ namespace boop
 	private:
 		enum class AudioType
 		{
-			sound,
-			music
+			sound = 0,
+			music = 1
 		};
 		struct AudioRequest
 		{
@@ -35,10 +36,12 @@ namespace boop
 			int volumePercentage;
 		};
 
-		std::queue<AudioRequest> m_SoundRequestQueue;
 		std::mutex m_Mutex;
+		std::queue<AudioRequest> m_SoundRequestQueue;
+		std::map<std::string, Audio*> m_AudioMap;
 		
 		static int GetAbsoluteVolumeFromPercentage(int volumePercentage);
+		void AddNewAudioToSavedAudio(const AudioRequest& newAudioRequest);
 	};
 }
 

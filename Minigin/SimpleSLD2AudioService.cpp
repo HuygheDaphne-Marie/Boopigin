@@ -12,6 +12,10 @@ boop::SimpleSld2AudioService::SimpleSld2AudioService()
 
 boop::SimpleSld2AudioService::~SimpleSld2AudioService()
 {
+	for (auto audioPair : m_AudioMap)
+	{
+		freeAudio(audioPair.second);
+	}
 	endAudio();
 }
 
@@ -40,13 +44,19 @@ void boop::SimpleSld2AudioService::ProcessSoundRequests()
 		AudioRequest request = m_SoundRequestQueue.front();
 		m_SoundRequestQueue.pop();
 
+		auto findResult = m_AudioMap.find(request.filename);
+		if (findResult == m_AudioMap.end())
+		{
+			AddNewAudioToSavedAudio(request);
+		}
+		
 		if (request.audioType == AudioType::music)
 		{
-			playMusic(request.filename.c_str(), GetAbsoluteVolumeFromPercentage(request.volumePercentage));
+			playMusicFromMemory(m_AudioMap[request.filename], request.volumePercentage);
 		}
 		else
 		{
-			playSound(request.filename.c_str(), GetAbsoluteVolumeFromPercentage(request.volumePercentage));
+			playSoundFromMemory(m_AudioMap[request.filename], request.volumePercentage);
 		}
 	}
 	while (!m_SoundRequestQueue.empty());
@@ -62,4 +72,10 @@ int boop::SimpleSld2AudioService::GetAbsoluteVolumeFromPercentage(int volumePerc
 		volumePercentage = 100;
 	}
 	return static_cast<int>(static_cast<float>(SDL_MIX_MAXVOLUME) / 100.f * static_cast<float>(volumePercentage));
+}
+
+void boop::SimpleSld2AudioService::AddNewAudioToSavedAudio(const AudioRequest& newAudioRequest)
+{
+	Audio* pAudio = createAudio(newAudioRequest.filename.c_str(), static_cast<uint8_t>(newAudioRequest.audioType), 100);
+	m_AudioMap.insert({ newAudioRequest.filename, pAudio });
 }
