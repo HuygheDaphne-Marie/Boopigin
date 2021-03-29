@@ -174,7 +174,7 @@ void boop::Minigin::LoadGame() const
 	go->AddComponent(pControlText);
 	scene.Add(go);
 
-	ServiceLocator::GetInstance().GetAudioService()->PlaySound("../3rdParty/Simple-SDL2-Audio/sounds/door1.wav", 100);
+	ServiceLocator::GetInstance().GetAudioService()->PlaySound("../Data/door1.wav", 100);
 }
 
 void boop::Minigin::Cleanup()
