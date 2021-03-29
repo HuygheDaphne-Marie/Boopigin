@@ -172,7 +172,7 @@
       <Filter>Services</Filter>
     </ClInclude>
     <ClInclude Include="SimpleSLD2AudioService.h">
-      <Filter>Header Files</Filter>
+      <Filter>Services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -306,7 +306,7 @@
       <Filter>Services</Filter>
     </ClCompile>
     <ClCompile Include="SimpleSLD2AudioService.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Services</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

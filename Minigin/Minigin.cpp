@@ -7,6 +7,7 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include <SDL.h>
+#include <future>
 
 #include "TextObject.h"
 #include "GameObject.h"
@@ -65,7 +66,7 @@ void boop::Minigin::Initialize()
 	m_pTestCommand = new TestCommand();
 	
 	InputManager::GetInstance().AddCommandToButton(KeyInfo(SDLK_a), m_pTestCommand, KeyState::Pressed);
-	SimpleSLD2AudioService* pAudioService = new SimpleSLD2AudioService();
+	auto* pAudioService = new SimpleSld2AudioService();
 	ServiceLocator::GetInstance().RegisterAudioService(pAudioService);
 }
 
@@ -192,12 +193,24 @@ void boop::Minigin::Run()
 
 	LoadGame();
 
+	
+	
 	{
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
 
 		bool shouldContinue = true;
+		
+		auto audioFuture = std::async(launch::async, [&shouldContinue]()
+			{
+				const auto& audio = ServiceLocator::GetInstance().GetAudioService();
+				while (shouldContinue)
+				{
+					audio->ProcessSoundRequests();
+				}
+			});
+
 
 		double timeSinceLastFrame = 0.0;
 		Time* pTime = &Time::GetInstance();

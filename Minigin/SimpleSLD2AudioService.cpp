@@ -4,29 +4,55 @@
 #include <SDL.h>
 #include "../3rdParty/Simple-SDL2-Audio/src/audio.c"
 
-boop::SimpleSLD2AudioService::SimpleSLD2AudioService()
+boop::SimpleSld2AudioService::SimpleSld2AudioService()
 {
 	//SDL_Init(SDL_INIT_AUDIO);
 	initAudio();
 }
 
-boop::SimpleSLD2AudioService::~SimpleSLD2AudioService()
+boop::SimpleSld2AudioService::~SimpleSld2AudioService()
 {
 	endAudio();
 }
 
-void boop::SimpleSLD2AudioService::PlayMusic(const std::string& filename, int volumePercentage)
+void boop::SimpleSld2AudioService::PlayMusic(const std::string& filename, int volumePercentage)
 {
-	playMusic(filename.c_str(), GetAbsoluteVolumeFromPercentage(volumePercentage));
+	std::lock_guard<std::mutex> lock{ m_Mutex };
+	m_SoundRequestQueue.push(AudioRequest{ AudioType::music, filename, volumePercentage });
 }
 
-void boop::SimpleSLD2AudioService::PlaySound(const std::string& filename, int volumePercentage)
+void boop::SimpleSld2AudioService::PlaySound(const std::string& filename, int volumePercentage)
 {
-	playSound(filename.c_str(), GetAbsoluteVolumeFromPercentage(volumePercentage));
-	std::cout << SDL_GetError();
+	std::lock_guard<std::mutex> lock{ m_Mutex };
+	m_SoundRequestQueue.push(AudioRequest{ AudioType::sound, filename, volumePercentage });
 }
 
-int boop::SimpleSLD2AudioService::GetAbsoluteVolumeFromPercentage(int volumePercentage)
+void boop::SimpleSld2AudioService::ProcessSoundRequests()
+{
+	do
+	{
+		std::lock_guard<std::mutex> lock{ m_Mutex };
+		if (m_SoundRequestQueue.empty())
+		{
+			continue;
+		}
+		
+		AudioRequest request = m_SoundRequestQueue.front();
+		m_SoundRequestQueue.pop();
+
+		if (request.audioType == AudioType::music)
+		{
+			playMusic(request.filename.c_str(), GetAbsoluteVolumeFromPercentage(request.volumePercentage));
+		}
+		else
+		{
+			playSound(request.filename.c_str(), GetAbsoluteVolumeFromPercentage(request.volumePercentage));
+		}
+	}
+	while (!m_SoundRequestQueue.empty());
+}
+
+int boop::SimpleSld2AudioService::GetAbsoluteVolumeFromPercentage(int volumePercentage)
 {
 	if (volumePercentage < 0)
 	{
