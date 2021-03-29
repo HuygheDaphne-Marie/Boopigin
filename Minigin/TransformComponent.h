@@ -3,7 +3,7 @@
 
 #pragma warning(push)
 #pragma warning (disable:4201)
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
 #pragma warning(pop)
 
 namespace boop
@@ -12,8 +12,6 @@ namespace boop
 	{
 	public:
 		explicit TransformComponent(float x = 0.f, float y = 0.f, float z = 0.f);
-
-		//static const std::string& GetComponentName();
 
 		[[nodiscard]] const glm::vec3& GetPosition() const { return m_Position; }
 		void SetPosition(float x, float y, float z = 0.f);
