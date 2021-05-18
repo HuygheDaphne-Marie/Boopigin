@@ -24,7 +24,7 @@ namespace boop
 
 		SDL_Renderer* GetSDLRenderer() const { return m_pRenderer; }
 	private:
-		int GetOpenGLDriverIndex();
+		static int GetOpenGLDriverIndex();
 		
 		SDL_Renderer* m_pRenderer{};
 		SDL_Window* m_pWindow{};

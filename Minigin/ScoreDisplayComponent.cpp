@@ -14,7 +14,7 @@ boop::ScoreDisplayComponent::ScoreDisplayComponent(TextComponent* pLinkedTextCom
 	if (m_pTextComponent == nullptr)
 	{
 		m_pTextComponent = m_pOwner->GetComponentOfType<TextComponent>();
-		// todo: if it's still null now there's no TextComponent, we should throw
+		std::cerr << "ERROR: ScoreDisplayComponent requires it's GameObject to have a TextComponent\n";
 	}
 
 	m_pObserver->AddEventCallback("ScoreGained", this, &ScoreDisplayComponent::OnScoreGained);

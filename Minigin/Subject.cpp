@@ -21,9 +21,13 @@ void boop::Subject::Notify(const Event& event)
 {
 	for (Observer* pObserver : m_pObservers)
 	{
-		if (pObserver != nullptr) //Todo: this should get deleted if == null
+		if (pObserver != nullptr)
 		{
 			pObserver->OnNotify(event);
+		}
+		else
+		{
+			RemoveObserver(pObserver);
 		}
 	}
 }

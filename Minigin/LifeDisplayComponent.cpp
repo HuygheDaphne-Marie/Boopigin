@@ -14,7 +14,7 @@ boop::LifeDisplayComponent::LifeDisplayComponent(PlayerComponent* pLinkedPlayer,
 	if (m_pTextComponent == nullptr)
 	{
 		m_pTextComponent = m_pOwner->GetComponentOfType<TextComponent>();
-		// todo: if it's still null now there's no TextComponent, we should throw
+		std::cerr << "Error: LifeDisplayComponent, requires it's game object to have a TextComponent\n";
 	}
 
 	m_pObserver->AddEventCallback("PlayerDied", this, &LifeDisplayComponent::OnDeath);

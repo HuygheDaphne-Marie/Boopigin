@@ -19,7 +19,7 @@ void boop::Component::SetOwner(GameObject* newOwner)
 {
 	if (m_pOwner != nullptr)
 	{
-		// Todo: Notify old owner we have been transferred, unlikely this will ever happen
+		m_pOwner->RemoveComponent(this);
 	}
 	m_pOwner = newOwner;
 }

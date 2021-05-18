@@ -8,7 +8,6 @@
 
 namespace boop
 {
-	// template <typename SubjectType, typename EventType = std::string> //todo: could event be a type and then just send events of a certain type with data already in them? 
 	class Observer final
 	{
 	public:		

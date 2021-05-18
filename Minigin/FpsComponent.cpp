@@ -14,7 +14,7 @@ boop::FpsComponent::FpsComponent(TextComponent* linkedTextComp)
 	if(m_pLinkedTextComponent == nullptr)
 	{
 		m_pLinkedTextComponent = m_pOwner->GetComponentOfType<TextComponent>();
-		// todo: if it's still null now there's no TextComponent, we should throw
+		std::cerr << "ERROR: FpsComponent requires it's GameObject to have a TextComponent\n";
 	}
 }
 

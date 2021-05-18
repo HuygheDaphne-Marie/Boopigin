@@ -190,10 +190,7 @@ void boop::Minigin::Cleanup()
 void boop::Minigin::Run()
 {
 	Initialize();
-
 	LoadGame();
-
-	
 	
 	{
 		auto& renderer = Renderer::GetInstance();

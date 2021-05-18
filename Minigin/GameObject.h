@@ -36,6 +36,6 @@ namespace boop
 		}
 
 	private:
-		std::vector<Component*> m_Components{}; // Todo: might do this in a map don't know yet..
+		std::vector<Component*> m_Components{};
 	};
 }

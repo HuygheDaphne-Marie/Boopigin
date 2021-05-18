@@ -5,8 +5,6 @@
 #include <XInput.h>
 #pragma comment(lib, "XInput.lib")
 
-//#include "Winerror.h"
-
 boop::ControllerManager::ControllerManager(int controllerId)
 	: m_ControllerId(controllerId)
 	, m_IsControllerStateOneCurrent(false)
@@ -24,6 +22,7 @@ bool boop::ControllerManager::ProcessInput()
 	return true;
 	//Todo: Should return whether the game loop should continue, for now we'll just let it continue forever,
 	//todo:  this might also just always be handled by the inputManager
+	// Handled by Inputmanager for now.
 }
 boop::KeyState boop::ControllerManager::GetKeyState(const KeyInfo& keyInfo) const
 {
