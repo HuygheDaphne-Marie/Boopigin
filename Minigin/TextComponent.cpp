@@ -35,7 +35,7 @@ void boop::TextComponent::Update()
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
 		SDL_FreeSurface(surf);
-		delete m_pTextTexture; // Todo: this is shit, get a manager & printer
+		delete m_pTextTexture; // Todo: this is shit, get a manager & printer (Honestly not sure if it's worth the effort anymore)
 		m_pTextTexture = new Texture2D(texture);
 		m_NeedsUpdate = false;
 	}

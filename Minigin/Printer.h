@@ -1,6 +1,7 @@
 #pragma once
 class Printer
 {
+	// Might get yeeted, I'll have what, 5-10 pieces of text?
 	// Todo: Make this class capable of writing any message in a certain font (Monospace),
 	// Todo: without constantly getting a new texture for a specific string
 	// 1. load a texture with a string containing all commonly used characters
