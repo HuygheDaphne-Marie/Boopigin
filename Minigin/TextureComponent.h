@@ -9,6 +9,7 @@ namespace boop
 	{
 	public:
 		explicit TextureComponent(const std::string& texturePath);
+		explicit TextureComponent(const std::string& texturePath, float width, float height);
 		~TextureComponent() = default;
 		TextureComponent(const TextureComponent& other) = delete;
 		TextureComponent(TextureComponent&& other) = delete;
@@ -18,9 +19,14 @@ namespace boop
 		void Render() const override;
 
 		void SetTexture(const std::string& texturePath);
+		void SetDimensions(float width, float height);
 	
 	private:
 		std::shared_ptr<Texture2D> m_pTexture{};
+
+		bool m_AreDimensionsSet = false;
+		float m_Width{};
+		float m_Height{};
 	};
 }
 
