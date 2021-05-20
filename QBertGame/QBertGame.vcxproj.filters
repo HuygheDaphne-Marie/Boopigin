@@ -33,6 +33,9 @@
     <ClCompile Include="TileComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LevelFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSetup.h">
@@ -43,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="TileComponent.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelFactory.h">
+      <Filter>Factory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
