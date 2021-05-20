@@ -75,106 +75,110 @@ void boop::Minigin::Initialize()
  */
 void boop::Minigin::LoadGame() const
 {
+	if (m_pGame != nullptr)
+	{
+		m_pGame->LoadGame();
+	}
 	// Load this all from a file later cause this is very hard coded **Yikers**
-	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
+	//auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	auto go = std::make_shared<GameObject>();
-	go->AddComponent(new TransformComponent(0, 0));
-	go->AddComponent(new TextureComponent("background.jpg"));
-	scene.Add(go);
+	//auto go = std::make_shared<GameObject>();
+	//go->AddComponent(new TransformComponent(0, 0));
+	//go->AddComponent(new TextureComponent("background.jpg"));
+	//scene.Add(go);
 
-	go = std::make_shared<GameObject>();
-	go->AddComponent(new TransformComponent(216, 180));
-	go->AddComponent(new TextureComponent("logo.png"));
-	scene.Add(go);
+	//go = std::make_shared<GameObject>();
+	//go->AddComponent(new TransformComponent(216, 180));
+	//go->AddComponent(new TextureComponent("logo.png"));
+	//scene.Add(go);
 
-	go = std::make_shared<GameObject>();
-	go->AddComponent(new TransformComponent(80, 20));
-	const auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	go->AddComponent(new TextComponent("Programming 4 Assignment", font));
-	scene.Add(go);
+	//go = std::make_shared<GameObject>();
+	//go->AddComponent(new TransformComponent(80, 20));
+	//const auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	//go->AddComponent(new TextComponent("Programming 4 Assignment", font));
+	//scene.Add(go);
 
-	go = std::make_shared<GameObject>();
-	go->AddComponent(new TransformComponent(10, 10));
-	const auto fpsFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
-	TextComponent* pFpsTextComponent = new TextComponent("TEMP", fpsFont);
-	go->AddComponent(pFpsTextComponent);
-	go->AddComponent(new FpsComponent(pFpsTextComponent));
-	scene.Add(go);
+	//go = std::make_shared<GameObject>();
+	//go->AddComponent(new TransformComponent(10, 10));
+	//const auto fpsFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	//TextComponent* pFpsTextComponent = new TextComponent("TEMP", fpsFont);
+	//go->AddComponent(pFpsTextComponent);
+	//go->AddComponent(new FpsComponent(pFpsTextComponent));
+	//scene.Add(go);
 
-	// Week 3
-	const auto displayFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
+	//// Week 3
+	//const auto displayFont = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 
-	// Player 1
-	{
-		// QBert (Player 1)
-		go = std::make_shared<GameObject>();
-		auto* pPlayerOneComponent = new PlayerComponent(ControllerButton::ButtonA, ControllerButton::ButtonB);
-		go->AddComponent(pPlayerOneComponent);
-		scene.Add(go);
+	//// Player 1
+	//{
+	//	// QBert (Player 1)
+	//	go = std::make_shared<GameObject>();
+	//	auto* pPlayerOneComponent = new PlayerComponent(ControllerButton::ButtonA, ControllerButton::ButtonB);
+	//	go->AddComponent(pPlayerOneComponent);
+	//	scene.Add(go);
 
-		// Lives Display
-		go = std::make_shared<GameObject>();
-		go->AddComponent(new TransformComponent(10, 70));
-		TextComponent* pLifeDisplayOneText = new TextComponent("Current Lives: X", displayFont);
-		go->AddComponent(pLifeDisplayOneText);
-		auto* pLifeDisplayOne = new LifeDisplayComponent(pPlayerOneComponent, pLifeDisplayOneText);
-		go->AddComponent(pLifeDisplayOne);
-		scene.Add(go);
+	//	// Lives Display
+	//	go = std::make_shared<GameObject>();
+	//	go->AddComponent(new TransformComponent(10, 70));
+	//	TextComponent* pLifeDisplayOneText = new TextComponent("Current Lives: X", displayFont);
+	//	go->AddComponent(pLifeDisplayOneText);
+	//	auto* pLifeDisplayOne = new LifeDisplayComponent(pPlayerOneComponent, pLifeDisplayOneText);
+	//	go->AddComponent(pLifeDisplayOne);
+	//	scene.Add(go);
 
-		pPlayerOneComponent->m_pSubject->AddObserver(pLifeDisplayOne->GetObserver());
+	//	pPlayerOneComponent->m_pSubject->AddObserver(pLifeDisplayOne->GetObserver());
 
-		// Score Display
-		go = std::make_shared<GameObject>();
-		go->AddComponent(new TransformComponent(10, 100));
-		TextComponent* pScoreOneText = new TextComponent("Current Score: X", displayFont);
-		go->AddComponent(pScoreOneText);
-		auto* pScoreDisplayOne = new ScoreDisplayComponent(pScoreOneText);
-		go->AddComponent(pScoreDisplayOne);
-		scene.Add(go);
+	//	// Score Display
+	//	go = std::make_shared<GameObject>();
+	//	go->AddComponent(new TransformComponent(10, 100));
+	//	TextComponent* pScoreOneText = new TextComponent("Current Score: X", displayFont);
+	//	go->AddComponent(pScoreOneText);
+	//	auto* pScoreDisplayOne = new ScoreDisplayComponent(pScoreOneText);
+	//	go->AddComponent(pScoreDisplayOne);
+	//	scene.Add(go);
 
-		pPlayerOneComponent->m_pSubject->AddObserver(pScoreDisplayOne->GetObserver());
-	}
-	
-	// Player 2
-	{
-		// QBert
-		go = std::make_shared<GameObject>();
-		auto* pPlayerComponentTwo = new PlayerComponent(ControllerButton::ButtonX, ControllerButton::ButtonY);
-		go->AddComponent(pPlayerComponentTwo);
-		scene.Add(go);
+	//	pPlayerOneComponent->m_pSubject->AddObserver(pScoreDisplayOne->GetObserver());
+	//}
+	//
+	//// Player 2
+	//{
+	//	// QBert
+	//	go = std::make_shared<GameObject>();
+	//	auto* pPlayerComponentTwo = new PlayerComponent(ControllerButton::ButtonX, ControllerButton::ButtonY);
+	//	go->AddComponent(pPlayerComponentTwo);
+	//	scene.Add(go);
 
-		// Lives Display
-		go = std::make_shared<GameObject>();
-		go->AddComponent(new TransformComponent(10, 200));
-		TextComponent* pLifeDisplayTwoText = new TextComponent("Current Lives: X", displayFont);
-		go->AddComponent(pLifeDisplayTwoText);
-		auto* pLifeDisplayTwo = new LifeDisplayComponent(pPlayerComponentTwo, pLifeDisplayTwoText);
-		go->AddComponent(pLifeDisplayTwo);
-		scene.Add(go);
+	//	// Lives Display
+	//	go = std::make_shared<GameObject>();
+	//	go->AddComponent(new TransformComponent(10, 200));
+	//	TextComponent* pLifeDisplayTwoText = new TextComponent("Current Lives: X", displayFont);
+	//	go->AddComponent(pLifeDisplayTwoText);
+	//	auto* pLifeDisplayTwo = new LifeDisplayComponent(pPlayerComponentTwo, pLifeDisplayTwoText);
+	//	go->AddComponent(pLifeDisplayTwo);
+	//	scene.Add(go);
 
-		pPlayerComponentTwo->m_pSubject->AddObserver(pLifeDisplayTwo->GetObserver());
+	//	pPlayerComponentTwo->m_pSubject->AddObserver(pLifeDisplayTwo->GetObserver());
 
-		// Score Display
-		go = std::make_shared<GameObject>();
-		go->AddComponent(new TransformComponent(10, 230));
-		TextComponent* pScoreTextTwo = new TextComponent("Current Score: X", displayFont);
-		go->AddComponent(pScoreTextTwo);
-		auto* pScoreDisplayTwo = new ScoreDisplayComponent(pScoreTextTwo);
-		go->AddComponent(pScoreDisplayTwo);
-		scene.Add(go);
+	//	// Score Display
+	//	go = std::make_shared<GameObject>();
+	//	go->AddComponent(new TransformComponent(10, 230));
+	//	TextComponent* pScoreTextTwo = new TextComponent("Current Score: X", displayFont);
+	//	go->AddComponent(pScoreTextTwo);
+	//	auto* pScoreDisplayTwo = new ScoreDisplayComponent(pScoreTextTwo);
+	//	go->AddComponent(pScoreDisplayTwo);
+	//	scene.Add(go);
 
-		pPlayerComponentTwo->m_pSubject->AddObserver(pScoreDisplayTwo->GetObserver());
-	}
+	//	pPlayerComponentTwo->m_pSubject->AddObserver(pScoreDisplayTwo->GetObserver());
+	//}
 
-	// Controls
-	go = std::make_shared<GameObject>();
-	go->AddComponent(new TransformComponent(10, 330));
-	TextComponent* pControlText = new TextComponent("Player 1: A to die, B to gain score | Player 2: X to die, Y to gain score", displayFont);
-	go->AddComponent(pControlText);
-	scene.Add(go);
+	//// Controls
+	//go = std::make_shared<GameObject>();
+	//go->AddComponent(new TransformComponent(10, 330));
+	//TextComponent* pControlText = new TextComponent("Player 1: A to die, B to gain score | Player 2: X to die, Y to gain score", displayFont);
+	//go->AddComponent(pControlText);
+	//scene.Add(go);
 
-	ServiceLocator::GetInstance().GetAudioService()->PlaySound("../Data/door1.wav", 100);
+	//ServiceLocator::GetInstance().GetAudioService()->PlaySound("../Data/door1.wav", 100);
 }
 
 void boop::Minigin::Cleanup()

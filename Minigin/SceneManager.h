@@ -1,5 +1,7 @@
 #pragma once
 #include "Singleton.h"
+#include <string>
+#include <vector>
 
 namespace boop
 {
