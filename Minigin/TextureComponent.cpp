@@ -16,3 +16,8 @@ void boop::TextureComponent::Render() const
 	const auto pos = pTransform->GetPosition();
 	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 }
+
+void boop::TextureComponent::SetTexture(const std::string& texturePath)
+{
+	m_pTexture = ResourceManager::GetInstance().LoadTexture(texturePath);
+}

@@ -5,13 +5,15 @@
 #include <TransformComponent.h>
 #include <TextureComponent.h>
 
+#include "TileFactory.h"
+
 using namespace boop;
 
 void GameSetup::LoadGame() const
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("Game");
-	auto go = std::make_shared<GameObject>();
-	go->AddComponent(new TransformComponent(0, 0));
-	go->AddComponent(new TextureComponent("background.jpg"));
-	scene.Add(go);
+
+	scene.Add(TileFactory::MakeTile("unwalked_level1.png", "walked_level1.png", 0, 0));
+	scene.Add(TileFactory::MakeTile("unwalked_level1.png", "walked_level1.png", -16, 24));
+	scene.Add(TileFactory::MakeTile("unwalked_level1.png", "walked_level1.png", 16, 24));
 }
