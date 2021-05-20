@@ -29,18 +29,17 @@ void boop::Renderer::Render() const
 
 	SceneManager::GetInstance().Render();
 
-	ImGui_ImplOpenGL2_NewFrame();
-	ImGui_ImplSDL2_NewFrame(m_pWindow);
-	ImGui::NewFrame();
-
-	ImGui::Begin("Test");
-	ImGui::Button("Single Player");
-	ImGui::Button("Co-op");
-	ImGui::Button("Versus");
-	ImGui::End();
-
-	ImGui::Render();
-	ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+	// Old ImGui test code
+	//ImGui_ImplOpenGL2_NewFrame();
+	//ImGui_ImplSDL2_NewFrame(m_pWindow);
+	//ImGui::NewFrame();
+	//ImGui::Begin("Test");
+	//ImGui::Button("Single Player");
+	//ImGui::Button("Co-op");
+	//ImGui::Button("Versus");
+	//ImGui::End();
+	//ImGui::Render();
+	//ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 	
 	SDL_RenderPresent(m_pRenderer);
 }
