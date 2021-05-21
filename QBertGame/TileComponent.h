@@ -7,7 +7,7 @@
 class TileComponent final : public boop::Component
 {
 public:
-	explicit TileComponent(const std::string& walkedTexturePath);
+	explicit TileComponent(const std::string& walkedTexturePath, int posX, int posY);
 	~TileComponent() override = default;
 	TileComponent(const TileComponent & other) = delete;
 	TileComponent(TileComponent && other) = delete;
@@ -18,5 +18,7 @@ public:
 
 private:
 	std::string m_WalkedTexturePath;
+	const int m_TilePosX; // col
+	const int m_TilePosY; // row
 };
 

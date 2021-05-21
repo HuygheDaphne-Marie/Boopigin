@@ -9,9 +9,14 @@ class TileFactory
 {
 public:
 	// take walked on and not walked on texture & position and turn it into a tile/cube
-	static std::shared_ptr<boop::GameObject> MakeTile(const std::string& unwalkedTexturePath, const std::string& walkedTexturePath, float posX, float posY, float size);
-
-private:
-	
+	// Todo: this is a lot of vars
+	static std::shared_ptr<boop::GameObject> MakeTile(
+		const std::string& unwalkedTexturePath, 
+		const std::string& walkedTexturePath, 
+		float posX, 
+		float posY, 
+		float size, 
+		int row, 
+		int col);
 };
 

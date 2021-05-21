@@ -2,24 +2,24 @@
 #include <string>
 #include <Scene.h>
 
-#pragma warning(push)
-#pragma warning (disable:4201)
-#include <glm/glm.hpp>
-#pragma warning(pop)
+
 
 #include "TileFactory.h"
 
 using namespace boop;
 
-void LevelFactory::MakeLevel(boop::Scene& scene, int levelNumber, int size, bool isTriangle)
+std::vector<std::shared_ptr<GameObject>> LevelFactory::MakeLevel(Scene& scene, const glm::vec2& levelCenterPos, int levelNumber, int size, bool isTriangle)
 {
 	const std::string walkedTexturePath = "walked_level" + std::to_string(levelNumber) + ".png";
 	const std::string unwalkedTexturePath = "un" + walkedTexturePath;
-	const float tileSize = 64.f; //todo: should be var? feels like a static const
-	const float horizontalStep = tileSize / 2;
-	const float verticalStep = tileSize * 0.75f;
 
-	glm::vec2 tilePos = { 200,100 }; //todo: should be a var
+	const float horizontalStep = m_TileSize / 2;
+	const float verticalStep = m_TileSize * 0.75f;
+	const float halfPyramidSize = GetPyramidHeight(size) / 2;
+	
+	glm::vec2 tilePos = { levelCenterPos.x, levelCenterPos.y - halfPyramidSize };
+	
+	std::vector<std::shared_ptr<GameObject>> tiles = std::vector<std::shared_ptr<GameObject>>{};
 	
 	for (int row = 0; row < size; row++)
 	{
@@ -31,7 +31,17 @@ void LevelFactory::MakeLevel(boop::Scene& scene, int levelNumber, int size, bool
 		
 		for (int col = 0; col < colsToMake; col++)
 		{
-			scene.Add(TileFactory::MakeTile(unwalkedTexturePath, walkedTexturePath, tilePos.x, tilePos.y, tileSize));
+			std::shared_ptr<GameObject> tile = TileFactory::MakeTile(
+				unwalkedTexturePath, 
+				walkedTexturePath, 
+				tilePos.x, 
+				tilePos.y, 
+				m_TileSize, 
+				col, 
+				row);
+			
+			tiles.push_back(tile);
+			scene.Add(tile);
 
 			// increment pos to down right
 			tilePos.x += horizontalStep;
@@ -42,4 +52,21 @@ void LevelFactory::MakeLevel(boop::Scene& scene, int levelNumber, int size, bool
 		tilePos.x = rowStartPos.x - horizontalStep;
 		tilePos.y = rowStartPos.y + verticalStep;
 	}
+
+	return tiles;
+}
+
+float LevelFactory::GetPyramidHeight(int size)
+{
+	float pyramidHeight = m_TileSize;
+	if (size > 1)
+	{
+		pyramidHeight += m_TileSize;
+	}
+	if (size - 2 > 0)
+	{
+		const int middleRowCount = size - 2;
+		pyramidHeight += (m_TileSize / 2) * middleRowCount;
+	}
+	return pyramidHeight;
 }

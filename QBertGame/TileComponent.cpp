@@ -3,8 +3,10 @@
 
 using namespace boop;
 
-TileComponent::TileComponent(const std::string& walkedTexturePath)
+TileComponent::TileComponent(const std::string& walkedTexturePath, int posX, int posY)
 	: m_WalkedTexturePath(walkedTexturePath)
+	, m_TilePosX(posX)
+	, m_TilePosY(posY)
 {
 }
 
