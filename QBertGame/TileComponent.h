@@ -2,8 +2,21 @@
 #include <Component.h>
 #include <string>
 
+#pragma warning(push)
+#pragma warning (disable:4201)
+#include <glm/glm.hpp>
+#pragma warning(pop)
+
 // Contains logic for a tile
 // Will change color of tile and hold connections to other tiles for path finding
+enum class Direction
+{
+	top = 0,
+	right = 1,
+	bottom = 2,
+	left = 3
+};
+
 class TileComponent final : public boop::Component
 {
 public:
@@ -16,9 +29,14 @@ public:
 
 	void OnWalked() const;
 
+	int GetRow() const;
+	int GetColumn() const;
+
 private:
 	std::string m_WalkedTexturePath;
-	const int m_TilePosX; // col
-	const int m_TilePosY; // row
+	const int m_TileCol; // col
+	const int m_TileRow; // row
+	
+	std::vector<TileComponent*> m_pAdjacentTiles = std::vector<TileComponent*>{};
 };
 

@@ -5,8 +5,8 @@ using namespace boop;
 
 TileComponent::TileComponent(const std::string& walkedTexturePath, int posX, int posY)
 	: m_WalkedTexturePath(walkedTexturePath)
-	, m_TilePosX(posX)
-	, m_TilePosY(posY)
+	, m_TileCol(posX)
+	, m_TileRow(posY)
 {
 }
 

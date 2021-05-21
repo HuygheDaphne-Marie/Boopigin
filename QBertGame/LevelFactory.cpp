@@ -1,10 +1,8 @@
 #include "LevelFactory.h"
 #include <string>
 #include <Scene.h>
-
-
-
 #include "TileFactory.h"
+
 
 using namespace boop;
 
@@ -54,6 +52,21 @@ std::vector<std::shared_ptr<GameObject>> LevelFactory::MakeLevel(Scene& scene, c
 	}
 
 	return tiles;
+}
+
+void LevelFactory::LinkTiles(std::vector<std::shared_ptr<boop::GameObject>>& levelTiles)
+{
+	for (auto& tile : levelTiles)
+	{
+		LinkTile(tile->GetComponentOfType<TileComponent>(), levelTiles);
+	}
+}
+
+void LevelFactory::LinkTile(TileComponent* tile, const std::vector<std::shared_ptr<boop::GameObject>>& levelTiles)
+{
+	int row = tile.GetRow();
+	int col = tile.GetColumn();
+	
 }
 
 float LevelFactory::GetPyramidHeight(int size)

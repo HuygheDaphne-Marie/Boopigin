@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include <GameObject.h>
-
+#include "TileComponent.h";
 #pragma warning(push)
 #pragma warning (disable:4201)
 #include <glm/glm.hpp>
@@ -22,6 +22,8 @@ public:
 		bool isTriangle = true);
 
 private:
+	static void LinkTiles(std::vector<std::shared_ptr<boop::GameObject>>& levelTiles);
+	static void LinkTile(TileComponent* tile, const std::vector<std::shared_ptr<boop::GameObject>>& levelTiles);
 	static float GetPyramidHeight(int size);
 };
 
