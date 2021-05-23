@@ -15,3 +15,13 @@ void TileComponent::OnWalked() const
 	// Todo: might need more work done here
 	m_pOwner->GetComponentOfType<TextureComponent>()->SetTexture(m_WalkedTexturePath);
 }
+
+int TileComponent::GetRow() const
+{
+	return m_TileRow;
+}
+
+int TileComponent::GetColumn() const
+{
+	return m_TileCol;
+}

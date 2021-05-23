@@ -64,8 +64,8 @@ void LevelFactory::LinkTiles(std::vector<std::shared_ptr<boop::GameObject>>& lev
 
 void LevelFactory::LinkTile(TileComponent* tile, const std::vector<std::shared_ptr<boop::GameObject>>& levelTiles)
 {
-	int row = tile.GetRow();
-	int col = tile.GetColumn();
+	int row = tile->GetRow();
+	int col = tile->GetColumn();
 	
 }
 
