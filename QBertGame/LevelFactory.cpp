@@ -35,8 +35,8 @@ std::vector<std::shared_ptr<GameObject>> LevelFactory::MakeLevel(Scene& scene, c
 				tilePos.x, 
 				tilePos.y, 
 				m_TileSize, 
-				col, 
-				row);
+				row, 
+				col);
 			
 			tiles.push_back(tile);
 			scene.Add(tile);
@@ -54,20 +54,20 @@ std::vector<std::shared_ptr<GameObject>> LevelFactory::MakeLevel(Scene& scene, c
 	return tiles;
 }
 
-void LevelFactory::LinkTiles(std::vector<std::shared_ptr<boop::GameObject>>& levelTiles)
-{
-	for (auto& tile : levelTiles)
-	{
-		LinkTile(tile->GetComponentOfType<TileComponent>(), levelTiles);
-	}
-}
-
-void LevelFactory::LinkTile(TileComponent* tile, const std::vector<std::shared_ptr<boop::GameObject>>& levelTiles)
-{
-	int row = tile->GetRow();
-	int col = tile->GetColumn();
-	
-}
+//void LevelFactory::LinkTiles(std::vector<std::shared_ptr<boop::GameObject>>& levelTiles)
+//{
+//	for (auto& tile : levelTiles)
+//	{
+//		LinkTile(tile->GetComponentOfType<TileComponent>(), levelTiles);
+//	}
+//}
+//
+//void LevelFactory::LinkTile(TileComponent* tile, const std::vector<std::shared_ptr<GameObject>>& levelTiles)
+//{
+//	int row = tile->GetRow();
+//	int col = tile->GetColumn();
+//
+//}
 
 float LevelFactory::GetPyramidHeight(int size)
 {

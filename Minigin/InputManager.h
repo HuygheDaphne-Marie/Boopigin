@@ -22,6 +22,7 @@ namespace boop
 		void HandleInput() const;
 
 		bool AddCommandToButton(KeyInfo keyInfo, Command* pCommand, KeyState neededKeyState);
+		void RemoveCommand(Command* pCommand);
 
 	private:
 		friend class Singleton<InputManager>;

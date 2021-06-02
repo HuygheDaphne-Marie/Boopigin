@@ -1,8 +1,8 @@
 #include "MiniginPCH.h"
 #include "FpsComponent.h"
 #include "TextComponent.h"
-#include "Time.h"
-//#include "Time.h"
+#include "Timer.h"
+//#include "Timer.h"
 
 
 boop::FpsComponent::FpsComponent(TextComponent* linkedTextComp)

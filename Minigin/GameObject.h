@@ -24,7 +24,7 @@ namespace boop
 		void RemoveComponent(Component* pComponentToRemove);
 
 		template <typename TypeOfComponent>
-		inline TypeOfComponent* GetComponentOfType()
+		inline TypeOfComponent* GetComponentOfType() const
 		{
 			for (Component* component : m_Components)
 			{

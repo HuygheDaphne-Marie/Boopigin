@@ -32,6 +32,32 @@ bool boop::InputManager::AddCommandToButton(KeyInfo keyInfo, Command* pCommand, 
 	return m_Commands.insert({ keyInfo, info }).second;
 }
 
+void boop::InputManager::RemoveCommand(Command* pCommand)
+{
+	// Won't work, can't figure out why
+	//const auto itr = std::remove_if(m_Commands.begin(), m_Commands.end(), 
+	//	[pCommand](const std::pair<KeyInfo, CommandInfo>& pair)
+	//	{
+	//		return pair.second.pCommand == pCommand;
+	//    }
+	//);
+	//m_Commands.erase(itr);
+
+	const KeyInfo* pKey = nullptr;
+	for (auto& pair : m_Commands)
+	{
+		if (pair.second.pCommand == pCommand)
+		{
+			pKey = &pair.first;
+			break;
+		}
+	}
+
+	if (pKey != nullptr)
+	{
+		m_Commands.erase(*pKey);
+	}
+}
 
 
 boop::KeyState boop::InputManager::GetKeyStateFromDevice(KeyInfo keyInfo) const

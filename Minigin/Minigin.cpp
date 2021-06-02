@@ -13,7 +13,9 @@
 #include "GameObject.h"
 #include "Scene.h"
 
-#include "Time.h"
+#include "Timer.h"
+
+#include <iostream>
 
 #include "TransformComponent.h"
 #include "TextComponent.h"
@@ -62,7 +64,7 @@ void boop::Minigin::Initialize()
 	ResourceManager::GetInstance().Init("../Data/");
 	
 	// Own Init
-	Time::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
+	Timer::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
 	m_pTestCommand = new TestCommand();
 	
 	InputManager::GetInstance().AddCommandToButton(KeyInfo(SDLK_a), m_pTestCommand, KeyState::Pressed);
@@ -214,13 +216,15 @@ void boop::Minigin::Run()
 
 
 		double timeSinceLastFrame = 0.0;
-		Time* pTime = &Time::GetInstance();
+		Timer* pTime = &Timer::GetInstance();
+		pTime->Start();
 		while (shouldContinue)
 		{
 			shouldContinue = input.ProcessInput();
 			input.HandleInput();
+ 
+			timeSinceLastFrame += pTime->GetElapsedSec();
 			
-			timeSinceLastFrame += pTime->GetElapsedMilli();
 			while (timeSinceLastFrame >= pTime->GetMilliPerFrame())
 			{
 				// Fixed Update, for physics & networking
@@ -228,6 +232,7 @@ void boop::Minigin::Run()
 				timeSinceLastFrame -= pTime->GetMilliPerFrame();
 			}
 
+			
 			// Update, this should be used by default
 			sceneManager.Update();
 
@@ -235,6 +240,7 @@ void boop::Minigin::Run()
 			sceneManager.LateUpdate();
 			
 			renderer.Render();
+			pTime->Update();
 		}
 	}
 

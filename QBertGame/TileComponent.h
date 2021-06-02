@@ -9,13 +9,13 @@
 
 // Contains logic for a tile
 // Will change color of tile and hold connections to other tiles for path finding
-enum class Direction
-{
-	top = 0,
-	right = 1,
-	bottom = 2,
-	left = 3
-};
+//enum class Direction
+//{
+//	top = 0,
+//	right = 1,
+//	bottom = 2,
+//	left = 3
+//};
 
 class TileComponent final : public boop::Component
 {
@@ -34,8 +34,8 @@ public:
 
 private:
 	std::string m_WalkedTexturePath;
-	const int m_TileCol; // col
-	const int m_TileRow; // row
+	const int m_TileCol;
+	const int m_TileRow;
 	
 	std::vector<TileComponent*> m_pAdjacentTiles = std::vector<TileComponent*>{};
 };

@@ -13,6 +13,7 @@ TileComponent::TileComponent(const std::string& walkedTexturePath, int posX, int
 void TileComponent::OnWalked() const
 {
 	// Todo: might need more work done here
+	// send event probs
 	m_pOwner->GetComponentOfType<TextureComponent>()->SetTexture(m_WalkedTexturePath);
 }
 
