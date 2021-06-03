@@ -175,22 +175,26 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="JumpComponent.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="LevelFactory.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
     <ClCompile Include="PlayerMovementComponent.cpp" />
+    <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="GameSetup.cpp" />
     <ClCompile Include="QBertGame.cpp" />
     <ClCompile Include="TileComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="JumpComponent.h" />
     <ClInclude Include="LevelComponent.h" />
     <ClInclude Include="LevelFactory.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="PlayerMovementComponent.h" />
+    <ClInclude Include="StateComponent.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="GameSetup.h" />
     <ClInclude Include="TileComponent.h" />

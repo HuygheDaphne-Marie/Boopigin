@@ -5,13 +5,13 @@
 #include <glm/glm.hpp>
 #pragma warning(pop)
 
-MovementComponent::MovementComponent(TileComponent* startTile, LevelComponent* level, boop::TransformComponent* myTransform)
+MovementComponent::MovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper)
 	: m_pCurrentTile(startTile)
 	, m_pLevel(level)
-	, m_pTransform(myTransform)
+	, m_pJumper(jumper)
 {
 	const glm::vec2 pos = GetTileStandPosition(m_pCurrentTile);
-	m_pTransform->SetPosition(pos.x, pos.y);
+	m_pJumper->SetStartPos(pos);
 }
 
 bool MovementComponent::MoveUp()
@@ -53,24 +53,34 @@ bool MovementComponent::Move(Direction movementDirection)
 
 	const glm::ivec2 currentTileCoordinate = { m_pCurrentTile->GetColumn(), m_pCurrentTile->GetRow() };
 	const glm::ivec2 newTileCoordinate = currentTileCoordinate + coordinateChange;
-	
-	if (m_pLevel->IsCoordinateInBounds(newTileCoordinate))
+
+	return MoveTo(newTileCoordinate);
+}
+
+bool MovementComponent::MoveTo(const glm::ivec2& tileCoordinate)
+{
+	if (m_pLevel->IsCoordinateInBounds(tileCoordinate))
 	{
-		TileComponent* newTile = m_pLevel->GetTileWithCoordinate(newTileCoordinate);
-		m_pCurrentTile = newTile;
-		m_pCurrentTile->OnWalked();
-		const glm::vec2 newPos = GetTileStandPosition(m_pCurrentTile);
-		m_pTransform->SetPosition(newPos.x, newPos.y);
-		
-		// Todo: (later that will be nicely animated with a leap)
-		return true;
+		TileComponent* newTile = m_pLevel->GetTileWithCoordinate(tileCoordinate);
+		const glm::vec2 newPos = GetTileStandPosition(newTile);
+
+		if (m_pJumper->StartJump(newPos))
+		{
+			m_pCurrentTile = newTile;
+			m_pCurrentTile->OnWalked();
+			return true;
+		}
+		return false;
 	}
-	//else
-	//{
-	//	// check if there's a teleporter there
-	//	// 
-	//	// if not, jump into empty space & die
-	//}
+	else
+	{
+		//if (m_pLevel.DoesCoordinateHaveTeleporter(tileCoordinate))
+		//{
+		//	
+		//}
+		
+		// if not, jump into empty space & die
+	}
 	return false;
 }
 

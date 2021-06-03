@@ -51,6 +51,12 @@
     <ClCompile Include="MoveCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
+    <ClCompile Include="JumpComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="StateComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSetup.h">
@@ -76,6 +82,12 @@
     </ClInclude>
     <ClInclude Include="MoveCommand.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="StateComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

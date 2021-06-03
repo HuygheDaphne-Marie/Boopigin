@@ -1,10 +1,9 @@
 #pragma once
 #include <Component.h>
-#include <TransformComponent.h>
 #include "TileComponent.h"
 #include "LevelComponent.h"
+#include "JumpComponent.h"
 
-// Knows which tile it is on, when moving in a direction checks which tile is there and jumps to it's location in an arc
 enum class Direction
 {
 	up = 0,
@@ -16,19 +15,20 @@ enum class Direction
 class MovementComponent : public boop::Component
 {
 public:
-	MovementComponent(TileComponent* startTile, LevelComponent* level, boop::TransformComponent* myTransform);
+	MovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper);
 
 	bool MoveUp();
 	bool MoveRight();
 	bool MoveDown();
 	bool MoveLeft();
 	virtual bool Move(Direction movementDirection);
+	virtual bool MoveTo(const glm::ivec2& tileCoordinate);
 
 private:
 	friend class PlayerMovementComponent;
 	TileComponent* m_pCurrentTile;
 	LevelComponent* m_pLevel;
-	boop::TransformComponent* m_pTransform;
+	JumpComponent* m_pJumper;
 
 	static glm::vec2 GetTileStandPosition(TileComponent* tile);
 };

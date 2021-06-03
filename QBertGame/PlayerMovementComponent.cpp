@@ -3,27 +3,25 @@
 #include <InputManager.h>
 #include <Timer.h>
 
-PlayerMovementComponent::PlayerMovementComponent(TileComponent* startTile, LevelComponent* level, boop::TransformComponent* myTransform, 
+PlayerMovementComponent::PlayerMovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper,
 	std::vector<boop::KeyInfo>& keys)
-	: MovementComponent(startTile, level, myTransform)
-	, m_CanMove(true)
-	, m_MoveDelay(1.f)
-	, m_MoveTimer(0.f)
+	: MovementComponent(startTile, level, jumper)
 {
+	const int upIndex = static_cast<std::underlying_type<Direction>::type>(Direction::up);
+	const int rightIndex = static_cast<std::underlying_type<Direction>::type>(Direction::right);
+	const int downIndex = static_cast<std::underlying_type<Direction>::type>(Direction::down);
+	const int leftIndex = static_cast<std::underlying_type<Direction>::type>(Direction::left);
+	
 	m_MoveCommands.resize(4);
-	m_MoveCommands[0] = new MoveCommand(this, Direction::up);
-	m_MoveCommands[1] = new MoveCommand(this, Direction::right);
-	m_MoveCommands[2] = new MoveCommand(this, Direction::down);
-	m_MoveCommands[3] = new MoveCommand(this, Direction::left);
+	m_MoveCommands[upIndex] = new MoveCommand(this, Direction::up);
+	m_MoveCommands[rightIndex] = new MoveCommand(this, Direction::right);
+	m_MoveCommands[downIndex] = new MoveCommand(this, Direction::down);
+	m_MoveCommands[leftIndex] = new MoveCommand(this, Direction::left);
 
-	boop::InputManager::GetInstance().AddCommandToButton(
-		keys[0], m_MoveCommands[0], boop::KeyState::Pressed);
-	boop::InputManager::GetInstance().AddCommandToButton(
-		keys[1], m_MoveCommands[1], boop::KeyState::Pressed);
-	boop::InputManager::GetInstance().AddCommandToButton(
-		keys[2], m_MoveCommands[2], boop::KeyState::Pressed);
-	boop::InputManager::GetInstance().AddCommandToButton(
-		keys[3], m_MoveCommands[3], boop::KeyState::Pressed);
+	boop::InputManager::GetInstance().AddCommandToButton(keys[upIndex], m_MoveCommands[upIndex], boop::KeyState::Pressed);
+	boop::InputManager::GetInstance().AddCommandToButton(keys[rightIndex], m_MoveCommands[rightIndex], boop::KeyState::Pressed);
+	boop::InputManager::GetInstance().AddCommandToButton(keys[downIndex], m_MoveCommands[downIndex], boop::KeyState::Pressed);
+	boop::InputManager::GetInstance().AddCommandToButton(keys[leftIndex], m_MoveCommands[leftIndex], boop::KeyState::Pressed);
 }
 
 PlayerMovementComponent::~PlayerMovementComponent()
@@ -38,32 +36,10 @@ PlayerMovementComponent::~PlayerMovementComponent()
 
 bool PlayerMovementComponent::Move(Direction movementDirection)
 {
-	if (m_CanMove)
-	{
-		std::cout << "========\n";
-		std::cout << "x: " << std::to_string(m_pCurrentTile->GetColumn()) << ", y: " << std::to_string(m_pCurrentTile->GetRow()) << std::endl;
-		const bool didMove = MovementComponent::Move(movementDirection);
-		std::cout << "x: " << std::to_string(m_pCurrentTile->GetColumn()) << ", y: " << std::to_string(m_pCurrentTile->GetRow()) << std::endl;
-		std::cout << "========\n";
-		if (didMove)
-		{
-			m_CanMove = false;
-			return true;
-		}
-	}
-	return false;
-}
-
-void PlayerMovementComponent::Update()
-{
-	
-	if (!m_CanMove)
-	{
-		m_MoveTimer += boop::Timer::GetInstance().GetElapsedSec();
-		if (m_MoveTimer >= m_MoveDelay)
-		{
-			m_MoveTimer = 0;
-			m_CanMove = true;
-		}
-	}
+	//std::cout << "========\n";
+	//std::cout << "x: " << std::to_string(m_pCurrentTile->GetColumn()) << ", y: " << std::to_string(m_pCurrentTile->GetRow()) << std::endl;
+	const bool didMove = MovementComponent::Move(movementDirection);
+	//std::cout << "x: " << std::to_string(m_pCurrentTile->GetColumn()) << ", y: " << std::to_string(m_pCurrentTile->GetRow()) << std::endl;
+	//std::cout << "========\n";
+	return didMove;
 }

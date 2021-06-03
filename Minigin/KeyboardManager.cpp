@@ -1,14 +1,10 @@
 #include "MiniginPCH.h"
 #include "KeyboardManager.h"
-//
-//boop::KeyboardManager::~KeyboardManager()
-//{
-//	delete m_pKeyboardStateSize;
-//}
 
 bool boop::KeyboardManager::ProcessInput()
 {
 	m_FirstKeysIsCurrent = !m_FirstKeysIsCurrent;
+	GetCurrentPressedKeys().clear();
 	
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
