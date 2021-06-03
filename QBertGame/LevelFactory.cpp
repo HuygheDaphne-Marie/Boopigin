@@ -2,55 +2,84 @@
 #include <string>
 #include <Scene.h>
 #include "TileFactory.h"
-
+#include "json.hpp"
+#include <fstream>
 
 using namespace boop;
+using json = nlohmann::json;
 
 float LevelFactory::m_TileSize = 64.f;
+std::string LevelFactory::m_TilesLocation = "textures/tiles/";
+std::string LevelFactory::m_LevelsFilePath = "../Data/Levels.json";
 
-std::vector<std::shared_ptr<GameObject>> LevelFactory::MakeLevel(Scene& scene, const glm::vec2& levelCenterPos, int levelNumber, int size, bool isTriangle)
+std::vector<std::shared_ptr<GameObject>> LevelFactory::MakeLevel(Scene& scene, const glm::vec2& levelCenterPos, int levelNumber, 
+	LevelInfo* levelInfo)
 {
-	const std::string walkedTexturePath = "walked_level" + std::to_string(levelNumber) + ".png";
-	const std::string unwalkedTexturePath = "un" + walkedTexturePath;
+	std::ifstream levelFile(m_LevelsFilePath);
+	json levels;
+	levelFile >> levels;
 
-	const float horizontalStep = m_TileSize / 2;
-	const float verticalStep = m_TileSize * 0.75f;
-	const float halfPyramidSize = GetPyramidHeight(size) / 2;
+	json levelToMake = nullptr;
 	
-	glm::vec2 tilePos = { levelCenterPos.x, levelCenterPos.y - halfPyramidSize };
-	
-	std::vector<std::shared_ptr<GameObject>> tiles = std::vector<std::shared_ptr<GameObject>>{};
-	
-	for (int row = 0; row < size; row++)
+	for (auto& level : levels)
 	{
-		int colsToMake = size;
-		if (isTriangle)
-			colsToMake -= row;
-
-		const glm::vec2 rowStartPos = tilePos;
-		
-		for (int col = 0; col < colsToMake; col++)
+		const int levelNum = level["LevelNumber"];
+		if(levelNum == levelNumber)
 		{
-			std::shared_ptr<GameObject> tile = TileFactory::MakeTile(
-				unwalkedTexturePath, 
-				walkedTexturePath, 
-				tilePos.x, 
-				tilePos.y, 
-				m_TileSize, 
-				row, 
-				col);
-			
-			tiles.push_back(tile);
-			scene.Add(tile);
-
-			// increment pos to down right
-			tilePos.x += horizontalStep;
-			tilePos.y += verticalStep;
+			levelToMake = level;
+			break;
 		}
+	}
 
-		// increment row and shift tiles to bottom left
-		tilePos.x = rowStartPos.x - horizontalStep;
-		tilePos.y = rowStartPos.y + verticalStep;
+	std::vector<std::shared_ptr<GameObject>> tiles{};
+	if (levelToMake != nullptr)
+	{
+		const int size = levelToMake["LevelSize"];
+		std::vector<std::string> tileTextures = levelToMake["TileTextures"];
+		const bool isTriangle = levelToMake["IsTriangle"];
+
+		if (levelInfo != nullptr)
+		{
+			levelInfo->size = size;
+			levelInfo->isTwoState = (tileTextures.size() == 2) ? true : false;
+		}
+		
+		const float horizontalStep = m_TileSize / 2;
+		const float verticalStep = m_TileSize * 0.75f;
+		const float halfPyramidSize = GetPyramidHeight(size) / 2;
+
+		glm::vec2 tilePos = { levelCenterPos.x, levelCenterPos.y - halfPyramidSize };
+
+		for (int row = 0; row < size; row++)
+		{
+			int colsToMake = size;
+			if (isTriangle)
+				colsToMake -= row;
+
+			const glm::vec2 rowStartPos = tilePos;
+
+			for (int col = 0; col < colsToMake; col++)
+			{
+				std::shared_ptr<GameObject> tile = TileFactory::MakeTile(
+					tileTextures,
+					tilePos.x,
+					tilePos.y,
+					m_TileSize,
+					row,
+					col);
+
+				tiles.push_back(tile);
+				scene.Add(tile);
+
+				// increment pos to down right
+				tilePos.x += horizontalStep;
+				tilePos.y += verticalStep;
+			}
+
+			// increment row and shift tiles to bottom left
+			tilePos.x = rowStartPos.x - horizontalStep;
+			tilePos.y = rowStartPos.y + verticalStep;
+		}
 	}
 
 	return tiles;

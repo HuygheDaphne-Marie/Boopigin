@@ -89,5 +89,8 @@
     <ClInclude Include="StateComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

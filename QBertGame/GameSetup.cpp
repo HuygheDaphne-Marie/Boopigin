@@ -13,11 +13,12 @@ using namespace boop;
 void GameSetup::LoadGame() const
 {
 	Scene& scene = SceneManager::GetInstance().CreateScene("Game");
-	const int levelSize = 3;
-	std::vector<std::shared_ptr<GameObject>> levelTiles = LevelFactory::MakeLevel(scene, {300, 200}, 1, levelSize);
+	const glm::vec2 screenCenter = { 300, 200 };
+	LevelInfo levelInfo{};
+	std::vector<std::shared_ptr<GameObject>> levelTiles = LevelFactory::MakeLevel(scene, screenCenter, 1, &levelInfo);
 
 	auto go = std::make_shared<GameObject>();
-	auto* levelComponent = new LevelComponent(levelTiles, levelSize);
+	auto* levelComponent = new LevelComponent(levelTiles, levelInfo.size);
 	go->AddComponent(levelComponent);
 	scene.Add(go);
 

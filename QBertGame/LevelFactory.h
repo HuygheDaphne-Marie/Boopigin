@@ -9,23 +9,29 @@
 #include <glm/glm.hpp>
 #pragma warning(pop)
 
-//static float m_TileSize = 64.f;
+struct LevelInfo
+{
+	int size;
+	bool isTwoState;
+};
 
 class LevelFactory final
 {
 public:
 	static std::vector<std::shared_ptr<boop::GameObject>> MakeLevel(
 		boop::Scene& scene, 
-		const glm::vec2& levelCenterPos,
+		const glm::vec2& levelCenterPos, 
 		int levelNumber, 
-		int size, 
-		bool isTriangle = true);
-
+		LevelInfo* levelInfo = nullptr);
+	
 	static float m_TileSize;
 
 private:
 	//static void LinkTiles(std::vector<std::shared_ptr<boop::GameObject>>& levelTiles);
 	//static void LinkTile(TileComponent* tile, const std::vector<std::shared_ptr<boop::GameObject>>& levelTiles);
 	static float GetPyramidHeight(int size);
+
+	static std::string m_TilesLocation;
+	static std::string m_LevelsFilePath;
 };
 

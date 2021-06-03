@@ -26,7 +26,6 @@ void MovementComponent::Update()
 	}
 }
 
-
 bool MovementComponent::MoveUp()
 {
 	return Move(Direction::up);
@@ -67,9 +66,9 @@ bool MovementComponent::Move(Direction movementDirection)
 	const glm::ivec2 currentTileCoordinate = { m_pCurrentTile->GetColumn(), m_pCurrentTile->GetRow() };
 	const glm::ivec2 newTileCoordinate = currentTileCoordinate + coordinateChange;
 
-	return MoveTo(newTileCoordinate);
+	return MoveTo(newTileCoordinate, movementDirection);
 }
-bool MovementComponent::MoveTo(const glm::ivec2& tileCoordinate)
+bool MovementComponent::MoveTo(const glm::ivec2& tileCoordinate, Direction direction)
 {
 	if (m_pLevel->IsCoordinateInBounds(tileCoordinate))
 	{
@@ -90,8 +89,39 @@ bool MovementComponent::MoveTo(const glm::ivec2& tileCoordinate)
 		//{
 		//	
 		//}
+		//else
+		{
+			glm::vec2 jumpOffset{};
+			const float halfTileSize = LevelFactory::m_TileSize / 2;
+			switch (direction)
+			{
+			case Direction::up:
+				jumpOffset.x = halfTileSize;
+				jumpOffset.y = -halfTileSize;
+				break;
+			case Direction::right:
+				jumpOffset.x = halfTileSize;
+				jumpOffset.y = halfTileSize;
+				break;
+			case Direction::down:
+				jumpOffset.x = -halfTileSize;
+				jumpOffset.y = halfTileSize;
+				break;
+			case Direction::left:
+				jumpOffset.x = -halfTileSize;
+				jumpOffset.y = -halfTileSize;
+				break;
+			}
+			
+			const glm::vec2 jumpOffPoint = GetTileStandPosition(m_pCurrentTile) + jumpOffset;
+			
+			if (m_pJumper->StartJump(jumpOffPoint))
+			{
+				// die
+				return true;
+			}
+		}
 		
-		// if not, jump into empty space & die
 	}
 	return false;
 }

@@ -31,10 +31,13 @@ row  +-----+-----+-----+-----+-----+
 	 +-----+
  */
 
-LevelComponent::LevelComponent(std::vector<std::shared_ptr<boop::GameObject>> levelTiles, int levelSize)
-	: m_LevelTiles(std::move(levelTiles))
-	, m_LevelSize(levelSize)
+LevelComponent::LevelComponent(const std::vector<std::shared_ptr<boop::GameObject>>& levelTiles, int levelSize)
+	: m_LevelSize(levelSize)
 {
+	for (auto& gameObject : levelTiles)
+	{
+		m_LevelTiles.push_back(gameObject->GetComponentOfType<TileComponent>());
+	}
 }
 
 bool LevelComponent::IsCoordinateInBounds(const glm::ivec2& coordinate) const
@@ -69,5 +72,10 @@ TileComponent* LevelComponent::GetTileWithCoordinate(const glm::ivec2& coordinat
 		index += m_LevelSize - row; // -row cause rows get shorter as you go along the triangle
 	}
 
-	return m_LevelTiles[index]->GetComponentOfType<TileComponent>();
+	return m_LevelTiles[index];
+}
+
+void LevelComponent::Update()
+{
+	
 }

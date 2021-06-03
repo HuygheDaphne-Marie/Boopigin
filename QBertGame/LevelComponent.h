@@ -8,16 +8,18 @@
 #include <glm/glm.hpp>
 #pragma warning(pop)
 
-class LevelComponent : public boop::Component
+class LevelComponent final : public boop::Component
 {
 public:
-	LevelComponent(std::vector<std::shared_ptr<boop::GameObject>> levelTiles, int levelSize);
+	LevelComponent(const std::vector<std::shared_ptr<boop::GameObject>>& levelTiles, int levelSize);
 
 	bool IsCoordinateInBounds(const glm::ivec2& coordinate) const;
 	TileComponent* GetTileWithCoordinate(const glm::ivec2& coordinate);
 
+	void Update() override;
+
 private:
-	std::vector<std::shared_ptr<boop::GameObject>> m_LevelTiles;
+	std::vector<TileComponent*> m_LevelTiles;
 	int m_LevelSize;
 };
 

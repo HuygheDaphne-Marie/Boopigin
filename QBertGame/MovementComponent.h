@@ -24,7 +24,7 @@ public:
 	bool MoveDown();
 	bool MoveLeft();
 	virtual bool Move(Direction movementDirection);
-	virtual bool MoveTo(const glm::ivec2& tileCoordinate);
+	virtual bool MoveTo(const glm::ivec2& tileCoordinate, Direction direction);
 
 private:
 	friend class PlayerMovementComponent;

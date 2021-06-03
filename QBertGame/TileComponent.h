@@ -17,26 +17,46 @@
 //	left = 3
 //};
 
+enum class FlipKind
+{
+	twoState,
+	threeState
+};
+enum class FlipState
+{
+	unFlipped = 0,
+	intermediate = 1,
+	flipped = 2
+};
+
 class TileComponent final : public boop::Component
 {
 public:
-	explicit TileComponent(const std::string& walkedTexturePath, int posX, int posY);
+	explicit TileComponent(std::vector<std::string> textures, int posX, int posY);
 	~TileComponent() override = default;
 	TileComponent(const TileComponent & other) = delete;
 	TileComponent(TileComponent && other) = delete;
 	TileComponent& operator=(const TileComponent & other) = delete;
 	TileComponent& operator=(TileComponent && other) = delete;
 
-	void OnWalked() const;
+	void OnWalked(bool isFlipping = true, bool isPlayer = true);
+	void UpdateTexture();
 
 	int GetRow() const;
 	int GetColumn() const;
 
 private:
-	std::string m_WalkedTexturePath;
+	std::vector<std::string> m_TileTextures;
 	const int m_TileCol;
 	const int m_TileRow;
+	FlipKind m_FlipKind;
+	FlipState m_FlipState;
 	
 	std::vector<TileComponent*> m_pAdjacentTiles = std::vector<TileComponent*>{};
+
+	bool HasNextFlipState() const;
+	bool HasPreviousFlipState() const;
+	void ToNextFlipState();
+	void ToPreviousFlipState();
 };
 

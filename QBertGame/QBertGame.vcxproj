@@ -188,6 +188,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="TileComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="JumpComponent.h" />
     <ClInclude Include="LevelComponent.h" />
     <ClInclude Include="LevelFactory.h" />
