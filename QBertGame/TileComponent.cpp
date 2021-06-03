@@ -1,6 +1,6 @@
 #include "TileComponent.h"
 #include <TextureComponent.h>
-
+#include <EventQueue.h>
 #include <utility>
 
 using namespace boop;
@@ -30,7 +30,8 @@ void TileComponent::OnWalked(bool isFlipping, bool isPlayer)
 			ToNextFlipState();
 			if (isPlayer)
 			{
-				// todo: send event to gain score			
+				auto* scoreEvent = new Event("ScoreGained", 25);
+				EventQueue::GetInstance().Broadcast(scoreEvent);
 			}
 		}
 	}
@@ -41,7 +42,8 @@ void TileComponent::OnWalked(bool isFlipping, bool isPlayer)
 			ToPreviousFlipState();
 			if (isPlayer)
 			{
-				// todo: send event to gain score			
+				auto* scoreEvent = new Event("ScoreGained", 25);
+				EventQueue::GetInstance().Broadcast(scoreEvent);
 			}
 		}
 	}

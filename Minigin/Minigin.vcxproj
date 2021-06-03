@@ -239,6 +239,7 @@
     <ClInclude Include="Font.h" />
     <ClInclude Include="FpsComponent.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="IEventListener.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="KeyboardManager.h" />
     <ClInclude Include="LifeDisplayComponent.h" />

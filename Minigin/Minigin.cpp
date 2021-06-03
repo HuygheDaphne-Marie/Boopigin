@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "EventQueue.h"
 #include <SDL.h>
 #include <future>
 
@@ -202,6 +203,7 @@ void boop::Minigin::Run()
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
+		auto& eventQueue = EventQueue::GetInstance();
 
 		bool shouldContinue = true;
 		
@@ -240,6 +242,7 @@ void boop::Minigin::Run()
 			sceneManager.LateUpdate();
 			
 			renderer.Render();
+			eventQueue.HandleQueue();
 			pTime->Update();
 		}
 	}
