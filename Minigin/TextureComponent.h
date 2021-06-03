@@ -20,6 +20,8 @@ namespace boop
 
 		void SetTexture(const std::string& texturePath);
 		void SetDimensions(float width, float height);
+		[[nodiscard]] int GetHeight() const;
+		[[nodiscard]] int GetWidth() const;
 	
 	private:
 		std::shared_ptr<Texture2D> m_pTexture{};

@@ -1,4 +1,6 @@
 #include "MovementComponent.h"
+#include "LevelFactory.h"
+#include <TextureComponent.h>
 
 #pragma warning(push)
 #pragma warning (disable:4201)
@@ -9,10 +11,21 @@ MovementComponent::MovementComponent(TileComponent* startTile, LevelComponent* l
 	: m_pCurrentTile(startTile)
 	, m_pLevel(level)
 	, m_pJumper(jumper)
+	, m_HasStarted(false)
 {
-	const glm::vec2 pos = GetTileStandPosition(m_pCurrentTile);
-	m_pJumper->SetStartPos(pos);
 }
+
+void MovementComponent::Update()
+{
+	if (!m_HasStarted)
+	{
+		// Dirty fix, but will have to do for now
+		const glm::vec2 pos = GetTileStandPosition(m_pCurrentTile);
+		m_pJumper->SetStartPos(pos);
+		m_HasStarted = true;
+	}
+}
+
 
 bool MovementComponent::MoveUp()
 {
@@ -56,7 +69,6 @@ bool MovementComponent::Move(Direction movementDirection)
 
 	return MoveTo(newTileCoordinate);
 }
-
 bool MovementComponent::MoveTo(const glm::ivec2& tileCoordinate)
 {
 	if (m_pLevel->IsCoordinateInBounds(tileCoordinate))
@@ -84,8 +96,15 @@ bool MovementComponent::MoveTo(const glm::ivec2& tileCoordinate)
 	return false;
 }
 
-glm::vec2 MovementComponent::GetTileStandPosition(TileComponent* tile)
+glm::vec2 MovementComponent::GetTileStandPosition(TileComponent* tile) const
 {
+	auto* texture = m_pOwner->GetComponentOfType<boop::TextureComponent>();
+	const auto qbertHeight = static_cast<float>(texture->GetHeight());
+	const auto qbertWidth = static_cast<float>(texture->GetWidth());
+	
+	const float verticalAdjustment = LevelFactory::m_TileSize / 4 - qbertHeight;
+	const float horizontalAdjustment = LevelFactory::m_TileSize / 2 - qbertWidth / 2;
 	const glm::vec3 position = tile->GetOwner()->GetComponentOfType<boop::TransformComponent>()->GetPosition();
-	return { position.x, position.y }; // Todo: will need to move this a bit to get the center of the tile 
+	
+	return { position.x + horizontalAdjustment, position.y + verticalAdjustment };
 }

@@ -22,14 +22,14 @@ void GameSetup::LoadGame() const
 	scene.Add(go);
 
 	go = std::make_shared<GameObject>();
-	auto* state = new StateComponent();
-	go->AddComponent(state);
-	
+	go->AddComponent(new TextureComponent("textures/qbert.png", 32.f, 32.f));
 	auto* transform = new TransformComponent();
 	go->AddComponent(transform);
-	auto* playerJumper = new JumpComponent(transform, state, 2.0f);
-	go->AddComponent(playerJumper);
 	
+	auto* state = new StateComponent();
+	go->AddComponent(state);
+	auto* playerJumper = new JumpComponent(transform, state, 0.7f);
+	go->AddComponent(playerJumper);
 	std::vector<KeyInfo> keys = {
 		KeyInfo(SDLK_KP_9),
 		KeyInfo(SDLK_KP_3),
@@ -43,6 +43,5 @@ void GameSetup::LoadGame() const
 	//	KeyInfo(ControllerButton::ButtonY)
 	//};
 	go->AddComponent(new PlayerMovementComponent(levelTiles[0]->GetComponentOfType<TileComponent>(), levelComponent, playerJumper, keys));
-	go->AddComponent(new TextureComponent("textures/qbert.png"));
 	scene.Add(go);
 }

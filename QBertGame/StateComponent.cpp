@@ -6,13 +6,13 @@ StateComponent::StateComponent()
 	: m_CurrentState(State::standing),
 	m_pMyJumpComponent(nullptr)
 {
-	if (m_pOwner != nullptr)
-		SetJumpComponent(m_pOwner->GetComponentOfType<JumpComponent>());
+	//if (m_pOwner != nullptr)
+	//	SetJumpComponent(m_pOwner->GetComponentOfType<JumpComponent>());
 
-	if (m_pMyJumpComponent == nullptr)
-	{
-		std::cerr << "StateComponent could not find a JumpComponent, it will need to be set!\n";
-	}
+	//if (m_pMyJumpComponent == nullptr)
+	//{
+	//	std::cerr << "StateComponent could not find a JumpComponent, it will need to be set!\n";
+	//}
 }
 
 void StateComponent::Update()

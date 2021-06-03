@@ -6,6 +6,8 @@
 
 using namespace boop;
 
+float LevelFactory::m_TileSize = 64.f;
+
 std::vector<std::shared_ptr<GameObject>> LevelFactory::MakeLevel(Scene& scene, const glm::vec2& levelCenterPos, int levelNumber, int size, bool isTriangle)
 {
 	const std::string walkedTexturePath = "walked_level" + std::to_string(levelNumber) + ".png";

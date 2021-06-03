@@ -17,6 +17,8 @@ class MovementComponent : public boop::Component
 public:
 	MovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper);
 
+	void Update() override;
+	
 	bool MoveUp();
 	bool MoveRight();
 	bool MoveDown();
@@ -29,7 +31,8 @@ private:
 	TileComponent* m_pCurrentTile;
 	LevelComponent* m_pLevel;
 	JumpComponent* m_pJumper;
+	bool m_HasStarted;
 
-	static glm::vec2 GetTileStandPosition(TileComponent* tile);
+	glm::vec2 GetTileStandPosition(TileComponent* tile) const;
 };
 

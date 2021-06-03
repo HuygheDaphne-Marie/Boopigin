@@ -55,7 +55,7 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="StateComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -87,7 +87,7 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="StateComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

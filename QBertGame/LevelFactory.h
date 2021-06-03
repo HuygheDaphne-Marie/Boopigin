@@ -9,7 +9,7 @@
 #include <glm/glm.hpp>
 #pragma warning(pop)
 
-static float m_TileSize = 64.f;
+//static float m_TileSize = 64.f;
 
 class LevelFactory final
 {
@@ -20,6 +20,8 @@ public:
 		int levelNumber, 
 		int size, 
 		bool isTriangle = true);
+
+	static float m_TileSize;
 
 private:
 	//static void LinkTiles(std::vector<std::shared_ptr<boop::GameObject>>& levelTiles);
