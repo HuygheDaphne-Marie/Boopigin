@@ -22,6 +22,15 @@
     <Filter Include="Commands">
       <UniqueIdentifier>{22f018a1-3572-4e4f-914f-416205c12a0a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Level">
+      <UniqueIdentifier>{c444c7c0-c0c3-416b-9dda-bec78c2b5bbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Movement">
+      <UniqueIdentifier>{5456c3b3-393f-4eaf-ba36-1d7a7ed6b0dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Data">
+      <UniqueIdentifier>{bf3cf0cc-8825-461a-83d4-d8da749ad167}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QBertGame.cpp">
@@ -36,26 +45,35 @@
     <ClCompile Include="LevelFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
-    <ClCompile Include="TileComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="MovementComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerMovementComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="MoveCommand.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="JumpComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="StateComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelComponent.cpp">
+      <Filter>Components\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpComponent.cpp">
+      <Filter>Components\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementComponent.cpp">
+      <Filter>Components\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDataComponent.cpp">
+      <Filter>Components\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeTrackerComponent.cpp">
+      <Filter>Components\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMovementComponent.cpp">
+      <Filter>Components\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="TileComponent.cpp">
+      <Filter>Components\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="QBertFactory.cpp">
+      <Filter>Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,29 +86,38 @@
     <ClInclude Include="LevelFactory.h">
       <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="TileComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="MovementComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerMovementComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="MoveCommand.h">
       <Filter>Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="StateComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="json.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelComponent.h">
+      <Filter>Components\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpComponent.h">
+      <Filter>Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDataComponent.h">
+      <Filter>Components\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeTrackerComponent.h">
+      <Filter>Components\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMovementComponent.h">
+      <Filter>Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="TileComponent.h">
+      <Filter>Components\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="QBertFactory.h">
+      <Filter>Factory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

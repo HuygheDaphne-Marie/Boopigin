@@ -1,12 +1,12 @@
 #include "GameSetup.h"
 #include <SceneManager.h>
 #include "LevelFactory.h"
+#include "QBertFactory.h"
 
 #include <TextureComponent.h>
+#include <ResourceManager.h>
 #include "LevelComponent.h"
 #include "PlayerMovementComponent.h"
-#include "JumpComponent.h"
-#include "StateComponent.h"
 
 using namespace boop;
 
@@ -21,22 +21,12 @@ void GameSetup::LoadGame() const
 	const std::string sceneName = "Game";
 	Scene& scene = SceneManager::GetInstance().CreateScene(sceneName);
 	const glm::vec2 screenCenter = { m_WindowWidth / 2, m_WindowHeight / 2 };
-	
 
 	auto go = std::make_shared<GameObject>();
 	auto* levelComponent = new LevelComponent(sceneName, screenCenter);
 	go->AddComponent(levelComponent);
 	scene.Add(go);
 
-	go = std::make_shared<GameObject>();
-	go->AddComponent(new TextureComponent("textures/qbert.png", 32.f, 32.f));
-	auto* transform = new TransformComponent();
-	go->AddComponent(transform);
-	
-	auto* state = new StateComponent();
-	go->AddComponent(state);
-	auto* playerJumper = new JumpComponent(transform, state, 0.7f);
-	go->AddComponent(playerJumper);
 	std::vector<KeyInfo> keys = {
 		KeyInfo(SDLK_KP_9),
 		KeyInfo(SDLK_KP_3),
@@ -49,6 +39,6 @@ void GameSetup::LoadGame() const
 	//	KeyInfo(ControllerButton::ButtonX),
 	//	KeyInfo(ControllerButton::ButtonY)
 	//};
-	go->AddComponent(new PlayerMovementComponent(levelComponent->GetTileWithCoordinate({0,0}), levelComponent, playerJumper, keys));
-	scene.Add(go, 1);
+	auto player = QBertFactory::MakePlayer(scene, levelComponent, keys, { 0,0 });
+	auto tracker = QBertFactory::MakePlayerTracker(scene, player);
 }

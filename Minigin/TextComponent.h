@@ -4,6 +4,7 @@
 #include "Component.h"
 #include "Font.h"
 #include "Texture2D.h"
+#include <memory>
 
 namespace boop
 {	

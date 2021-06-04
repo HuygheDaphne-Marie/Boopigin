@@ -67,6 +67,14 @@ bool PlayerMovementComponent::OnEvent(const Event& event)
 		
 		return true;
 	}
+	if (event.message == "JumpCompleted")
+	{
+		if (!m_pLevel->IsCoordinateInBounds(m_CurrentPos))
+		{
+			EventQueue::GetInstance().Broadcast(new Event("PlayerTakeDamage", m_pOwner));
+			return true;
+		}
+	}
 	
 	// Pass event on to base
 	return MovementComponent::OnEvent(event);
