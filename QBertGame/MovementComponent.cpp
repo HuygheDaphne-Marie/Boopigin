@@ -23,8 +23,7 @@ void MovementComponent::Update()
 	if (!m_HasStarted)
 	{
 		// Dirty fix, but will have to do for now
-		const glm::vec2 pos = GetTileStandPosition(m_pLevel->GetTileWithCoordinate(m_CurrentPos));
-		m_pJumper->SetStartPos(pos);
+		SetPosition(m_CurrentPos);
 		m_HasStarted = true;
 	}
 }
@@ -155,6 +154,12 @@ bool MovementComponent::OnEvent(const Event& event)
 bool MovementComponent::ChangesTileStateOnWalk() const
 {
 	return m_DoUnFlip || m_DoFlip;
+}
+
+void MovementComponent::SetPosition(const glm::ivec2& coordinate)
+{
+	const glm::vec2 pos = GetTileStandPosition(m_pLevel->GetTileWithCoordinate(coordinate));
+	m_pJumper->SetStartPos(pos);
 }
 
 glm::vec2 MovementComponent::GetTileStandPosition(TileComponent* tile) const

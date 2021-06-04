@@ -37,7 +37,12 @@ public:
 	bool OnEvent(const Event& event) override;
 
 	bool ChangesTileStateOnWalk() const;
-	
+
+	void SetPosition(const glm::ivec2& coordinate);
+
+	bool m_DoUnFlip;
+	bool m_DoFlip;
+	bool m_DoGainScore;
 
 private:
 	friend class PlayerMovementComponent;
@@ -46,10 +51,6 @@ private:
 	JumpComponent* m_pJumper;
 	bool m_HasStarted;
 	
-	bool m_DoUnFlip;
-	bool m_DoFlip;
-	bool m_DoGainScore;
-
 	glm::vec2 GetTileStandPosition(TileComponent* tile) const;
 	static glm::vec2 GetTileStandPosition(TileComponent* tile, boop::TextureComponent* pQbertTexture);
 };

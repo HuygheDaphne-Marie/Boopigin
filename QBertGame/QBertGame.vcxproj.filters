@@ -75,6 +75,12 @@
     <ClCompile Include="QBertFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TumbleMovementComponent.cpp">
+      <Filter>Components\Movement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSetup.h">
@@ -118,6 +124,12 @@
     </ClInclude>
     <ClInclude Include="QBertFactory.h">
       <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TumbleMovementComponent.h">
+      <Filter>Components\Movement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

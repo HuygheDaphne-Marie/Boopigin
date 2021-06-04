@@ -1,7 +1,7 @@
 [
 	{
 		"LevelNumber": 1,
-		"LevelSize": 2,
+		"LevelSize": 7,
 		"IsTriangle": true,
 		"IsCyclical": false,
 		"TileTextures":
@@ -12,7 +12,7 @@
 	},
 	{
 		"LevelNumber": 2,
-		"LevelSize": 3,
+		"LevelSize": 7,
 		"IsTriangle": true,
 		"IsCyclical": false,
 		"TileTextures":
@@ -24,7 +24,7 @@
 	},
 	{
 		"LevelNumber": 3,
-		"LevelSize": 4,
+		"LevelSize": 7,
 		"IsTriangle": true,
 		"IsCyclical": true,
 		"TileTextures":

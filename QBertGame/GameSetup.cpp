@@ -2,6 +2,7 @@
 #include <SceneManager.h>
 #include "LevelFactory.h"
 #include "QBertFactory.h"
+#include "EnemyFactory.h"
 
 #include <TextureComponent.h>
 #include <ResourceManager.h>
@@ -41,6 +42,9 @@ void GameSetup::LoadGame() const
 	//};
 	auto player = QBertFactory::MakePlayer(scene, levelComponent, keys, { 0,0 });
 	auto tracker = QBertFactory::MakePlayerTracker(scene, player);
+
+	auto slick = EnemyFactory::MakeSlick(scene, levelComponent, { 1,0 });
+	//auto sam = EnemyFactory::MakeSam(scene, levelComponent, { 0,1 });
 
 	levelComponent->AddPlayer(player);
 }
