@@ -21,30 +21,27 @@ TileComponent::TileComponent(std::vector<std::string> textures, int posX, int po
 	}
 }
 
-void TileComponent::OnWalked(bool isFlipping, bool isPlayer)
+void TileComponent::OnFlip(bool gainScore)
 {
-	if (isFlipping)
+	if (HasNextFlipState())
 	{
-		if (HasNextFlipState())
+		ToNextFlipState();
+		if (gainScore)
 		{
-			ToNextFlipState();
-			if (isPlayer)
-			{
-				auto* scoreEvent = new Event("ScoreGained", 25);
-				EventQueue::GetInstance().Broadcast(scoreEvent);
-			}
+			auto* scoreEvent = new Event("ScoreGained", 25);
+			EventQueue::GetInstance().Broadcast(scoreEvent);
 		}
 	}
-	else
+}
+void TileComponent::OnUnFlip(bool gainScore)
+{
+	if (HasPreviousFlipState())
 	{
-		if (HasPreviousFlipState())
+		ToPreviousFlipState();
+		if (gainScore)
 		{
-			ToPreviousFlipState();
-			if (isPlayer)
-			{
-				auto* scoreEvent = new Event("ScoreGained", 25);
-				EventQueue::GetInstance().Broadcast(scoreEvent);
-			}
+			auto* scoreEvent = new Event("ScoreGained", 25);
+			EventQueue::GetInstance().Broadcast(scoreEvent);
 		}
 	}
 }
@@ -66,6 +63,11 @@ int TileComponent::GetRow() const
 int TileComponent::GetColumn() const
 {
 	return m_TileCol;
+}
+
+FlipState TileComponent::GetFlipState() const
+{
+	return m_FlipState;
 }
 
 bool TileComponent::HasNextFlipState() const

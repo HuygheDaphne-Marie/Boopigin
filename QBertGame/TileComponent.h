@@ -39,11 +39,15 @@ public:
 	TileComponent& operator=(const TileComponent & other) = delete;
 	TileComponent& operator=(TileComponent && other) = delete;
 
-	void OnWalked(bool isFlipping = true, bool isPlayer = true);
+	//void OnWalked(bool isFlipping = true, bool isPlayer = true);
+	void OnFlip(bool gainScore);
+	void OnUnFlip(bool gainScore);
 	void UpdateTexture();
 
 	int GetRow() const;
 	int GetColumn() const;
+
+	FlipState GetFlipState() const;
 
 private:
 	std::vector<std::string> m_TileTextures;

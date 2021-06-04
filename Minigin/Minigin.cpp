@@ -50,8 +50,8 @@ void boop::Minigin::Initialize()
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		640,
-		480,
+		m_WindowWidth,
+		m_WindowHeight,
 		SDL_WINDOW_OPENGL
 	);
 	if (m_Window == nullptr) 
@@ -66,9 +66,8 @@ void boop::Minigin::Initialize()
 	
 	// Own Init
 	Timer::GetInstance().m_DesiredFramePerSecond = m_FixedUpdateFps;
-	m_pTestCommand = new TestCommand();
 	
-	InputManager::GetInstance().AddCommandToButton(KeyInfo(SDLK_a), m_pTestCommand, KeyState::Pressed);
+	InputManager::GetInstance();
 	auto* pAudioService = new SimpleSld2AudioService();
 	ServiceLocator::GetInstance().RegisterAudioService(pAudioService);
 }
@@ -186,8 +185,6 @@ void boop::Minigin::LoadGame() const
 
 void boop::Minigin::Cleanup()
 {
-	delete m_pTestCommand;
-	
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
@@ -227,14 +224,13 @@ void boop::Minigin::Run()
  
 			timeSinceLastFrame += pTime->GetElapsedSec();
 			
-			while (timeSinceLastFrame >= pTime->GetMilliPerFrame())
+			if (timeSinceLastFrame >= pTime->GetMilliPerFrame())
 			{
 				// Fixed Update, for physics & networking
 				sceneManager.FixedUpdate();
 				timeSinceLastFrame -= pTime->GetMilliPerFrame();
 			}
 
-			
 			// Update, this should be used by default
 			sceneManager.Update();
 
@@ -243,6 +239,8 @@ void boop::Minigin::Run()
 			
 			renderer.Render();
 			eventQueue.HandleQueue();
+			sceneManager.GetActiveScene()->DeleteRemovedObjects();
+			sceneManager.GetActiveScene()->AddObjects();
 			pTime->Update();
 		}
 	}

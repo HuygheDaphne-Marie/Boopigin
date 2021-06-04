@@ -13,6 +13,9 @@ boop::GameObject::~GameObject()
 
 void boop::GameObject::FixedUpdate()
 {
+	if (m_IsMarkedForDeletion)
+		return;
+	
 	for (Component* pElement : m_Components)
 	{
 		pElement->FixedUpdate();
@@ -21,6 +24,9 @@ void boop::GameObject::FixedUpdate()
 
 void boop::GameObject::Update()
 {
+	if (m_IsMarkedForDeletion)
+		return;
+
 	for (Component* pElement : m_Components)
 	{
 		pElement->Update();
@@ -29,6 +35,9 @@ void boop::GameObject::Update()
 
 void boop::GameObject::LateUpdate()
 {
+	if (m_IsMarkedForDeletion)
+		return;
+
 	for (Component* pElement : m_Components)
 	{
 		pElement->LateUpdate();
@@ -37,14 +46,30 @@ void boop::GameObject::LateUpdate()
 
 void boop::GameObject::Render() const
 {
+	if (m_IsMarkedForDeletion)
+		return;
+
 	for (const Component* pElement : m_Components)
 	{
 		pElement->Render();
 	}
 }
 
+void boop::GameObject::MarkForDelete()
+{
+	m_IsMarkedForDeletion = true;
+}
+
+bool boop::GameObject::IsMarkedForDelete() const
+{
+	return m_IsMarkedForDeletion;
+}
+
 void boop::GameObject::AddComponent(Component* pComponentToAdd)
 {
+	if (m_IsMarkedForDeletion)
+		return;
+
 	const auto findItrResult = std::find_if(m_Components.begin(), m_Components.end(), 
 		[pComponentToAdd](Component* pComponent) { return pComponent == pComponentToAdd; } );
 	

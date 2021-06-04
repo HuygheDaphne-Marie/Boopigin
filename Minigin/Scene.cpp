@@ -10,9 +10,31 @@ Scene::Scene(const std::string& name) : m_Name(name) {}
 
 Scene::~Scene() = default;
 
-void Scene::Add(const std::shared_ptr<GameObject>& object)
+void Scene::Add(const std::shared_ptr<GameObject>& object, const unsigned int depth)
 {
-	m_Objects.push_back(object);
+	const auto& findResult = m_ObjectsToAdd.find(depth);
+	if (findResult == m_ObjectsToAdd.end())
+	{
+		m_ObjectsToAdd[depth] = std::vector<std::shared_ptr<GameObject>>{};
+	}
+	m_ObjectsToAdd[depth].push_back(object);
+}
+
+void Scene::Remove(const GameObject* object)
+{
+	for (auto& gameObject : m_Objects)
+	{
+		if (gameObject.get() == object)
+		{
+			Remove(gameObject);
+			return;
+		}
+	}
+}
+
+void Scene::Remove(std::shared_ptr<GameObject>& object)
+{
+	object->MarkForDelete();
 }
 
 void Scene::FixedUpdate()
@@ -22,7 +44,6 @@ void Scene::FixedUpdate()
 		object->FixedUpdate();
 	}
 }
-
 void Scene::Update()
 {
 	for(auto& object : m_Objects)
@@ -30,7 +51,6 @@ void Scene::Update()
 		object->Update();
 	}
 }
-
 void Scene::LateUpdate()
 {
 	for (auto& object : m_Objects)
@@ -38,12 +58,67 @@ void Scene::LateUpdate()
 		object->LateUpdate();
 	}
 }
-
 void Scene::Render() const
 {
-	for (const auto& object : m_Objects)
+	//for (const auto& object : m_Objects)
+	//{
+	//	object->Render();
+	//}
+	for (auto& pair : m_ObjectsByDepth)
 	{
-		object->Render();
+		for (auto& gameObject : pair.second)
+		{
+			gameObject->Render();
+		}
 	}
+}
+
+void Scene::DeleteRemovedObjects()
+{
+	//for (int index = 0; index < m_Objects.size(); index++)
+	//{
+	//	if (m_Objects[index]->IsMarkedForDelete())
+	//	{
+	//		m_Objects[index] = m_Objects[m_Objects.size() - 1];
+	//		m_Objects.pop_back();
+	//		index--;
+	//	}
+	//}
+	DeleteRemovedObjectsFromVector(m_Objects);
+	for (auto& pair : m_ObjectsByDepth)
+	{
+		DeleteRemovedObjectsFromVector(pair.second);
+	}
+}
+
+void Scene::DeleteRemovedObjectsFromVector(std::vector<std::shared_ptr<GameObject>>& vectorToRemoveFrom)
+{
+	for (int index = 0; index < vectorToRemoveFrom.size(); index++)
+	{
+		if (vectorToRemoveFrom[index]->IsMarkedForDelete())
+		{
+			vectorToRemoveFrom[index] = vectorToRemoveFrom[vectorToRemoveFrom.size() - 1];
+			vectorToRemoveFrom.pop_back();
+			index--;
+		}
+	}
+}
+
+void Scene::AddObjects()
+{
+	for (auto& pair : m_ObjectsToAdd)
+	{
+		for (auto& gameObject : pair.second)
+		{
+			m_Objects.push_back(gameObject);
+			m_ObjectsByDepth[pair.first].push_back(gameObject);
+		}
+	}
+	m_ObjectsToAdd.clear();
+}
+
+std::string Scene::GetName() const
+{
+	return m_Name;
 }
 

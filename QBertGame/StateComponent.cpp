@@ -56,3 +56,8 @@ bool StateComponent::GoJump()
 	}
 	return false;
 }
+
+void StateComponent::ResetState()
+{
+	m_CurrentState = State::standing;
+}

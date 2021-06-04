@@ -2,6 +2,7 @@
 #include <Component.h>
 #include <TransformComponent.h>
 class StateComponent;
+#include "TileComponent.h"
 
 class JumpComponent : public boop::Component
 {

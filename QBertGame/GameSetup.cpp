@@ -10,15 +10,21 @@
 
 using namespace boop;
 
+GameSetup::GameSetup(int windowWidth, int windowHeight)
+	: m_WindowWidth(windowWidth)
+	, m_WindowHeight(windowHeight)
+{	
+}
+
 void GameSetup::LoadGame() const
 {
-	Scene& scene = SceneManager::GetInstance().CreateScene("Game");
-	const glm::vec2 screenCenter = { 300, 200 };
-	LevelInfo levelInfo{};
-	std::vector<std::shared_ptr<GameObject>> levelTiles = LevelFactory::MakeLevel(scene, screenCenter, 1, &levelInfo);
+	const std::string sceneName = "Game";
+	Scene& scene = SceneManager::GetInstance().CreateScene(sceneName);
+	const glm::vec2 screenCenter = { m_WindowWidth / 2, m_WindowHeight / 2 };
+	
 
 	auto go = std::make_shared<GameObject>();
-	auto* levelComponent = new LevelComponent(levelTiles, levelInfo.size);
+	auto* levelComponent = new LevelComponent(sceneName, screenCenter);
 	go->AddComponent(levelComponent);
 	scene.Add(go);
 
@@ -43,6 +49,6 @@ void GameSetup::LoadGame() const
 	//	KeyInfo(ControllerButton::ButtonX),
 	//	KeyInfo(ControllerButton::ButtonY)
 	//};
-	go->AddComponent(new PlayerMovementComponent(levelTiles[0]->GetComponentOfType<TileComponent>(), levelComponent, playerJumper, keys));
-	scene.Add(go);
+	go->AddComponent(new PlayerMovementComponent(levelComponent->GetTileWithCoordinate({0,0}), levelComponent, playerJumper, keys));
+	scene.Add(go, 1);
 }

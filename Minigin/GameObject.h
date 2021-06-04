@@ -12,6 +12,8 @@ namespace boop
 		void LateUpdate();
 		
 		void Render() const;
+		void MarkForDelete();
+		[[nodiscard]] bool IsMarkedForDelete() const;
 
 		GameObject() = default;
 		~GameObject();
@@ -38,5 +40,6 @@ namespace boop
 
 	private:
 		std::vector<Component*> m_Components{};
+		bool m_IsMarkedForDeletion = false;
 	};
 }

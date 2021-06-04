@@ -48,7 +48,7 @@ std::vector<std::shared_ptr<GameObject>> LevelFactory::MakeLevel(Scene& scene, c
 		const float verticalStep = m_TileSize * 0.75f;
 		const float halfPyramidSize = GetPyramidHeight(size) / 2;
 
-		glm::vec2 tilePos = { levelCenterPos.x, levelCenterPos.y - halfPyramidSize };
+		glm::vec2 tilePos = { levelCenterPos.x - m_TileSize/2, levelCenterPos.y - halfPyramidSize };
 
 		for (int row = 0; row < size; row++)
 		{

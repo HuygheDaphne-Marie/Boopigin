@@ -1,6 +1,6 @@
 #include "LevelComponent.h"
-
-#include <utility>
+#include "LevelFactory.h"
+#include <EventQueue.h>
 
 /*
 
@@ -31,13 +31,13 @@ row  +-----+-----+-----+-----+-----+
 	 +-----+
  */
 
-LevelComponent::LevelComponent(const std::vector<std::shared_ptr<boop::GameObject>>& levelTiles, int levelSize)
-	: m_LevelSize(levelSize)
+LevelComponent::LevelComponent(const std::string& sceneName, const glm::vec2& levelCenterPos)
+	: m_Scene(boop::SceneManager::GetInstance().GetScene(sceneName))
+	, m_WindowCenter(levelCenterPos)
+	, m_LevelSize(0)
+	, m_LevelNumber(1)
 {
-	for (auto& gameObject : levelTiles)
-	{
-		m_LevelTiles.push_back(gameObject->GetComponentOfType<TileComponent>());
-	}
+	LoadLevel(m_LevelNumber);
 }
 
 bool LevelComponent::IsCoordinateInBounds(const glm::ivec2& coordinate) const
@@ -58,7 +58,6 @@ bool LevelComponent::IsCoordinateInBounds(const glm::ivec2& coordinate) const
 
 	return true;
 }
-
 TileComponent* LevelComponent::GetTileWithCoordinate(const glm::ivec2& coordinate)
 {
 	if (!IsCoordinateInBounds(coordinate))
@@ -77,5 +76,58 @@ TileComponent* LevelComponent::GetTileWithCoordinate(const glm::ivec2& coordinat
 
 void LevelComponent::Update()
 {
+	if (AreAllTilesFlipped())
+	{
+		// if all tiles are flipped
+		// load next level
+		LoadNextLevel();
+	}
 	
+}
+
+bool LevelComponent::AreAllTilesFlipped() const
+{
+	if (m_LevelTiles.empty())
+		return false;
+	
+	bool allTilesFlipped = true;
+	for (auto* levelTile : m_LevelTiles)
+	{
+		if (levelTile->GetFlipState() != FlipState::flipped)
+		{
+			allTilesFlipped = false;
+			break;
+		}
+	}
+	return allTilesFlipped;
+}
+
+void LevelComponent::LoadLevel(int levelNumber)
+{
+	LevelInfo levelInfo{};
+	std::vector<std::shared_ptr<boop::GameObject>> levelTiles = LevelFactory::MakeLevel(*m_Scene, m_WindowCenter, levelNumber, &levelInfo);
+	m_LevelSize = levelInfo.size;
+	
+	for (auto& gameObject : levelTiles)
+	{
+		m_LevelTiles.push_back(gameObject->GetComponentOfType<TileComponent>());
+	}
+}
+
+void LevelComponent::ClearLevel()
+{
+	for (auto& levelTile : m_LevelTiles)
+	{
+		m_Scene->Remove(levelTile->GetOwner());
+	}
+	m_LevelTiles.clear();
+}
+
+void LevelComponent::LoadNextLevel()
+{
+	ClearLevel();
+	// Todo: Reset what needs to be reset (like player and stuff)
+	m_LevelNumber++;
+	LoadLevel(m_LevelNumber);
+	EventQueue::GetInstance().Broadcast(new Event("NewLevelLoaded"));
 }

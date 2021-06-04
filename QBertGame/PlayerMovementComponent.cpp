@@ -3,9 +3,11 @@
 #include <InputManager.h>
 #include <Timer.h>
 
+#include "StateComponent.h"
+
 PlayerMovementComponent::PlayerMovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper,
-	std::vector<boop::KeyInfo>& keys)
-	: MovementComponent(startTile, level, jumper)
+                                                 std::vector<boop::KeyInfo>& keys)
+	: MovementComponent({ startTile->GetColumn(), startTile->GetRow() }, level, jumper)
 {
 	const int upIndex = static_cast<std::underlying_type<Direction>::type>(Direction::up);
 	const int rightIndex = static_cast<std::underlying_type<Direction>::type>(Direction::right);
@@ -22,6 +24,12 @@ PlayerMovementComponent::PlayerMovementComponent(TileComponent* startTile, Level
 	boop::InputManager::GetInstance().AddCommandToButton(keys[rightIndex], m_MoveCommands[rightIndex], boop::KeyState::Pressed);
 	boop::InputManager::GetInstance().AddCommandToButton(keys[downIndex], m_MoveCommands[downIndex], boop::KeyState::Pressed);
 	boop::InputManager::GetInstance().AddCommandToButton(keys[leftIndex], m_MoveCommands[leftIndex], boop::KeyState::Pressed);
+
+	m_DoFlip = true;
+	m_DoGainScore = true;
+	
+	EventQueue::GetInstance().Subscribe("NewLevelLoaded", this);
+	EventQueue::GetInstance().Subscribe("JumpCompleted", this);
 }
 
 PlayerMovementComponent::~PlayerMovementComponent()
@@ -42,4 +50,24 @@ bool PlayerMovementComponent::Move(Direction movementDirection)
 	//std::cout << "x: " << std::to_string(m_pCurrentTile->GetColumn()) << ", y: " << std::to_string(m_pCurrentTile->GetRow()) << std::endl;
 	//std::cout << "========\n";
 	return didMove;
+}
+
+bool PlayerMovementComponent::OnEvent(const Event& event)
+{
+	if (event.message == "NewLevelLoaded")
+	{
+		auto* myState = m_pOwner->GetComponentOfType<StateComponent>();
+		myState->ResetState();
+		auto* myTexture = m_pOwner->GetComponentOfType<boop::TextureComponent>();
+
+		const glm::ivec2 newTileCoordinate = { 0,0 };
+		const glm::vec2 newPos = GetTileStandPosition(m_pLevel->GetTileWithCoordinate(newTileCoordinate), myTexture);
+		m_pJumper->SetStartPos(newPos);
+		m_CurrentPos = newTileCoordinate;
+		
+		return true;
+	}
+	
+	// Pass event on to base
+	return MovementComponent::OnEvent(event);
 }

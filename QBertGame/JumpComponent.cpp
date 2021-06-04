@@ -1,6 +1,7 @@
 #include "JumpComponent.h"
 #include <Timer.h>
 #include "StateComponent.h"
+#include <EventQueue.h>
 
 JumpComponent::JumpComponent(boop::TransformComponent* myTransform, StateComponent* myState, float desiredLeapTime)
 	: m_pTransform(myTransform)
@@ -28,6 +29,7 @@ bool JumpComponent::StartJump(const glm::vec2& end)
 {
 	if (m_pState->CanJump())
 	{
+		m_LeapTimer = 0.f;
 		SetEndPos(end);
 		return m_pState->GoJump();
 	}
@@ -65,6 +67,7 @@ void JumpComponent::Update()
 		{
 			SetStartPos(m_EndPos);
 			m_LeapTimer = 0.f;
+			EventQueue::GetInstance().Broadcast(new Event("JumpCompleted", this));
 		}
 	}
 }

@@ -21,6 +21,7 @@ public:
 
 	bool CanJump() const;
 	bool GoJump();
+	void ResetState();
 
 private:
 	State m_CurrentState;

@@ -3,6 +3,8 @@
 #include "TileComponent.h"
 #include "LevelComponent.h"
 #include "JumpComponent.h"
+#include <TextureComponent.h>
+#include <EventQueue.h>
 
 enum class Direction
 {
@@ -12,10 +14,16 @@ enum class Direction
 	left = 3
 };
 
-class MovementComponent : public boop::Component
+//struct WalkData
+//{
+//	glm::ivec2 tileCoordinate;
+//	bool isPlayer;
+//};
+
+class MovementComponent : public boop::Component, public IEventListener
 {
 public:
-	MovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper);
+	MovementComponent(const glm::ivec2& startPos, LevelComponent* level, JumpComponent* jumper);
 
 	void Update() override;
 	
@@ -26,13 +34,23 @@ public:
 	virtual bool Move(Direction movementDirection);
 	virtual bool MoveTo(const glm::ivec2& tileCoordinate, Direction direction);
 
+	bool OnEvent(const Event& event) override;
+
+	bool ChangesTileStateOnWalk() const;
+	
+
 private:
 	friend class PlayerMovementComponent;
-	TileComponent* m_pCurrentTile;
+	glm::ivec2 m_CurrentPos;
 	LevelComponent* m_pLevel;
 	JumpComponent* m_pJumper;
 	bool m_HasStarted;
+	
+	bool m_DoUnFlip;
+	bool m_DoFlip;
+	bool m_DoGainScore;
 
 	glm::vec2 GetTileStandPosition(TileComponent* tile) const;
+	static glm::vec2 GetTileStandPosition(TileComponent* tile, boop::TextureComponent* pQbertTexture);
 };
 

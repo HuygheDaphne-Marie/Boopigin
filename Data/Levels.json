@@ -1,7 +1,17 @@
 [
 	{
 		"LevelNumber": 1,
-		"LevelSize": 5,
+		"LevelSize": 3,
+		"IsTriangle": true,
+		"TileTextures":
+		[
+			"textures/tiles/unFlipped_level1.png",
+			"textures/tiles/flipped_level1.png"
+		]
+	},
+	{
+		"LevelNumber": 2,
+		"LevelSize": 4,
 		"IsTriangle": true,
 		"TileTextures":
 		[

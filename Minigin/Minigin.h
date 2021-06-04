@@ -15,11 +15,11 @@ namespace boop
 		void Run();
 		
 		Game* m_pGame;
+		const int m_WindowWidth = 640;
+		const int m_WindowHeight = 480;
 	
 	private:
 		static const int m_FixedUpdateFps = 60;
 		SDL_Window* m_Window{};
-
-		TestCommand* m_pTestCommand;
 	};
 }
