@@ -1,6 +1,6 @@
 #pragma once
 #include "MovementComponent.h"
-class TumbleMovementComponent : public MovementComponent
+class TumbleMovementComponent final : public MovementComponent
 {
 public:
 	TumbleMovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper, StateComponent* state);

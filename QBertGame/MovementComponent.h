@@ -44,7 +44,7 @@ public:
 	bool m_DoFlip;
 	bool m_DoGainScore;
 
-private:
+protected:
 	friend class PlayerMovementComponent;
 	glm::ivec2 m_CurrentPos;
 	LevelComponent* m_pLevel;

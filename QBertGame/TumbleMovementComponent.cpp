@@ -1,7 +1,6 @@
 #include "TumbleMovementComponent.h"
 #include "StateComponent.h"
 #include <random>
-#include <functional>
 
 TumbleMovementComponent::TumbleMovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper, StateComponent* state)
 	: MovementComponent({ startTile->GetColumn(), startTile->GetRow() }, level, jumper)
@@ -11,18 +10,22 @@ TumbleMovementComponent::TumbleMovementComponent(TileComponent* startTile, Level
 
 void TumbleMovementComponent::Update()
 {
-	//if (m_pState->CanJump())
-	//{
-	//	auto gen = std::bind(std::uniform_int_distribution<>(0, 1), std::default_random_engine());
-	//	const bool goDownLeft = gen();
+	MovementComponent::Update();
+	if (m_pState->CanJump())
+	{
+		if (m_pLevel->IsCoordinateInBounds(m_CurrentPos))
+		{
+			const int randomInt = rand() % 2;
+			const bool goDownLeft = (randomInt == 1) ? true : false;
 
-	//	if (goDownLeft)
-	//	{
-	//		MoveDown();
-	//	}
-	//	else
-	//	{
-	//		MoveRight();
-	//	}
-	//}
+			if (goDownLeft)
+				MoveDown();
+			else
+				MoveRight();
+		}
+		else
+		{
+			// todo: reset or die, or whatever
+		}
+	}
 }

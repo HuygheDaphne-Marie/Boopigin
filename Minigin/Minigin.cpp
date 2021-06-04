@@ -59,6 +59,9 @@ void boop::Minigin::Initialize()
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
+	/* initialize random seed: */
+	srand(static_cast<unsigned int>(time(nullptr)));
+	
 	Renderer::GetInstance().Init(m_Window);
 
 	// tell the resource manager where he can find the game data
