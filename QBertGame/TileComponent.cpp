@@ -5,11 +5,12 @@
 
 using namespace boop;
 
-TileComponent::TileComponent(std::vector<std::string> textures, int posX, int posY)
+TileComponent::TileComponent(std::vector<std::string> textures, int posX, int posY, bool isCyclical)
 	: m_TileTextures(std::move(textures))
 	, m_TileCol(posX)
 	, m_TileRow(posY)
 	, m_FlipState(FlipState::unFlipped)
+	, m_IsCyclical(isCyclical)
 {
 	if (m_TileTextures.size() == 2)
 	{
@@ -30,6 +31,18 @@ void TileComponent::OnFlip(bool gainScore)
 		{
 			auto* scoreEvent = new Event("ScoreGained", 25);
 			EventQueue::GetInstance().Broadcast(scoreEvent);
+		}
+	}
+	else
+	{
+		if (m_IsCyclical)
+		{
+			ToPreviousFlipState();
+			if (gainScore)
+			{
+				auto* scoreEvent = new Event("ScoreGained", 25);
+				EventQueue::GetInstance().Broadcast(scoreEvent);
+			}
 		}
 	}
 }

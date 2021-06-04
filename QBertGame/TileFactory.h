@@ -16,7 +16,8 @@ public:
 		float posY, 
 		float size, 
 		int row, 
-		int col);
+		int col,
+		bool isCyclical);
 
 
 };

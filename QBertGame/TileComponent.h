@@ -32,7 +32,7 @@ enum class FlipState
 class TileComponent final : public boop::Component
 {
 public:
-	explicit TileComponent(std::vector<std::string> textures, int posX, int posY);
+	explicit TileComponent(std::vector<std::string> textures, int posX, int posY, bool isCyclical);
 	~TileComponent() override = default;
 	TileComponent(const TileComponent & other) = delete;
 	TileComponent(TileComponent && other) = delete;
@@ -55,6 +55,7 @@ private:
 	const int m_TileRow;
 	FlipKind m_FlipKind;
 	FlipState m_FlipState;
+	bool m_IsCyclical;
 	
 	std::vector<TileComponent*> m_pAdjacentTiles = std::vector<TileComponent*>{};
 

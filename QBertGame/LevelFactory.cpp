@@ -37,6 +37,7 @@ std::vector<std::shared_ptr<GameObject>> LevelFactory::MakeLevel(Scene& scene, c
 		const int size = levelToMake["LevelSize"];
 		std::vector<std::string> tileTextures = levelToMake["TileTextures"];
 		const bool isTriangle = levelToMake["IsTriangle"];
+		const bool isCyclical = levelToMake["IsCyclical"];
 
 		if (levelInfo != nullptr)
 		{
@@ -66,7 +67,8 @@ std::vector<std::shared_ptr<GameObject>> LevelFactory::MakeLevel(Scene& scene, c
 					tilePos.y,
 					m_TileSize,
 					row,
-					col);
+					col,
+					isCyclical);
 
 				tiles.push_back(tile);
 				scene.Add(tile);

@@ -1,8 +1,9 @@
 [
 	{
 		"LevelNumber": 1,
-		"LevelSize": 3,
+		"LevelSize": 2,
 		"IsTriangle": true,
+		"IsCyclical": false,
 		"TileTextures":
 		[
 			"textures/tiles/unFlipped_level1.png",
@@ -11,8 +12,21 @@
 	},
 	{
 		"LevelNumber": 2,
+		"LevelSize": 3,
+		"IsTriangle": true,
+		"IsCyclical": false,
+		"TileTextures":
+		[
+			"textures/tiles/unFlipped_level2.png",
+			"textures/tiles/intermediate_level2.png",
+			"textures/tiles/flipped_level2.png"
+		]
+	},
+	{
+		"LevelNumber": 3,
 		"LevelSize": 4,
 		"IsTriangle": true,
+		"IsCyclical": true,
 		"TileTextures":
 		[
 			"textures/tiles/unFlipped_level1.png",
