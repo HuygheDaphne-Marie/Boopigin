@@ -190,10 +190,12 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="GameSetup.cpp" />
     <ClCompile Include="QBertGame.cpp" />
     <ClCompile Include="TileComponent.cpp" />
-    <ClCompile Include="TumbleMovementComponent.cpp" />
+    <ClCompile Include="BehaviorMovementComponent.cpp" />
+    <ClCompile Include="TumbleBehavior.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyFactory.h" />
+    <ClInclude Include="IMovementBehavior.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JumpComponent.h" />
     <ClInclude Include="LevelComponent.h" />
@@ -208,7 +210,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="GameSetup.h" />
     <ClInclude Include="TileComponent.h" />
-    <ClInclude Include="TumbleMovementComponent.h" />
+    <ClInclude Include="BehaviorMovementComponent.h" />
+    <ClInclude Include="TumbleBehavior.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

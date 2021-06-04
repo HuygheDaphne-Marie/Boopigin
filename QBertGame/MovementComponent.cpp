@@ -162,6 +162,19 @@ void MovementComponent::SetPosition(const glm::ivec2& coordinate)
 	m_pJumper->SetStartPos(pos);
 }
 
+glm::vec2 MovementComponent::GetCurrentPosition() const
+{
+	return m_CurrentPos;
+}
+const LevelComponent* MovementComponent::GetLevel() const
+{
+	return m_pLevel;
+}
+const JumpComponent* MovementComponent::GetJumper() const
+{
+	return m_pJumper;
+}
+
 glm::vec2 MovementComponent::GetTileStandPosition(TileComponent* tile) const
 {
 	auto* texture = m_pOwner->GetComponentOfType<boop::TextureComponent>();

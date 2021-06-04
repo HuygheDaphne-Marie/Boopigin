@@ -3,7 +3,8 @@
 #include <TextureComponent.h>
 #include <TransformComponent.h>
 #include "StateComponent.h"
-#include "TumbleMovementComponent.h"
+#include "BehaviorMovementComponent.h"
+#include "TumbleBehavior.h"
 
 float EnemyFactory::m_LeapTime = 0.7f;
 unsigned int EnemyFactory::m_Depth = 1;
@@ -37,7 +38,8 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeTumbler(boop::Scene& scene, 
 
 	auto* jumper = new JumpComponent(transform, state, m_LeapTime);
 	go->AddComponent(jumper);
-	go->AddComponent(new TumbleMovementComponent(pLevel->GetTileWithCoordinate(startCoordinate), pLevel, jumper, state));
+	auto* tumbleBehavior = new TumbleBehavior();
+	go->AddComponent(new BehaviorMovementComponent(pLevel->GetTileWithCoordinate(startCoordinate), pLevel, jumper, state, tumbleBehavior));
 	scene.Add(go, m_Depth);
 	return go;
 }

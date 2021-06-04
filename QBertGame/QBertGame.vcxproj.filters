@@ -31,6 +31,12 @@
     <Filter Include="Components\Data">
       <UniqueIdentifier>{bf3cf0cc-8825-461a-83d4-d8da749ad167}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{194b8f6c-d2dc-4b19-a1ab-8cae6dd2106d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Behaviors">
+      <UniqueIdentifier>{1a8b9d87-e5b8-4bb0-8394-c661d89db96a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QBertGame.cpp">
@@ -75,11 +81,14 @@
     <ClCompile Include="QBertFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TumbleMovementComponent.cpp">
+    <ClCompile Include="BehaviorMovementComponent.cpp">
       <Filter>Components\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="TumbleBehavior.cpp">
+      <Filter>AI\Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFactory.cpp">
+      <Filter>Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,11 +134,17 @@
     <ClInclude Include="QBertFactory.h">
       <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TumbleMovementComponent.h">
+    <ClInclude Include="BehaviorMovementComponent.h">
       <Filter>Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="IMovementBehavior.h">
+      <Filter>AI\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="TumbleBehavior.h">
+      <Filter>AI\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>Factory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -40,12 +40,16 @@ public:
 
 	void SetPosition(const glm::ivec2& coordinate);
 
+	glm::vec2 GetCurrentPosition() const;
+	const LevelComponent* GetLevel() const;
+	const JumpComponent* GetJumper() const;
+
 	bool m_DoUnFlip;
 	bool m_DoFlip;
 	bool m_DoGainScore;
 
 protected:
-	friend class PlayerMovementComponent;
+	//friend class PlayerMovementComponent;
 	glm::ivec2 m_CurrentPos;
 	LevelComponent* m_pLevel;
 	JumpComponent* m_pJumper;
