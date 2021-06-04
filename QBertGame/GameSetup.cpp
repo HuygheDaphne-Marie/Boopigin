@@ -41,4 +41,6 @@ void GameSetup::LoadGame() const
 	//};
 	auto player = QBertFactory::MakePlayer(scene, levelComponent, keys, { 0,0 });
 	auto tracker = QBertFactory::MakePlayerTracker(scene, player);
+
+	levelComponent->AddPlayer(player);
 }

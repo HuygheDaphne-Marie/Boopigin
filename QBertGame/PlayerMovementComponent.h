@@ -21,5 +21,7 @@ public:
 
 private:
 	std::vector<MoveCommand*> m_MoveCommands{};
+
+	void Reset();
 };
 

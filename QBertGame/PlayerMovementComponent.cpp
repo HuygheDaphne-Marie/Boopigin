@@ -30,6 +30,7 @@ PlayerMovementComponent::PlayerMovementComponent(TileComponent* startTile, Level
 	
 	EventQueue::GetInstance().Subscribe("NewLevelLoaded", this);
 	EventQueue::GetInstance().Subscribe("JumpCompleted", this);
+	EventQueue::GetInstance().Subscribe("PlayerTakeDamage", this);
 }
 
 PlayerMovementComponent::~PlayerMovementComponent()
@@ -56,15 +57,7 @@ bool PlayerMovementComponent::OnEvent(const Event& event)
 {
 	if (event.message == "NewLevelLoaded")
 	{
-		auto* myState = m_pOwner->GetComponentOfType<StateComponent>();
-		myState->ResetState();
-		auto* myTexture = m_pOwner->GetComponentOfType<boop::TextureComponent>();
-
-		const glm::ivec2 newTileCoordinate = { 0,0 };
-		const glm::vec2 newPos = GetTileStandPosition(m_pLevel->GetTileWithCoordinate(newTileCoordinate), myTexture);
-		m_pJumper->SetStartPos(newPos);
-		m_CurrentPos = newTileCoordinate;
-		
+		Reset();
 		return true;
 	}
 	if (event.message == "JumpCompleted")
@@ -75,7 +68,24 @@ bool PlayerMovementComponent::OnEvent(const Event& event)
 			return true;
 		}
 	}
+	if (event.message == "PlayerTakeDamage")
+	{
+		Reset();
+		return true;
+	}
 	
 	// Pass event on to base
 	return MovementComponent::OnEvent(event);
+}
+
+void PlayerMovementComponent::Reset()
+{
+	auto* myState = m_pOwner->GetComponentOfType<StateComponent>();
+	myState->ResetState();
+	auto* myTexture = m_pOwner->GetComponentOfType<boop::TextureComponent>();
+
+	const glm::ivec2 newTileCoordinate = { 0,0 };
+	const glm::vec2 newPos = GetTileStandPosition(m_pLevel->GetTileWithCoordinate(newTileCoordinate), myTexture);
+	m_pJumper->SetStartPos(newPos);
+	m_CurrentPos = newTileCoordinate;
 }

@@ -2,6 +2,8 @@
 #include "LevelFactory.h"
 #include <EventQueue.h>
 
+#include "PlayerDataComponent.h"
+
 /*
 
 ** LEVEL LAYOUT **
@@ -38,6 +40,7 @@ LevelComponent::LevelComponent(const std::string& sceneName, const glm::vec2& le
 	, m_LevelNumber(1)
 {
 	LoadLevel(m_LevelNumber);
+	EventQueue::GetInstance().Subscribe("PlayerDied", this);
 }
 
 bool LevelComponent::IsCoordinateInBounds(const glm::ivec2& coordinate) const
@@ -83,6 +86,37 @@ void LevelComponent::Update()
 		LoadNextLevel();
 	}
 	
+}
+
+bool LevelComponent::OnEvent(const Event& event)
+{
+	if (event.message == "PlayerDied")
+	{
+		for (auto& weakPlayer : m_Players)
+		{
+			auto player = weakPlayer.lock();
+			player->GetComponentOfType<PlayerDataComponent>()->Reset();
+			// Todo: reset more stuff, like score, position
+		}
+		m_LevelNumber = 0;
+		LoadNextLevel();
+		return true;
+	}
+	return false;
+}
+
+void LevelComponent::AddPlayer(std::shared_ptr<boop::GameObject> player)
+{
+	bool isAlreadyInList = false;
+	for (auto& weakPtr : m_Players)
+	{
+		if (weakPtr.lock() == player)
+			isAlreadyInList = true;
+	}
+	if (!isAlreadyInList)
+	{
+		m_Players.push_back(player);
+	}
 }
 
 bool LevelComponent::AreAllTilesFlipped() const
