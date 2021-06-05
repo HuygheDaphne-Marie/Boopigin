@@ -175,10 +175,11 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ChaseQbertBehavior.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
-    <ClCompile Include="ICollisionBehavior.cpp" />
     <ClCompile Include="JumpComponent.cpp" />
+    <ClCompile Include="KillPlayerCollision.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="LevelFactory.cpp" />
     <ClCompile Include="LifeTrackerComponent.cpp" />
@@ -200,12 +201,14 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="TumbleBehavior.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChaseQbertBehavior.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="ICollisionBehavior.h" />
     <ClInclude Include="IMovementBehavior.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JumpComponent.h" />
+    <ClInclude Include="KillPlayerCollision.h" />
     <ClInclude Include="LevelComponent.h" />
     <ClInclude Include="LevelFactory.h" />
     <ClInclude Include="LifeTrackerComponent.h" />

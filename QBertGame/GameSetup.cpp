@@ -47,14 +47,17 @@ void GameSetup::LoadGame() const
 	//	KeyInfo(ControllerButton::ButtonX),
 	//	KeyInfo(ControllerButton::ButtonY)
 	//};
-	auto player = QBertFactory::MakePlayer(scene, levelComponent, keys, { 3,3 });
+	auto player = QBertFactory::MakePlayer(scene, levelComponent, keys, { 0,0 });
 	auto lifeTracker = QBertFactory::MakePlayerTracker(scene, player);
 	auto scoreTracker = QBertFactory::MakeScoreTracker(scene, go);
 
+	auto coily = EnemyFactory::MakeCoily(scene, levelComponent, { 3, 3 });
+	
 	//auto slick = EnemyFactory::MakeSlick(scene, levelComponent, { 1,0 });
 	//auto sam = EnemyFactory::MakeSam(scene, levelComponent, { 0,1 });
 
 	levelComponent->AddEntity(player);
+	levelComponent->AddEntity(coily);
 	//levelComponent->AddEntity(slick);
 	//levelComponent->AddEntity(sam);
 }

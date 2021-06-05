@@ -102,14 +102,17 @@
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="ICollisionBehavior.cpp">
-      <Filter>Components\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="ScoreGainCollision.cpp">
       <Filter>Components\Collision</Filter>
     </ClCompile>
     <ClCompile Include="SpawnComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Components\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="KillPlayerCollision.cpp">
+      <Filter>Components\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaseQbertBehavior.cpp">
+      <Filter>AI\Behaviors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,7 +186,13 @@
       <Filter>Components\Collision</Filter>
     </ClInclude>
     <ClInclude Include="SpawnComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Components\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="KillPlayerCollision.h">
+      <Filter>Components\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaseQbertBehavior.h">
+      <Filter>AI\Behaviors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

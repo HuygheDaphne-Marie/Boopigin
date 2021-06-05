@@ -23,10 +23,13 @@ void boop::Timer::Update()
 	m_PreviousTime = m_StartTime;
 }
 
-int boop::Timer::GetElapsedMilli() const
+/* Broken, don't use this, don't be a fool, be cool use -> GetElapsedSec()
+ int boop::Timer::GetElapsedMilli() const
 {
 	return static_cast<int>(m_ElapsedSeconds) * 1000;
 }
+ */
+
 
 float boop::Timer::GetElapsedSec() const
 {

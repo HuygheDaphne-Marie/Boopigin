@@ -12,8 +12,6 @@ class SpawnComponent final : public boop::Component
 public:
 	explicit SpawnComponent(LevelComponent* level, float defaultSpawnTime = 5.f);
 
-
-	
 	void Update() override;
 
 	float m_SlickSamSpawnTime;
@@ -28,7 +26,6 @@ private:
 	float m_SlickSpawnTimer = 0.f;
 	float m_SamSpawnTimer = 0.f;
 	std::vector<glm::ivec2> m_SlickSamSpawnPositions{{0,1}, {1,0}};
-
 
 	static bool IsEntityAlive(const std::weak_ptr<boop::GameObject>& entity);
 	static glm::ivec2 GetStartPos(const std::vector<glm::ivec2>& possibleStartPositions);

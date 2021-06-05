@@ -7,7 +7,7 @@
 #include "ControlledMovementComponent.h"
 #include "BehaviorMovementComponent.h"
 #include "CollisionComponent.h"
-#include "SpawnComponent.h"
+#include "ScoreDataComponent.h"
 
 /*
 
@@ -105,16 +105,24 @@ bool LevelComponent::OnEvent(const Event& event)
 {
 	if (event.message == "PlayerDied")
 	{
-		for (auto& weakPlayer : m_Entities)
+		for (auto& weakEntity : m_Entities)
 		{
-			auto player = weakPlayer.lock();
-			player->GetComponentOfType<PlayerDataComponent>()->Reset();
+			if (auto lockedEntity = weakEntity.lock())
+			{
+				if (lockedEntity->HasTag("qbert"))
+				{
+					lockedEntity->GetComponentOfType<PlayerDataComponent>()->Reset();
+				}
+			}
 			// Todo: reset more stuff, like score, position
+			auto scoreData = m_pOwner->GetComponentOfType<ScoreDataComponent>();
+			scoreData->Reset();
 		}
 		m_LevelNumber = 0;
 		LoadNextLevel();
 		return true;
 	}
+	// Todo: reset entities, put players back in startPos & delete all other entities when player takes damage
 	if (event.message == "JumpCompleted")
 	{
 		JumpComponent* jumper = event.GetData<JumpComponent*>();
@@ -140,6 +148,23 @@ void LevelComponent::AddEntity(std::shared_ptr<boop::GameObject> player)
 std::shared_ptr<boop::Scene> LevelComponent::GetLevelScene() const
 {
 	return m_Scene;
+}
+
+std::shared_ptr<boop::GameObject> LevelComponent::GetQbertClosestTo(const glm::ivec2& pos)
+{
+	int x = pos.x; // Todo: make this actually get the closest qbert
+	x++;
+	for (auto& entity : m_Entities)
+	{
+		if (auto lockedEntity = entity.lock())
+		{
+			if (lockedEntity->HasTag("qbert"))
+			{
+				return lockedEntity;
+			}
+		}
+	}
+	return nullptr;
 }
 
 bool LevelComponent::AreAllTilesFlipped() const
