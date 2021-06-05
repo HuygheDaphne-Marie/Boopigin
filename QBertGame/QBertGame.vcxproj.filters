@@ -108,6 +108,9 @@
     <ClCompile Include="ScoreGainCollision.cpp">
       <Filter>Components\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="SpawnComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSetup.h">
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="ScoreGainCollision.h">
       <Filter>Components\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

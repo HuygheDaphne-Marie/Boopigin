@@ -190,6 +190,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="ScoreDataComponent.cpp" />
     <ClCompile Include="ScoreGainCollision.cpp" />
     <ClCompile Include="ScoreTrackerComponent.cpp" />
+    <ClCompile Include="SpawnComponent.cpp" />
     <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="GameSetup.cpp" />
@@ -216,6 +217,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="ScoreDataComponent.h" />
     <ClInclude Include="ScoreGainCollision.h" />
     <ClInclude Include="ScoreTrackerComponent.h" />
+    <ClInclude Include="SpawnComponent.h" />
     <ClInclude Include="StateComponent.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="GameSetup.h" />

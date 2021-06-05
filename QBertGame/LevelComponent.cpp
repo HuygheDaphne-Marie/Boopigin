@@ -7,6 +7,7 @@
 #include "ControlledMovementComponent.h"
 #include "BehaviorMovementComponent.h"
 #include "CollisionComponent.h"
+#include "SpawnComponent.h"
 
 /*
 
@@ -134,6 +135,11 @@ void LevelComponent::AddEntity(std::shared_ptr<boop::GameObject> player)
 	{
 		m_Entities.push_back(player);
 	}
+}
+
+std::shared_ptr<boop::Scene> LevelComponent::GetLevelScene() const
+{
+	return m_Scene;
 }
 
 bool LevelComponent::AreAllTilesFlipped() const

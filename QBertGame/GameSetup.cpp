@@ -11,6 +11,7 @@
 
 #include "ScoreDataComponent.h"
 #include "ScoreTrackerComponent.h"
+#include "SpawnComponent.h"
 
 using namespace boop;
 
@@ -31,6 +32,7 @@ void GameSetup::LoadGame() const
 	go->AddComponent(levelComponent);
 	auto* scoreData = new ScoreDataComponent();
 	go->AddComponent(scoreData);
+	go->AddComponent(new SpawnComponent(levelComponent));
 	scene.Add(go);
 
 	std::vector<KeyInfo> keys = {
@@ -49,10 +51,10 @@ void GameSetup::LoadGame() const
 	auto lifeTracker = QBertFactory::MakePlayerTracker(scene, player);
 	auto scoreTracker = QBertFactory::MakeScoreTracker(scene, go);
 
-	auto slick = EnemyFactory::MakeSlick(scene, levelComponent, { 1,0 });
-	auto sam = EnemyFactory::MakeSam(scene, levelComponent, { 0,1 });
+	//auto slick = EnemyFactory::MakeSlick(scene, levelComponent, { 1,0 });
+	//auto sam = EnemyFactory::MakeSam(scene, levelComponent, { 0,1 });
 
 	levelComponent->AddEntity(player);
-	levelComponent->AddEntity(slick);
-	levelComponent->AddEntity(sam);
+	//levelComponent->AddEntity(slick);
+	//levelComponent->AddEntity(sam);
 }

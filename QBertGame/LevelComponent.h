@@ -25,6 +25,8 @@ public:
 
 	void AddEntity(std::shared_ptr<boop::GameObject> player);
 
+	std::shared_ptr<boop::Scene> GetLevelScene() const;
+
 private:
 	std::shared_ptr<boop::Scene> m_Scene;
 	glm::vec2 m_WindowCenter;
