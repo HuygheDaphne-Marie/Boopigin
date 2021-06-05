@@ -1,5 +1,6 @@
 #include "MiniginPCH.h"
 #include "EventQueue.h"
+#include "IEventListener.h"
 
 void EventQueue::Broadcast(Event* event)
 {
@@ -42,9 +43,15 @@ void EventQueue::Unsubscribe(const std::string& eventType, IEventListener* liste
 {
 	if (m_Listeners.find(eventType) != m_Listeners.end())
 	{
-		m_Listeners[eventType].erase(
-		std::find(m_Listeners[eventType].begin(), m_Listeners[eventType].end(), listener)
-		);
+		const auto listenerItr = std::find(
+			m_Listeners[eventType].begin(), 
+			m_Listeners[eventType].end(), 
+			listener);
+		
+		if (listenerItr != m_Listeners[eventType].end())
+		{
+			m_Listeners[eventType].erase(listenerItr);
+		}
 	}
 }
 

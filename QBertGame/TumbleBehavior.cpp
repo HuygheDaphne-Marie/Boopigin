@@ -19,7 +19,13 @@ void TumbleBehavior::Update(BehaviorMovementComponent* movement, StateComponent*
 		}
 		else
 		{
-			// todo: reset or die, or whatever
+			movement->GetOwner()->MarkForDelete();
 		}
 	}
+}
+
+void TumbleBehavior::Setup(BehaviorMovementComponent* movement, StateComponent* state)
+{
+	movement->m_DoUnFlip = true;
+	state->ResetState(); // it has to do something
 }

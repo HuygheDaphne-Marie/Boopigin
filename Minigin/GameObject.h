@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 namespace boop
 {
@@ -25,6 +26,9 @@ namespace boop
 		void AddComponent(Component* pComponentToAdd);
 		void RemoveComponent(Component* pComponentToRemove);
 
+		bool HasTag(const std::string& tag);
+		void AddTag(const std::string& tag);
+
 		template <typename TypeOfComponent>
 		inline TypeOfComponent* GetComponentOfType() const
 		{
@@ -40,6 +44,7 @@ namespace boop
 
 	private:
 		std::vector<Component*> m_Components{};
+		std::vector<std::string> m_Tags{};
 		bool m_IsMarkedForDeletion = false;
 	};
 }

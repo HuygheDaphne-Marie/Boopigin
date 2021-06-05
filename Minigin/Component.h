@@ -26,7 +26,7 @@ namespace boop
 		virtual void Render() const;
 
 		void SetOwner(GameObject* newOwner);
-		[[nodiscard]] const GameObject* GetOwner() const;
+		[[nodiscard]] GameObject* GetOwner() const;
 
 	protected:
 		GameObject* m_pOwner = nullptr;

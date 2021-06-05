@@ -92,3 +92,16 @@ void boop::GameObject::RemoveComponent(Component* pComponentToRemove)
 		}
 	}
 }
+
+bool boop::GameObject::HasTag(const std::string& tag)
+{
+	const auto tagItr = std::find(m_Tags.begin(), m_Tags.end(), tag);
+	return tagItr != m_Tags.end();
+}
+void boop::GameObject::AddTag(const std::string& tag)
+{
+	if (!HasTag(tag))
+	{
+		m_Tags.push_back(tag);
+	}
+}

@@ -8,7 +8,7 @@
 #include <glm/glm.hpp>
 #pragma warning(pop)
 #include "Scene.h"
-#include <EventQueue.h>
+#include <IEventListener.h>
 
 class LevelComponent final : public boop::Component, IEventListener
 {

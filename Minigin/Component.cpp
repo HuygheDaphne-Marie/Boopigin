@@ -24,7 +24,7 @@ void boop::Component::SetOwner(GameObject* newOwner)
 	m_pOwner = newOwner;
 }
 
-const boop::GameObject* boop::Component::GetOwner() const
+boop::GameObject* boop::Component::GetOwner() const
 {
 	return m_pOwner;
 }

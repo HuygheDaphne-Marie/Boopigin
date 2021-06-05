@@ -3,7 +3,8 @@
 #include <queue>
 #include <map>
 #include "Event.h"
-#include "IEventListener.h"
+//#include "IEventListener.h"
+class IEventListener;
 
 enum class QueuedEventType
 {

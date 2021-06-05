@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <Component.h>
-#include <EventQueue.h>
+#include <IEventListener.h>
 
 class PlayerDataComponent final : public boop::Component, public IEventListener
 {

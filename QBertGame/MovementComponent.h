@@ -4,7 +4,7 @@
 #include "LevelComponent.h"
 #include "JumpComponent.h"
 #include <TextureComponent.h>
-#include <EventQueue.h>
+#include <IEventListener.h>
 
 enum class Direction
 {
