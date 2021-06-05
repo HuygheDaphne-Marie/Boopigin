@@ -1,15 +1,15 @@
 #pragma once
 #include <Command.h>
-#include "PlayerMovementComponent.h"
+#include "ControlledMovementComponent.h"
 
 class MoveCommand final : public boop::Command
 {
 public:
-	explicit MoveCommand(PlayerMovementComponent* player, Direction direction);
+	explicit MoveCommand(ControlledMovementComponent* player, Direction direction);
 	void Execute() override;
 
 private:
-	PlayerMovementComponent* m_pPlayer;
+	ControlledMovementComponent* m_pPlayer;
 	Direction m_MoveDirection;
 };
 

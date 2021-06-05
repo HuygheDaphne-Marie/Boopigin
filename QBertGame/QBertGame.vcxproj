@@ -183,7 +183,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="MovementComponent.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
     <ClCompile Include="PlayerDataComponent.cpp" />
-    <ClCompile Include="PlayerMovementComponent.cpp" />
+    <ClCompile Include="ControlledMovementComponent.cpp" />
     <ClCompile Include="QBertFactory.cpp" />
     <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="TileFactory.cpp" />
@@ -204,7 +204,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="PlayerDataComponent.h" />
-    <ClInclude Include="PlayerMovementComponent.h" />
+    <ClInclude Include="ControlledMovementComponent.h" />
     <ClInclude Include="QBertFactory.h" />
     <ClInclude Include="StateComponent.h" />
     <ClInclude Include="TileFactory.h" />

@@ -16,13 +16,19 @@ std::string EnemyFactory::m_SamTexturePath = "textures/samFrame.png";
 std::shared_ptr<boop::GameObject> EnemyFactory::MakeSlick(boop::Scene& scene, LevelComponent* pLevel,
 	const glm::ivec2& startCoordinate)
 {
-	return MakeTumbler(scene, pLevel, m_SlickTexturePath, startCoordinate);
+	auto slick = MakeTumbler(scene, pLevel, m_SlickTexturePath, startCoordinate);
+	slick->AddTag("slick");
+	slick->AddTag("green");
+	return slick;
 }
 
 std::shared_ptr<boop::GameObject> EnemyFactory::MakeSam(boop::Scene& scene, LevelComponent* pLevel,
 	const glm::ivec2& startCoordinate)
 {
-	return MakeTumbler(scene, pLevel, m_SamTexturePath, startCoordinate);
+	auto sam = MakeTumbler(scene, pLevel, m_SamTexturePath, startCoordinate);
+	sam->AddTag("sam");
+	sam->AddTag("green");
+	return sam;
 }
 
 std::shared_ptr<boop::GameObject> EnemyFactory::MakeTumbler(boop::Scene& scene, LevelComponent* pLevel, const std::string& texturePath,
@@ -40,6 +46,8 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeTumbler(boop::Scene& scene, 
 	go->AddComponent(jumper);
 	auto* tumbleBehavior = new TumbleBehavior();
 	go->AddComponent(new BehaviorMovementComponent(pLevel->GetTileWithCoordinate(startCoordinate), pLevel, jumper, state, tumbleBehavior));
+	go->AddTag("enemy");
+	
 	scene.Add(go, m_Depth);
 	return go;
 }

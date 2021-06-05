@@ -25,7 +25,7 @@ class MovementComponent : public boop::Component, public IEventListener
 public:
 	MovementComponent(const glm::ivec2& startPos, LevelComponent* level, JumpComponent* jumper);
 
-	void Update() override;
+	void Startup() override;
 	
 	bool MoveUp();
 	bool MoveRight();
@@ -49,11 +49,9 @@ public:
 	bool m_DoGainScore;
 
 protected:
-	//friend class PlayerMovementComponent;
 	glm::ivec2 m_CurrentPos;
 	LevelComponent* m_pLevel;
 	JumpComponent* m_pJumper;
-	bool m_HasStarted;
 	
 	glm::vec2 GetTileStandPosition(TileComponent* tile) const;
 	static glm::vec2 GetTileStandPosition(TileComponent* tile, boop::TextureComponent* pQbertTexture);

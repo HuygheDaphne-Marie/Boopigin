@@ -9,6 +9,7 @@
 #pragma warning(pop)
 #include "Scene.h"
 #include <IEventListener.h>
+class MovementComponent;
 
 class LevelComponent final : public boop::Component, IEventListener
 {
@@ -25,18 +26,21 @@ public:
 	void AddPlayer(std::shared_ptr<boop::GameObject> player);
 
 private:
-	//boop::Scene m_Scene;
 	std::shared_ptr<boop::Scene> m_Scene;
 	glm::vec2 m_WindowCenter;
 	std::vector<TileComponent*> m_LevelTiles;
 	int m_LevelSize;
 	int m_LevelNumber;
 	
-	std::vector<std::weak_ptr<boop::GameObject>> m_Players;
+	std::vector<std::weak_ptr<boop::GameObject>> m_Entities;
 	
 	bool AreAllTilesFlipped() const;
 	void LoadLevel(int levelNumber);
 	void ClearLevel();
 	void LoadNextLevel();
+
+	std::shared_ptr<boop::GameObject> GetSharedFromRawPointer(boop::GameObject* gameObject);
+	MovementComponent* GetMovementComponentFromEntity(std::weak_ptr<boop::GameObject> entity);
+	void DoCollisionCheck(boop::GameObject* jumpedEntity);
 };
 

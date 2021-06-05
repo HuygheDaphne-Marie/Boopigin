@@ -12,7 +12,6 @@ public:
 	BehaviorMovementComponent operator=(BehaviorMovementComponent&&) = delete;
 	~BehaviorMovementComponent();
 	
-
 	void Update() override;
 
 private:

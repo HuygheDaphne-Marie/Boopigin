@@ -8,6 +8,7 @@ namespace boop
 	class GameObject final
 	{
 	public:
+		void Startup();
 		void FixedUpdate();
 		void Update();
 		void LateUpdate();
@@ -46,5 +47,6 @@ namespace boop
 		std::vector<Component*> m_Components{};
 		std::vector<std::string> m_Tags{};
 		bool m_IsMarkedForDeletion = false;
+		bool m_IsFirstUpdate = true;
 	};
 }

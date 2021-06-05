@@ -72,7 +72,7 @@
     <ClCompile Include="LifeTrackerComponent.cpp">
       <Filter>Components\Data</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerMovementComponent.cpp">
+    <ClCompile Include="ControlledMovementComponent.cpp">
       <Filter>Components\Movement</Filter>
     </ClCompile>
     <ClCompile Include="TileComponent.cpp">
@@ -125,7 +125,7 @@
     <ClInclude Include="LifeTrackerComponent.h">
       <Filter>Components\Data</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerMovementComponent.h">
+    <ClInclude Include="ControlledMovementComponent.h">
       <Filter>Components\Movement</Filter>
     </ClInclude>
     <ClInclude Include="TileComponent.h">

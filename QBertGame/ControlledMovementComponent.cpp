@@ -1,11 +1,11 @@
-#include "PlayerMovementComponent.h"
+#include "ControlledMovementComponent.h"
 #include "MoveCommand.h"
 #include <InputManager.h>
 #include <Timer.h>
 
 #include "StateComponent.h"
 
-PlayerMovementComponent::PlayerMovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper,
+ControlledMovementComponent::ControlledMovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper,
                                                  std::vector<boop::KeyInfo>& keys)
 	: MovementComponent({ startTile->GetColumn(), startTile->GetRow() }, level, jumper)
 {
@@ -33,7 +33,7 @@ PlayerMovementComponent::PlayerMovementComponent(TileComponent* startTile, Level
 	EventQueue::GetInstance().Subscribe("PlayerTakeDamage", this);
 }
 
-PlayerMovementComponent::~PlayerMovementComponent()
+ControlledMovementComponent::~ControlledMovementComponent()
 {
 	boop::InputManager& inputManager = boop::InputManager::GetInstance();
 	for (auto& command : m_MoveCommands)
@@ -43,7 +43,13 @@ PlayerMovementComponent::~PlayerMovementComponent()
 	}
 }
 
-bool PlayerMovementComponent::Move(Direction movementDirection)
+void ControlledMovementComponent::Startup()
+{
+	MovementComponent::Startup();
+	m_pOwner->AddTag("controlled");
+}
+
+bool ControlledMovementComponent::Move(Direction movementDirection)
 {
 	//std::cout << "========\n";
 	//std::cout << "x: " << std::to_string(m_pCurrentTile->GetColumn()) << ", y: " << std::to_string(m_pCurrentTile->GetRow()) << std::endl;
@@ -53,7 +59,7 @@ bool PlayerMovementComponent::Move(Direction movementDirection)
 	return didMove;
 }
 
-bool PlayerMovementComponent::OnEvent(const Event& event)
+bool ControlledMovementComponent::OnEvent(const Event& event)
 {
 	if (event.message == "NewLevelLoaded")
 	{
@@ -78,7 +84,7 @@ bool PlayerMovementComponent::OnEvent(const Event& event)
 	return MovementComponent::OnEvent(event);
 }
 
-void PlayerMovementComponent::Reset()
+void ControlledMovementComponent::Reset()
 {
 	auto* myState = m_pOwner->GetComponentOfType<StateComponent>();
 	myState->ResetState();

@@ -7,7 +7,7 @@
 #include <TextureComponent.h>
 #include <ResourceManager.h>
 #include "LevelComponent.h"
-#include "PlayerMovementComponent.h"
+#include "ControlledMovementComponent.h"
 
 using namespace boop;
 

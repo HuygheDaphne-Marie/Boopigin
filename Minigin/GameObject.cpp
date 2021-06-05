@@ -11,6 +11,17 @@ boop::GameObject::~GameObject()
 	}
 }
 
+void boop::GameObject::Startup()
+{
+	if (m_IsMarkedForDeletion)
+		return;
+
+	for (Component* pElement : m_Components)
+	{
+		pElement->Startup();
+	}
+}
+
 void boop::GameObject::FixedUpdate()
 {
 	if (m_IsMarkedForDeletion)
@@ -27,6 +38,15 @@ void boop::GameObject::Update()
 	if (m_IsMarkedForDeletion)
 		return;
 
+	if (m_IsFirstUpdate)
+	{
+		for (Component* pElement : m_Components)
+		{
+			pElement->Startup();
+		}
+		m_IsFirstUpdate = false;
+	}
+	
 	for (Component* pElement : m_Components)
 	{
 		pElement->Update();

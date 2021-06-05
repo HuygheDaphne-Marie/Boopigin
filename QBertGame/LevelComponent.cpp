@@ -3,6 +3,9 @@
 #include <EventQueue.h>
 
 #include "PlayerDataComponent.h"
+#include "JumpComponent.h"
+#include "ControlledMovementComponent.h"
+#include "BehaviorMovementComponent.h"
 
 /*
 
@@ -41,6 +44,7 @@ LevelComponent::LevelComponent(const std::string& sceneName, const glm::vec2& le
 {
 	LoadLevel(m_LevelNumber);
 	EventQueue::GetInstance().Subscribe("PlayerDied", this);
+	EventQueue::GetInstance().Subscribe("JumpCompleted", this);
 }
 
 bool LevelComponent::IsCoordinateInBounds(const glm::ivec2& coordinate) const
@@ -85,14 +89,21 @@ void LevelComponent::Update()
 		// load next level
 		LoadNextLevel();
 	}
-	
+
+	//const auto removeItr = std::remove_if(m_Entities.begin(), m_Entities.end(),
+	//	[](std::weak_ptr<boop::GameObject>& entity)
+	//	{
+	//		return entity.expired();
+	//	}
+	//);
+	//m_Entities.erase(removeItr);
 }
 
 bool LevelComponent::OnEvent(const Event& event)
 {
 	if (event.message == "PlayerDied")
 	{
-		for (auto& weakPlayer : m_Players)
+		for (auto& weakPlayer : m_Entities)
 		{
 			auto player = weakPlayer.lock();
 			player->GetComponentOfType<PlayerDataComponent>()->Reset();
@@ -102,20 +113,25 @@ bool LevelComponent::OnEvent(const Event& event)
 		LoadNextLevel();
 		return true;
 	}
+	if (event.message == "JumpCompleted")
+	{
+		JumpComponent* jumper = event.GetData<JumpComponent*>();
+		DoCollisionCheck(jumper->GetOwner());
+	}
 	return false;
 }
 
 void LevelComponent::AddPlayer(std::shared_ptr<boop::GameObject> player)
 {
 	bool isAlreadyInList = false;
-	for (auto& weakPtr : m_Players)
+	for (auto& weakPtr : m_Entities)
 	{
 		if (weakPtr.lock() == player)
 			isAlreadyInList = true;
 	}
 	if (!isAlreadyInList)
 	{
-		m_Players.push_back(player);
+		m_Entities.push_back(player);
 	}
 }
 
@@ -147,7 +163,6 @@ void LevelComponent::LoadLevel(int levelNumber)
 		m_LevelTiles.push_back(gameObject->GetComponentOfType<TileComponent>());
 	}
 }
-
 void LevelComponent::ClearLevel()
 {
 	for (auto& levelTile : m_LevelTiles)
@@ -156,7 +171,6 @@ void LevelComponent::ClearLevel()
 	}
 	m_LevelTiles.clear();
 }
-
 void LevelComponent::LoadNextLevel()
 {
 	ClearLevel();
@@ -164,4 +178,76 @@ void LevelComponent::LoadNextLevel()
 	m_LevelNumber++;
 	LoadLevel(m_LevelNumber);
 	EventQueue::GetInstance().Broadcast(new Event("NewLevelLoaded"));
+}
+
+std::shared_ptr<boop::GameObject> LevelComponent::GetSharedFromRawPointer(boop::GameObject* gameObject)
+{
+	for (auto& entity : m_Entities)
+	{
+		if (auto lockedEntity = entity.lock())
+		{
+			if (lockedEntity.get() == gameObject)
+			{
+				return lockedEntity;
+			}
+		}
+	}
+	return nullptr;
+}
+
+MovementComponent* LevelComponent::GetMovementComponentFromEntity(std::weak_ptr<boop::GameObject> entity)
+{
+	if (auto lockedEntity = entity.lock())
+	{
+		if (lockedEntity->HasTag("controlled"))
+		{
+			return lockedEntity->GetComponentOfType<ControlledMovementComponent>();
+		}
+		return lockedEntity->GetComponentOfType<BehaviorMovementComponent>();
+	}
+	return nullptr;
+}
+
+void LevelComponent::DoCollisionCheck(boop::GameObject* jumpedEntity)
+{
+	const std::shared_ptr<boop::GameObject> ptrJumped = GetSharedFromRawPointer(jumpedEntity);
+	MovementComponent* jumpedMovementComp = GetMovementComponentFromEntity(ptrJumped);
+
+	if (jumpedMovementComp == nullptr)
+		return;
+
+	for (auto& entity : m_Entities)
+	{
+		if (entity.lock() == ptrJumped)
+			continue;
+		
+		if (auto lockedEntity = entity.lock())
+		{
+			MovementComponent* otherMovementComp = GetMovementComponentFromEntity(entity);
+			if (otherMovementComp == nullptr)
+				continue;
+
+			if (jumpedMovementComp->GetCurrentPosition() == otherMovementComp->GetCurrentPosition())
+			{
+				const bool isOnePlayer = ptrJumped->HasTag("qbert") || lockedEntity->HasTag("qbert");
+				const bool isOneGreen = ptrJumped->HasTag("green") || lockedEntity->HasTag("green");
+				const bool isOnePurple = ptrJumped->HasTag("purple") || lockedEntity->HasTag("purple");
+
+				if (isOnePlayer && isOneGreen)
+				{
+					EventQueue::GetInstance().Broadcast(new Event("ScoreGained", 300));
+				}
+				if (isOnePlayer && isOnePurple)
+				{
+					boop::GameObject* player = nullptr;
+					if (ptrJumped->HasTag("qbert"))
+						player = ptrJumped.get();
+					else
+						player = lockedEntity.get();
+					
+					EventQueue::GetInstance().Broadcast(new Event("PlayerTakeDamage", player));
+				}
+			}
+		}
+	}
 }

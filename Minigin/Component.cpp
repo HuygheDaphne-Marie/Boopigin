@@ -2,6 +2,9 @@
 #include "Component.h"
 
 // These have empty implementation so that subclasses aren't forced to make these all the time.
+void boop::Component::Startup()
+{
+}
 void boop::Component::FixedUpdate()
 {
 }

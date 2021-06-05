@@ -19,6 +19,7 @@ namespace boop
 
 		//static const std::string& GetComponentName();
 
+		virtual void Startup();
 		virtual void FixedUpdate();
 		virtual void Update();
 		virtual void LateUpdate();

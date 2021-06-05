@@ -10,7 +10,6 @@ MovementComponent::MovementComponent(const glm::ivec2& startPos, LevelComponent*
 	: m_CurrentPos(startPos)
 	, m_pLevel(level)
 	, m_pJumper(jumper)
-	, m_HasStarted(false)
 	, m_DoUnFlip(false)
 	, m_DoFlip(false)
 	, m_DoGainScore(false)
@@ -18,14 +17,9 @@ MovementComponent::MovementComponent(const glm::ivec2& startPos, LevelComponent*
 	EventQueue::GetInstance().Subscribe("JumpCompleted", this);
 }
 
-void MovementComponent::Update()
+void MovementComponent::Startup()
 {
-	if (!m_HasStarted)
-	{
-		// Dirty fix, but will have to do for now
-		SetPosition(m_CurrentPos);
-		m_HasStarted = true;
-	}
+	SetPosition(m_CurrentPos);
 }
 
 bool MovementComponent::MoveUp()

@@ -1,6 +1,6 @@
 #include "MoveCommand.h"
 
-MoveCommand::MoveCommand(PlayerMovementComponent* player, Direction direction)
+MoveCommand::MoveCommand(ControlledMovementComponent* player, Direction direction)
 	: m_pPlayer(player)
 	, m_MoveDirection(direction)
 {

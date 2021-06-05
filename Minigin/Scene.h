@@ -39,6 +39,7 @@ namespace boop
 		std::vector<std::shared_ptr<GameObject>> m_Objects{};
 		std::map<unsigned int, std::vector<std::shared_ptr<GameObject>>> m_ObjectsByDepth{};
 		std::map<unsigned int, std::vector<std::shared_ptr<GameObject>>> m_ObjectsToAdd{};
+		//bool IsFirstUpdate = true;
 		
 		static unsigned int m_IdCounter; 
 	};

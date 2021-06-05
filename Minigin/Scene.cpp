@@ -46,6 +46,15 @@ void Scene::FixedUpdate()
 }
 void Scene::Update()
 {
+	//if (IsFirstUpdate)
+	//{
+	//	for (auto& object : m_Objects)
+	//	{
+	//		object->Startup();
+	//	}
+	//	IsFirstUpdate = false;
+	//}
+	
 	for(auto& object : m_Objects)
 	{
 		object->Update();

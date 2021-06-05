@@ -7,7 +7,7 @@
 #include "PlayerDataComponent.h"
 #include "JumpComponent.h"
 #include "LifeTrackerComponent.h"
-#include "PlayerMovementComponent.h"
+#include "ControlledMovementComponent.h"
 #include <ResourceManager.h>
 
 float QBertFactory::m_QbertSize = 32.f;
@@ -33,7 +33,9 @@ std::shared_ptr<boop::GameObject> QBertFactory::MakePlayer(boop::Scene& scene, L
 
 	auto* playerJumper = new JumpComponent(transform, state, m_QbertLeapTime);
 	go->AddComponent(playerJumper);
-	go->AddComponent(new PlayerMovementComponent(pLevel->GetTileWithCoordinate(startCoordinate), pLevel, playerJumper, controls));
+	go->AddComponent(new ControlledMovementComponent(pLevel->GetTileWithCoordinate(startCoordinate), pLevel, playerJumper, controls));
+	go->AddTag("qbert");
+	
 	scene.Add(go, m_QBertDepth);
 	return go;
 }

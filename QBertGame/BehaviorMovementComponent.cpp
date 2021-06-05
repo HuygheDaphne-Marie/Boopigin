@@ -18,7 +18,5 @@ BehaviorMovementComponent::~BehaviorMovementComponent()
 
 void BehaviorMovementComponent::Update()
 {
-	MovementComponent::Update();
 	m_pBehavior->Update(this, m_pState);
-
 }
