@@ -27,6 +27,7 @@ public:
 
 	std::shared_ptr<boop::Scene> GetLevelScene() const;
 	std::shared_ptr<boop::GameObject> GetQbertClosestTo(const glm::ivec2& pos);
+	int GetLevelSize() const;
 
 private:
 	std::shared_ptr<boop::Scene> m_Scene;

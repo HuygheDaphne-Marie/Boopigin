@@ -6,8 +6,6 @@ class ChaseQbertBehavior final : public IMovementBehavior
 {
 public:
 	explicit ChaseQbertBehavior(LevelComponent* level);
-	
-	void Setup(BehaviorMovementComponent* movement, StateComponent* state) override;
 	void Update(BehaviorMovementComponent* movement, StateComponent* state) override;
 
 private:

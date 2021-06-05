@@ -9,13 +9,6 @@ ChaseQbertBehavior::ChaseQbertBehavior(LevelComponent* level)
 {
 }
 
-void ChaseQbertBehavior::Setup(BehaviorMovementComponent* movement, StateComponent* state)
-{
-	state->ResetState();
-	auto pos = movement->GetCurrentPosition();
-	pos.x++;
-}
-
 void ChaseQbertBehavior::Update(BehaviorMovementComponent* movement, StateComponent* state)
 {
 	if (!state->CanJump())

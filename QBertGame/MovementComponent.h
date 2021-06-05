@@ -11,14 +11,10 @@ enum class Direction
 	up = 0,
 	right = 1,
 	down = 2,
-	left = 3
+	left = 3,
+	escheresqueRight,
+	escheresqueLeft
 };
-
-//struct WalkData
-//{
-//	glm::ivec2 tileCoordinate;
-//	bool isPlayer;
-//};
 
 class MovementComponent : public boop::Component, public IEventListener
 {
@@ -31,6 +27,8 @@ public:
 	bool MoveRight();
 	bool MoveDown();
 	bool MoveLeft();
+	bool MoveEscheresqueRight();
+	bool MoveEscheresqueLeft();
 	virtual bool Move(Direction movementDirection);
 	virtual bool MoveTo(const glm::ivec2& tileCoordinate, Direction direction);
 
@@ -40,7 +38,7 @@ public:
 
 	void SetPosition(const glm::ivec2& coordinate);
 
-	glm::vec2 GetCurrentPosition() const;
+	glm::ivec2 GetCurrentPosition() const;
 	const LevelComponent* GetLevel() const;
 	const JumpComponent* GetJumper() const;
 

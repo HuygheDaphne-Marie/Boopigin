@@ -8,7 +8,6 @@ BehaviorMovementComponent::BehaviorMovementComponent(TileComponent* startTile, L
 	, m_pState(state)
 	, m_pBehavior(myBehavior)
 {
-	m_pBehavior->Setup(this, m_pState);
 }
 
 BehaviorMovementComponent::~BehaviorMovementComponent()

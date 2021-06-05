@@ -167,6 +167,11 @@ std::shared_ptr<boop::GameObject> LevelComponent::GetQbertClosestTo(const glm::i
 	return nullptr;
 }
 
+int LevelComponent::GetLevelSize() const
+{
+	return m_LevelSize;
+}
+
 bool LevelComponent::AreAllTilesFlipped() const
 {
 	if (m_LevelTiles.empty())

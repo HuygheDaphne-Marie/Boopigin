@@ -114,6 +114,9 @@
     <ClCompile Include="ChaseQbertBehavior.cpp">
       <Filter>AI\Behaviors</Filter>
     </ClCompile>
+    <ClCompile Include="EscheresqueTumbleBehavior.cpp">
+      <Filter>AI\Behaviors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSetup.h">
@@ -192,6 +195,9 @@
       <Filter>Components\Collision</Filter>
     </ClInclude>
     <ClInclude Include="ChaseQbertBehavior.h">
+      <Filter>AI\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="EscheresqueTumbleBehavior.h">
       <Filter>AI\Behaviors</Filter>
     </ClInclude>
   </ItemGroup>

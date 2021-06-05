@@ -23,11 +23,21 @@ public:
 		LevelComponent* pLevel,
 		const glm::ivec2& startCoordinate = { 0,0 });
 
+	static std::shared_ptr<boop::GameObject> MakeUgg(
+		boop::Scene& scene,
+		LevelComponent* pLevel,
+		const glm::ivec2& startCoordinate = { 0,0 });
+
+	static std::shared_ptr<boop::GameObject> MakeWrongway(
+		boop::Scene& scene,
+		LevelComponent* pLevel,
+		const glm::ivec2& startCoordinate = { 0,0 });
+
 	static float m_LeapTime;
 	static unsigned int m_Depth;
 
 	static int m_SlickSamScoreGain;
-	static float m_SlickSamSize;
+	static float m_SquareEnemySize;
 	static std::string m_SlickTexturePath;
 	static std::string m_SamTexturePath;
 
@@ -35,11 +45,21 @@ public:
 	static float m_CoilyHeight;
 	static std::string m_CoilyTexturePath;
 
+	static std::string m_UggTexturePath;
+	static std::string m_WrongwayTexturePath;
+
 private:
 	static std::shared_ptr<boop::GameObject> MakeTumbler(
 		boop::Scene& scene,
 		LevelComponent* pLevel,
 		const std::string& texturePath,
+		const glm::ivec2& startCoordinate = { 0,0 });
+
+	static std::shared_ptr<boop::GameObject> MakeEscheresqueTumbler(
+		boop::Scene& scene,
+		LevelComponent* pLevel,
+		const std::string& texturePath,
+		bool standOnLeftSideOfTile,
 		const glm::ivec2& startCoordinate = { 0,0 });
 };
 

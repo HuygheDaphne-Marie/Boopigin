@@ -38,6 +38,14 @@ bool MovementComponent::MoveLeft()
 {
 	return Move(Direction::left);
 }
+bool MovementComponent::MoveEscheresqueRight()
+{
+	return Move(Direction::escheresqueRight);
+}
+bool MovementComponent::MoveEscheresqueLeft()
+{
+	return Move(Direction::escheresqueLeft);
+}
 
 bool MovementComponent::Move(Direction movementDirection)
 {
@@ -56,6 +64,14 @@ bool MovementComponent::Move(Direction movementDirection)
 		break;
 	case Direction::left:
 		coordinateChange.x = -1;
+		break;
+	case Direction::escheresqueRight:
+		coordinateChange.x = -1;
+		coordinateChange.y = 1;
+		break;
+	case Direction::escheresqueLeft:
+		coordinateChange.x = 1;
+		coordinateChange.y = -1;
 		break;
 	}
 
@@ -156,7 +172,7 @@ void MovementComponent::SetPosition(const glm::ivec2& coordinate)
 	m_pJumper->SetStartPos(pos);
 }
 
-glm::vec2 MovementComponent::GetCurrentPosition() const
+glm::ivec2 MovementComponent::GetCurrentPosition() const
 {
 	return m_CurrentPos;
 }
