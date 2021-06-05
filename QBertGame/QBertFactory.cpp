@@ -9,6 +9,8 @@
 #include "LifeTrackerComponent.h"
 #include "ControlledMovementComponent.h"
 #include <ResourceManager.h>
+#include "ScoreDataComponent.h"
+#include "ScoreTrackerComponent.h"
 
 float QBertFactory::m_QbertSize = 32.f;
 float QBertFactory::m_QbertLeapTime = 0.7f;
@@ -48,6 +50,20 @@ std::shared_ptr<boop::GameObject> QBertFactory::MakePlayerTracker(boop::Scene& s
 	auto* lifeTrackText = new boop::TextComponent("Lives: X", font);
 	go->AddComponent(lifeTrackText);
 	go->AddComponent(new LifeTrackerComponent(playerToTrack->GetComponentOfType<PlayerDataComponent>(), lifeTrackText));
+	scene.Add(go, m_QBertTrackerDepth);
+
+	return go;
+}
+
+std::shared_ptr<boop::GameObject> QBertFactory::MakeScoreTracker(boop::Scene& scene,
+	std::shared_ptr<boop::GameObject> scoreDataObject)
+{
+	const auto font = boop::ResourceManager::GetInstance().LoadFont(m_QBertTrackerFontPath, m_QBertTrackerFontSize);
+	auto go = std::make_shared<boop::GameObject>();
+	go->AddComponent(new boop::TransformComponent(0, 25.f));
+	auto* scoreText = new boop::TextComponent("Score: X", font);
+	go->AddComponent(scoreText);
+	go->AddComponent(new ScoreTrackerComponent(scoreDataObject->GetComponentOfType<ScoreDataComponent>(), scoreText));
 	scene.Add(go, m_QBertTrackerDepth);
 
 	return go;

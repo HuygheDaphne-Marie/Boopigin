@@ -5,6 +5,8 @@
 #include "StateComponent.h"
 #include "BehaviorMovementComponent.h"
 #include "TumbleBehavior.h"
+#include "CollisionComponent.h"
+#include "ScoreGainCollision.h"
 
 float EnemyFactory::m_LeapTime = 0.7f;
 unsigned int EnemyFactory::m_Depth = 1;
@@ -17,6 +19,7 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeSlick(boop::Scene& scene, Le
 	const glm::ivec2& startCoordinate)
 {
 	auto slick = MakeTumbler(scene, pLevel, m_SlickTexturePath, startCoordinate);
+	slick->AddComponent(new CollisionComponent(new ScoreGainCollision(300)));
 	slick->AddTag("slick");
 	slick->AddTag("green");
 	return slick;
@@ -26,6 +29,7 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeSam(boop::Scene& scene, Leve
 	const glm::ivec2& startCoordinate)
 {
 	auto sam = MakeTumbler(scene, pLevel, m_SamTexturePath, startCoordinate);
+	sam->AddComponent(new CollisionComponent(new ScoreGainCollision(300)));
 	sam->AddTag("sam");
 	sam->AddTag("green");
 	return sam;

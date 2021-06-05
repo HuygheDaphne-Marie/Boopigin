@@ -23,7 +23,7 @@ public:
 
 	bool OnEvent(const Event& event) override;
 
-	void AddPlayer(std::shared_ptr<boop::GameObject> player);
+	void AddEntity(std::shared_ptr<boop::GameObject> player);
 
 private:
 	std::shared_ptr<boop::Scene> m_Scene;

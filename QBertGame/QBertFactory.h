@@ -18,6 +18,10 @@ public:
 		boop::Scene& scene,
 		std::shared_ptr<boop::GameObject> playerToTrack);
 
+	static std::shared_ptr<boop::GameObject> MakeScoreTracker(
+		boop::Scene& scene,
+		std::shared_ptr<boop::GameObject> scoreDataObject);
+
 	static float m_QbertSize;
 	static float m_QbertLeapTime;
 	static std::string m_QBertTexturePath;

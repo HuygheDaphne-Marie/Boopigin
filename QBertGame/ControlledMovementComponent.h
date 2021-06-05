@@ -12,7 +12,7 @@ public:
 	ControlledMovementComponent(ControlledMovementComponent&&) = delete;
 	ControlledMovementComponent operator=(ControlledMovementComponent&) = delete;
 	ControlledMovementComponent operator=(ControlledMovementComponent&&) = delete;
-	~ControlledMovementComponent();
+	~ControlledMovementComponent() override;
 
 	void Startup() override;
 	

@@ -37,6 +37,9 @@
     <Filter Include="AI\Behaviors">
       <UniqueIdentifier>{1a8b9d87-e5b8-4bb0-8394-c661d89db96a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Collision">
+      <UniqueIdentifier>{92edb2b3-32c0-41a3-a49f-d4f928fe2adb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QBertGame.cpp">
@@ -89,6 +92,21 @@
     </ClCompile>
     <ClCompile Include="EnemyFactory.cpp">
       <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreDataComponent.cpp">
+      <Filter>Components\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreTrackerComponent.cpp">
+      <Filter>Components\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionComponent.cpp">
+      <Filter>Components\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="ICollisionBehavior.cpp">
+      <Filter>Components\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreGainCollision.cpp">
+      <Filter>Components\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +163,21 @@
     </ClInclude>
     <ClInclude Include="EnemyFactory.h">
       <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreDataComponent.h">
+      <Filter>Components\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreTrackerComponent.h">
+      <Filter>Components\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Components\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollisionBehavior.h">
+      <Filter>Components\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreGainCollision.h">
+      <Filter>Components\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 #include "JumpComponent.h"
 #include "ControlledMovementComponent.h"
 #include "BehaviorMovementComponent.h"
+#include "CollisionComponent.h"
 
 /*
 
@@ -121,7 +122,7 @@ bool LevelComponent::OnEvent(const Event& event)
 	return false;
 }
 
-void LevelComponent::AddPlayer(std::shared_ptr<boop::GameObject> player)
+void LevelComponent::AddEntity(std::shared_ptr<boop::GameObject> player)
 {
 	bool isAlreadyInList = false;
 	for (auto& weakPtr : m_Entities)
@@ -229,6 +230,17 @@ void LevelComponent::DoCollisionCheck(boop::GameObject* jumpedEntity)
 
 			if (jumpedMovementComp->GetCurrentPosition() == otherMovementComp->GetCurrentPosition())
 			{
+				 // If the entity has a collision component, we tell it who it collided with
+				if (auto collisionComp = ptrJumped->GetComponentOfType<CollisionComponent>())
+				{
+					collisionComp->OnCollision(lockedEntity);
+				}
+				if (auto collisionComp = lockedEntity->GetComponentOfType<CollisionComponent>())
+				{
+					collisionComp->OnCollision(ptrJumped);
+				}
+				
+				/*
 				const bool isOnePlayer = ptrJumped->HasTag("qbert") || lockedEntity->HasTag("qbert");
 				const bool isOneGreen = ptrJumped->HasTag("green") || lockedEntity->HasTag("green");
 				const bool isOnePurple = ptrJumped->HasTag("purple") || lockedEntity->HasTag("purple");
@@ -247,6 +259,7 @@ void LevelComponent::DoCollisionCheck(boop::GameObject* jumpedEntity)
 					
 					EventQueue::GetInstance().Broadcast(new Event("PlayerTakeDamage", player));
 				}
+				*/
 			}
 		}
 	}

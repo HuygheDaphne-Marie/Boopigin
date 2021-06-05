@@ -176,6 +176,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EnemyFactory.cpp" />
+    <ClCompile Include="CollisionComponent.cpp" />
+    <ClCompile Include="ICollisionBehavior.cpp" />
     <ClCompile Include="JumpComponent.cpp" />
     <ClCompile Include="LevelComponent.cpp" />
     <ClCompile Include="LevelFactory.cpp" />
@@ -185,6 +187,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="PlayerDataComponent.cpp" />
     <ClCompile Include="ControlledMovementComponent.cpp" />
     <ClCompile Include="QBertFactory.cpp" />
+    <ClCompile Include="ScoreDataComponent.cpp" />
+    <ClCompile Include="ScoreGainCollision.cpp" />
+    <ClCompile Include="ScoreTrackerComponent.cpp" />
     <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="TileFactory.cpp" />
     <ClCompile Include="GameSetup.cpp" />
@@ -195,6 +200,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnemyFactory.h" />
+    <ClInclude Include="CollisionComponent.h" />
+    <ClInclude Include="ICollisionBehavior.h" />
     <ClInclude Include="IMovementBehavior.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JumpComponent.h" />
@@ -206,6 +213,9 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="PlayerDataComponent.h" />
     <ClInclude Include="ControlledMovementComponent.h" />
     <ClInclude Include="QBertFactory.h" />
+    <ClInclude Include="ScoreDataComponent.h" />
+    <ClInclude Include="ScoreGainCollision.h" />
+    <ClInclude Include="ScoreTrackerComponent.h" />
     <ClInclude Include="StateComponent.h" />
     <ClInclude Include="TileFactory.h" />
     <ClInclude Include="GameSetup.h" />
