@@ -26,6 +26,7 @@ public:
 	static int m_QbertDstSize;
 	static float m_QbertLeapTime;
 	static std::string m_QBertTexturePath;
+	static std::string m_QBertJumpSoundPath;
 	static unsigned int m_QBertDepth;
 	
 	static std::string m_QBertTrackerFontPath;

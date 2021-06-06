@@ -105,7 +105,7 @@ void Scene::DeleteRemovedObjects()
 
 void Scene::DeleteRemovedObjectsFromVector(std::vector<std::shared_ptr<GameObject>>& vectorToRemoveFrom)
 {
-	for (int index = 0; index < vectorToRemoveFrom.size(); index++)
+	for (int index = 0; index < static_cast<int>(vectorToRemoveFrom.size()); index++)
 	{
 		if (vectorToRemoveFrom[index]->IsMarkedForDelete())
 		{

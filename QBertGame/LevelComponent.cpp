@@ -50,17 +50,18 @@ std::vector<boop::KeyInfo> LevelComponent::m_PlayerOneKeys =
 };
 std::vector<boop::KeyInfo> LevelComponent::m_PlayerTwoKeys =
 {
+	boop::KeyInfo(boop::ControllerButton::ButtonB),
+	boop::KeyInfo(boop::ControllerButton::ButtonA),
+	boop::KeyInfo(boop::ControllerButton::ButtonX),
+	boop::KeyInfo(boop::ControllerButton::ButtonY)
+};
+/*
+		std::vector<KeyInfo> playerTwoKeys = {
+
 		boop::KeyInfo(SDLK_e),
 		boop::KeyInfo(SDLK_c),
 		boop::KeyInfo(SDLK_z),
 		boop::KeyInfo(SDLK_q)
-};
-/*
-		std::vector<KeyInfo> playerTwoKeys = {
-			KeyInfo(ControllerButton::ButtonB),
-			KeyInfo(ControllerButton::ButtonA),
-			KeyInfo(ControllerButton::ButtonX),
-			KeyInfo(ControllerButton::ButtonY)
 		};
  */
 

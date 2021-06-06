@@ -61,6 +61,7 @@ public:
 	static int m_CoilyDstHeight;
 	static std::string m_CoilyEggTexturePath;
 	static std::string m_CoilyTexturePath;
+	static std::string m_CoilyJumpSoundPath;
 
 	static std::string m_UggTexturePath;
 	static std::string m_WrongwayTexturePath;

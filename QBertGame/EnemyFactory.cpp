@@ -14,6 +14,7 @@
 #include "QuadDirectionalJumpAnimationComponent.h"
 #include "BiDirectionalJumpAnimationComponent.h"
 #include <Key.h>
+#include "PlaySoundOnJumpComponent.h"
 
 float EnemyFactory::m_LeapTime = 1.0f;
 float EnemyFactory::m_LeapCooldownTime = 0.5f;
@@ -31,6 +32,7 @@ int EnemyFactory::m_CoilyDstWidth = 24;
 int EnemyFactory::m_CoilyDstHeight = m_CoilyDstWidth * 2;
 std::string EnemyFactory::m_CoilyEggTexturePath = "textures/coilyEgg.png";
 std::string EnemyFactory::m_CoilyTexturePath = "textures/coily.png";
+std::string EnemyFactory::m_CoilyJumpSoundPath = "../Data/sound/jump-4.wav";
 
 std::string EnemyFactory::m_UggTexturePath = "textures/ugg.png";
 std::string EnemyFactory::m_WrongwayTexturePath = "textures/wrongway.png";
@@ -87,6 +89,8 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeCoily(boop::Scene& scene, Le
 	auto go = MakeCoilyBase(scene);
 	auto jumper = go->GetComponentOfType<JumpComponent>();
 	go->AddComponent(new ControlledMovementComponent(pLevel->GetTileWithCoordinate(startCoordinate), pLevel, jumper, controlKeys));
+	go->GetComponentOfType<MovementComponent>()->m_DoFlip = false;
+	go->GetComponentOfType<MovementComponent>()->m_DoGainScore = false;
 	return go;
 }
 
@@ -174,6 +178,8 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeCoilyBase(boop::Scene& scene
 
 	auto* jumper = new JumpComponent(transform, state, m_LeapTime);
 	go->AddComponent(jumper);
+
+	go->AddComponent(new PlaySoundOnJumpComponent(m_CoilyJumpSoundPath));
 
 	go->AddComponent(new CollisionComponent(new KillPlayerCollision()));
 	go->AddTag("enemy");

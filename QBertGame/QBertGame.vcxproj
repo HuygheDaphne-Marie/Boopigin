@@ -177,6 +177,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   <ItemGroup>
     <ClCompile Include="BiDirectionalJumpAnimationComponent.cpp" />
     <ClCompile Include="ChaseQbertBehavior.cpp" />
+    <ClCompile Include="MenuSelectChangeCommand.cpp" />
+    <ClCompile Include="MenuSelectComponent.cpp" />
+    <ClCompile Include="MenuSelectConfirmCommand.cpp" />
+    <ClCompile Include="PlaySoundOnJumpComponent.cpp" />
     <ClCompile Include="QuadDirectionalJumpAnimationComponent.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
@@ -206,6 +210,10 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   <ItemGroup>
     <ClInclude Include="BiDirectionalJumpAnimationComponent.h" />
     <ClInclude Include="ChaseQbertBehavior.h" />
+    <ClInclude Include="MenuSelectChangeCommand.h" />
+    <ClInclude Include="MenuSelectComponent.h" />
+    <ClInclude Include="MenuSelectConfirmCommand.h" />
+    <ClInclude Include="PlaySoundOnJumpComponent.h" />
     <ClInclude Include="QuadDirectionalJumpAnimationComponent.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="CollisionComponent.h" />

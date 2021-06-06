@@ -43,6 +43,12 @@
     <Filter Include="Components\Animation">
       <UniqueIdentifier>{361a9111-6473-4784-8dd9-c23223529f63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\UI">
+      <UniqueIdentifier>{47c0189b-a450-4ab4-b659-87481be28909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Sound">
+      <UniqueIdentifier>{ae1b6628-e6f7-4fea-8211-500f5b55a4fd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QBertGame.cpp">
@@ -125,6 +131,18 @@
     </ClCompile>
     <ClCompile Include="BiDirectionalJumpAnimationComponent.cpp">
       <Filter>Components\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSelectChangeCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSelectComponent.cpp">
+      <Filter>Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSelectConfirmCommand.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySoundOnJumpComponent.cpp">
+      <Filter>Components\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +232,18 @@
     </ClInclude>
     <ClInclude Include="BiDirectionalJumpAnimationComponent.h">
       <Filter>Components\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSelectChangeCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSelectComponent.h">
+      <Filter>Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSelectConfirmCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySoundOnJumpComponent.h">
+      <Filter>Components\Sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

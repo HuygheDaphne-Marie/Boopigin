@@ -29,6 +29,7 @@ bool JumpComponent::StartJump(const glm::vec2& end)
 {
 	if (m_pState->CanJump())
 	{
+		EventQueue::GetInstance().Broadcast(new Event("StartJump", this));
 		m_LeapTimer = 0.f;
 		SetEndPos(end);
 		return m_pState->GoJump();

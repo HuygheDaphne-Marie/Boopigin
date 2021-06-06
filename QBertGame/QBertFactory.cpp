@@ -9,6 +9,8 @@
 #include "LifeTrackerComponent.h"
 #include "ControlledMovementComponent.h"
 #include <ResourceManager.h>
+
+#include "PlaySoundOnJumpComponent.h"
 #include "ScoreDataComponent.h"
 #include "ScoreTrackerComponent.h"
 #include "QuadDirectionalJumpAnimationComponent.h"
@@ -17,6 +19,7 @@ int QBertFactory::m_QbertSrcSize = 16;
 int QBertFactory::m_QbertDstSize = 32;
 float QBertFactory::m_QbertLeapTime = 0.7f;
 std::string QBertFactory::m_QBertTexturePath = "textures/qbert.png";
+std::string QBertFactory::m_QBertJumpSoundPath = "../Data/sound/jump-3.wav";
 unsigned int QBertFactory::m_QBertDepth = 1;
 
 std::string QBertFactory::m_QBertTrackerFontPath = "Lingua.otf";
@@ -42,6 +45,8 @@ std::shared_ptr<boop::GameObject> QBertFactory::MakePlayer(boop::Scene& scene, L
 	go->AddComponent(playerJumper);
 	go->AddComponent(new ControlledMovementComponent(pLevel->GetTileWithCoordinate(startCoordinate), pLevel, playerJumper, controls));
 	go->AddTag("qbert");
+
+	go->AddComponent(new PlaySoundOnJumpComponent(m_QBertJumpSoundPath));
 	
 	scene.Add(go, m_QBertDepth);
 	return go;
