@@ -22,7 +22,8 @@ public:
 		boop::Scene& scene,
 		std::shared_ptr<boop::GameObject> scoreDataObject);
 
-	static float m_QbertSize;
+	static int m_QbertSrcSize;
+	static int m_QbertDstSize;
 	static float m_QbertLeapTime;
 	static std::string m_QBertTexturePath;
 	static unsigned int m_QBertDepth;

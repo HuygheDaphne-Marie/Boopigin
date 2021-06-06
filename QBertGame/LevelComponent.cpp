@@ -232,6 +232,7 @@ std::shared_ptr<boop::GameObject> LevelComponent::GetSharedFromRawPointer(boop::
 	return nullptr;
 }
 
+/*
 MovementComponent* LevelComponent::GetMovementComponentFromEntity(std::weak_ptr<boop::GameObject> entity)
 {
 	if (auto lockedEntity = entity.lock())
@@ -244,23 +245,26 @@ MovementComponent* LevelComponent::GetMovementComponentFromEntity(std::weak_ptr<
 	}
 	return nullptr;
 }
+*/
 
 void LevelComponent::DoCollisionCheck(boop::GameObject* jumpedEntity)
 {
 	const std::shared_ptr<boop::GameObject> ptrJumped = GetSharedFromRawPointer(jumpedEntity);
-	MovementComponent* jumpedMovementComp = GetMovementComponentFromEntity(ptrJumped);
+	MovementComponent* jumpedMovementComp = ptrJumped->GetComponentOfType<MovementComponent>();
 
 	if (jumpedMovementComp == nullptr)
 		return;
 
 	for (auto& entity : m_Entities)
 	{
+		// Skip self
 		if (entity.lock() == ptrJumped)
 			continue;
 		
 		if (auto lockedEntity = entity.lock())
 		{
-			MovementComponent* otherMovementComp = GetMovementComponentFromEntity(entity);
+			MovementComponent* otherMovementComp = lockedEntity->GetComponentOfType<MovementComponent>();
+			// Skip things that don't have a movement component
 			if (otherMovementComp == nullptr)
 				continue;
 
@@ -275,27 +279,6 @@ void LevelComponent::DoCollisionCheck(boop::GameObject* jumpedEntity)
 				{
 					collisionComp->OnCollision(ptrJumped);
 				}
-				
-				/*
-				const bool isOnePlayer = ptrJumped->HasTag("qbert") || lockedEntity->HasTag("qbert");
-				const bool isOneGreen = ptrJumped->HasTag("green") || lockedEntity->HasTag("green");
-				const bool isOnePurple = ptrJumped->HasTag("purple") || lockedEntity->HasTag("purple");
-
-				if (isOnePlayer && isOneGreen)
-				{
-					EventQueue::GetInstance().Broadcast(new Event("ScoreGained", 300));
-				}
-				if (isOnePlayer && isOnePurple)
-				{
-					boop::GameObject* player = nullptr;
-					if (ptrJumped->HasTag("qbert"))
-						player = ptrJumped.get();
-					else
-						player = lockedEntity.get();
-					
-					EventQueue::GetInstance().Broadcast(new Event("PlayerTakeDamage", player));
-				}
-				*/
 			}
 		}
 	}

@@ -5,6 +5,7 @@
 #include "JumpComponent.h"
 #include <TextureComponent.h>
 #include <IEventListener.h>
+#include <AnimationComponent.h>
 
 enum class Direction
 {
@@ -54,6 +55,7 @@ protected:
 	JumpComponent* m_pJumper;
 	
 	glm::vec2 GetTileStandPosition(TileComponent* tile) const;
-	static glm::vec2 GetTileStandPosition(TileComponent* tile, boop::TextureComponent* pQbertTexture);
+	static glm::vec2 GetTileStandPosition(TileComponent* tile, const glm::ivec2& textureDimension);
+	static glm::ivec2 GetTextureDimension(boop::GameObject* object);
 };
 

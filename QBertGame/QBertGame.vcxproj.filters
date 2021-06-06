@@ -40,6 +40,9 @@
     <Filter Include="Components\Collision">
       <UniqueIdentifier>{92edb2b3-32c0-41a3-a49f-d4f928fe2adb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Animation">
+      <UniqueIdentifier>{361a9111-6473-4784-8dd9-c23223529f63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="QBertGame.cpp">
@@ -116,6 +119,9 @@
     </ClCompile>
     <ClCompile Include="EscheresqueTumbleBehavior.cpp">
       <Filter>AI\Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadDirectionalJumpAnimationComponent.cpp">
+      <Filter>Components\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="EscheresqueTumbleBehavior.h">
       <Filter>AI\Behaviors</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadDirectionalJumpAnimationComponent.h">
+      <Filter>Components\Animation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

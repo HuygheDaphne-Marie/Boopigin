@@ -181,7 +181,7 @@
       <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="AnimationComponent.h">
-      <Filter>Header Files</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,8 @@
 #include <glm/glm.hpp>
 #pragma warning(pop)
 
+#include "QuadDirectionalJumpAnimationComponent.h"
+
 MovementComponent::MovementComponent(const glm::ivec2& startPos, LevelComponent* level, JumpComponent* jumper)
 	: m_CurrentPos(startPos)
 	, m_pLevel(level)
@@ -195,22 +197,44 @@ const JumpComponent* MovementComponent::GetJumper() const
 
 glm::vec2 MovementComponent::GetTileStandPosition(TileComponent* tile) const
 {
-	auto* texture = m_pOwner->GetComponentOfType<boop::TextureComponent>();
-	return GetTileStandPosition(tile, texture);
+	if (tile == nullptr)
+	{
+		return { 0,0 };
+	}
+
+	return GetTileStandPosition(tile, GetTextureDimension(m_pOwner));
 }
-glm::vec2 MovementComponent::GetTileStandPosition(TileComponent* tile, boop::TextureComponent* pQbertTexture)
+
+glm::vec2 MovementComponent::GetTileStandPosition(TileComponent* tile, const glm::ivec2& textureDimension)
 {
 	if (tile == nullptr)
 	{
 		return { 0,0 };
 	}
 
-	const auto qbertHeight = static_cast<float>(pQbertTexture->GetHeight());
-	const auto qbertWidth = static_cast<float>(pQbertTexture->GetWidth());
+	const auto entityHeight = static_cast<float>(textureDimension.y);
+	const auto entityWidth = static_cast<float>(textureDimension.x);
 
-	const float verticalAdjustment = LevelFactory::m_TileSize / 4 - qbertHeight;
-	const float horizontalAdjustment = LevelFactory::m_TileSize / 2 - qbertWidth / 2;
+	const float verticalAdjustment = LevelFactory::m_TileSize / 4 - entityHeight;
+	const float horizontalAdjustment = LevelFactory::m_TileSize / 2 - entityWidth / 2;
 	const glm::vec3 position = tile->GetOwner()->GetComponentOfType<boop::TransformComponent>()->GetPosition();
 
 	return { position.x + horizontalAdjustment, position.y + verticalAdjustment };
+}
+
+glm::ivec2 MovementComponent::GetTextureDimension(boop::GameObject* object)
+{
+	auto* texture = object->GetComponentOfType<boop::TextureComponent>();
+	if (texture != nullptr)
+	{
+		return { texture->GetWidth(), texture->GetHeight() };
+	}
+
+	auto* animation = object->GetComponentOfType<boop::AnimationComponent>();
+	if (animation != nullptr)
+	{
+		return { animation->GetWidth(), animation->GetHeight() };
+	}
+
+	return { 0, 0 };
 }

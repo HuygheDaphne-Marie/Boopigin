@@ -176,6 +176,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ChaseQbertBehavior.cpp" />
+    <ClCompile Include="QuadDirectionalJumpAnimationComponent.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="EscheresqueTumbleBehavior.cpp" />
@@ -203,6 +204,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChaseQbertBehavior.h" />
+    <ClInclude Include="QuadDirectionalJumpAnimationComponent.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="EscheresqueTumbleBehavior.h" />

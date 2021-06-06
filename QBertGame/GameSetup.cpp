@@ -31,7 +31,7 @@ void GameSetup::LoadGame() const
 	go->AddComponent(levelComponent);
 	auto* scoreData = new ScoreDataComponent();
 	go->AddComponent(scoreData);
-	go->AddComponent(new SpawnComponent(levelComponent));
+	//go->AddComponent(new SpawnComponent(levelComponent));
 	scene.Add(go);
 
 	std::vector<KeyInfo> keys = {

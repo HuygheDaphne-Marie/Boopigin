@@ -45,8 +45,8 @@ ControlledMovementComponent::~ControlledMovementComponent()
 
 void ControlledMovementComponent::Startup()
 {
-	MovementComponent::Startup();
 	m_pOwner->AddTag("controlled");
+	MovementComponent::Startup();
 }
 
 bool ControlledMovementComponent::Move(Direction movementDirection)
@@ -88,10 +88,13 @@ void ControlledMovementComponent::Reset()
 {
 	auto* myState = m_pOwner->GetComponentOfType<StateComponent>();
 	myState->ResetState();
+	/*
 	auto* myTexture = m_pOwner->GetComponentOfType<boop::TextureComponent>();
 
-	const glm::ivec2 newTileCoordinate = { 0,0 };
-	const glm::vec2 newPos = GetTileStandPosition(m_pLevel->GetTileWithCoordinate(newTileCoordinate), myTexture);
+	const glm::vec2 newPos = GetTileStandPosition(m_pLevel->GetTileWithCoordinate(newTileCoordinate), GetTextureDimension(m_pOwner));
 	m_pJumper->SetStartPos(newPos);
+	*/
+	const glm::ivec2 newTileCoordinate = { 0,0 };
+	SetPosition(newTileCoordinate);
 	m_CurrentPos = newTileCoordinate;
 }

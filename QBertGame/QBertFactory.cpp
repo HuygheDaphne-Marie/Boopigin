@@ -11,8 +11,10 @@
 #include <ResourceManager.h>
 #include "ScoreDataComponent.h"
 #include "ScoreTrackerComponent.h"
+#include "QuadDirectionalJumpAnimationComponent.h"
 
-float QBertFactory::m_QbertSize = 32.f;
+int QBertFactory::m_QbertSrcSize = 16;
+int QBertFactory::m_QbertDstSize = 32;
 float QBertFactory::m_QbertLeapTime = 0.7f;
 std::string QBertFactory::m_QBertTexturePath = "textures/qbert.png";
 unsigned int QBertFactory::m_QBertDepth = 1;
@@ -25,9 +27,14 @@ std::shared_ptr<boop::GameObject> QBertFactory::MakePlayer(boop::Scene& scene, L
 	std::vector<boop::KeyInfo>& controls, const glm::ivec2& startCoordinate)
 {
 	auto go = std::make_shared<boop::GameObject>();
-	go->AddComponent(new boop::TextureComponent(m_QBertTexturePath, m_QbertSize, m_QbertSize));
+	//go->AddComponent(new boop::TextureComponent(m_QBertTexturePath, m_QbertDstSize, m_QbertDstSize));
+
 	auto* transform = new boop::TransformComponent();
 	go->AddComponent(transform);
+
+	go->AddComponent(new QuadDirectionalJumpAnimationComponent(m_QBertTexturePath, m_QbertSrcSize, m_QbertSrcSize,
+		m_QbertDstSize, m_QbertDstSize));
+	
 	auto* playerData = new PlayerDataComponent();
 	go->AddComponent(playerData);
 	auto* state = new StateComponent();

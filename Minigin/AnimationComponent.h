@@ -8,7 +8,7 @@ namespace boop
 {
 	class TransformComponent;
 
-	class AnimationComponent final : public Component
+	class AnimationComponent : public Component
 	{
 	public:
 		explicit AnimationComponent(const std::string& texturePath, int frameWidth, int frameHeight, int displayWidth = 0, int displayHeight = 0);
@@ -24,6 +24,9 @@ namespace boop
 		[[nodiscard]] unsigned int GetFrameCount() const;
 		[[nodiscard]] unsigned int GetCurrentFrame() const;
 		void SetFrame(unsigned int frame);
+
+		[[nodiscard]] int GetWidth() const;
+		[[nodiscard]] int GetHeight() const;
 
 	private:
 		std::shared_ptr<Texture2D> m_pTexture{};

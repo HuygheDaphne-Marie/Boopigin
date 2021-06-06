@@ -37,6 +37,7 @@ boop::AnimationComponent::AnimationComponent(const std::string& texturePath, int
 void boop::AnimationComponent::Startup()
 {
 	m_pTransform = m_pOwner->GetComponentOfType<TransformComponent>();
+	SetFrame(m_CurrentFrame);
 }
 
 void boop::AnimationComponent::Render() const
@@ -72,4 +73,14 @@ void boop::AnimationComponent::SetFrame(unsigned int frame)
 	m_SrcRect.x = m_SrcRect.w * frameCol;
 	m_SrcRect.y = m_SrcRect.h * frameRow;
 	m_CurrentFrame = frame;
+}
+
+int boop::AnimationComponent::GetWidth() const
+{
+	return m_DstWidth;
+}
+
+int boop::AnimationComponent::GetHeight() const
+{
+	return m_DstHeight;
 }

@@ -35,9 +35,9 @@ namespace boop
 		{
 			for (Component* component : m_Components)
 			{
-				if(typeid(TypeOfComponent).name() == typeid(*component).name())
+				if(auto cast = dynamic_cast<TypeOfComponent*>(component))
 				{
-					return static_cast<TypeOfComponent*>(component);
+					return cast;
 				}
 			}
 			return nullptr;
