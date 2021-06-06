@@ -41,8 +41,10 @@ public:
 	static std::string m_SlickTexturePath;
 	static std::string m_SamTexturePath;
 
-	static float m_CoilyWidth;
-	static float m_CoilyHeight;
+	static int m_CoilySrcWidth;
+	static int m_CoilySrcHeight;
+	static int m_CoilyDstWidth;
+	static int m_CoilyDstHeight;
 	static std::string m_CoilyTexturePath;
 
 	static std::string m_UggTexturePath;

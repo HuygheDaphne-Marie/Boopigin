@@ -44,7 +44,6 @@ private:
 	void LoadNextLevel();
 
 	std::shared_ptr<boop::GameObject> GetSharedFromRawPointer(boop::GameObject* gameObject);
-	MovementComponent* GetMovementComponentFromEntity(std::weak_ptr<boop::GameObject> entity);
 	void DoCollisionCheck(boop::GameObject* jumpedEntity);
 };
 

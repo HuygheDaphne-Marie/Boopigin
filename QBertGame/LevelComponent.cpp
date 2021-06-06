@@ -232,21 +232,6 @@ std::shared_ptr<boop::GameObject> LevelComponent::GetSharedFromRawPointer(boop::
 	return nullptr;
 }
 
-/*
-MovementComponent* LevelComponent::GetMovementComponentFromEntity(std::weak_ptr<boop::GameObject> entity)
-{
-	if (auto lockedEntity = entity.lock())
-	{
-		if (lockedEntity->HasTag("controlled"))
-		{
-			return lockedEntity->GetComponentOfType<ControlledMovementComponent>();
-		}
-		return lockedEntity->GetComponentOfType<BehaviorMovementComponent>();
-	}
-	return nullptr;
-}
-*/
-
 void LevelComponent::DoCollisionCheck(boop::GameObject* jumpedEntity)
 {
 	const std::shared_ptr<boop::GameObject> ptrJumped = GetSharedFromRawPointer(jumpedEntity);

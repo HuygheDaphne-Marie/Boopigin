@@ -27,8 +27,6 @@ std::shared_ptr<boop::GameObject> QBertFactory::MakePlayer(boop::Scene& scene, L
 	std::vector<boop::KeyInfo>& controls, const glm::ivec2& startCoordinate)
 {
 	auto go = std::make_shared<boop::GameObject>();
-	//go->AddComponent(new boop::TextureComponent(m_QBertTexturePath, m_QbertDstSize, m_QbertDstSize));
-
 	auto* transform = new boop::TransformComponent();
 	go->AddComponent(transform);
 

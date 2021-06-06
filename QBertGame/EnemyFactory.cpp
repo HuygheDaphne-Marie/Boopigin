@@ -10,6 +10,7 @@
 #include "KillPlayerCollision.h"
 #include "ChaseQbertBehavior.h"
 #include "EscheresqueTumbleBehavior.h"
+#include "QuadDirectionalJumpAnimationComponent.h"
 
 float EnemyFactory::m_LeapTime = 1.0f;
 unsigned int EnemyFactory::m_Depth = 1;
@@ -19,9 +20,11 @@ float EnemyFactory::m_SquareEnemySize = 24.f;
 std::string EnemyFactory::m_SlickTexturePath = "textures/slickFrame.png"; // Todo: this must become an animation
 std::string EnemyFactory::m_SamTexturePath = "textures/samFrame.png";
 
-float EnemyFactory::m_CoilyWidth = 24.f;
-float EnemyFactory::m_CoilyHeight = m_CoilyWidth * 2;
-std::string EnemyFactory::m_CoilyTexturePath = "textures/coilyFrame.png";
+int EnemyFactory::m_CoilySrcWidth = 16;
+int EnemyFactory::m_CoilySrcHeight = 32;
+int EnemyFactory::m_CoilyDstWidth = 24;
+int EnemyFactory::m_CoilyDstHeight = m_CoilyDstWidth * 2;
+std::string EnemyFactory::m_CoilyTexturePath = "textures/coily.png";
 
 std::string EnemyFactory::m_UggTexturePath = "textures/uggFrame.png";
 std::string EnemyFactory::m_WrongwayTexturePath = "textures/wrongwayFrame.png";
@@ -30,6 +33,7 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeSlick(boop::Scene& scene, Le
 	const glm::ivec2& startCoordinate)
 {
 	auto slick = MakeTumbler(scene, pLevel, m_SlickTexturePath, startCoordinate);
+	slick->GetComponentOfType<MovementComponent>()->m_DoUnFlip = true;
 	slick->AddComponent(new CollisionComponent(new ScoreGainCollision(m_SlickSamScoreGain)));
 	slick->AddTag("slick");
 	slick->AddTag("green");
@@ -40,6 +44,7 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeSam(boop::Scene& scene, Leve
 	const glm::ivec2& startCoordinate)
 {
 	auto sam = MakeTumbler(scene, pLevel, m_SamTexturePath, startCoordinate);
+	sam->GetComponentOfType<MovementComponent>()->m_DoUnFlip = true;
 	sam->AddComponent(new CollisionComponent(new ScoreGainCollision(m_SlickSamScoreGain)));
 	sam->AddTag("sam");
 	sam->AddTag("green");
@@ -50,10 +55,12 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeCoily(boop::Scene& scene, Le
 	const glm::ivec2& startCoordinate)
 {
 	auto go = std::make_shared<boop::GameObject>();
-	go->AddComponent(new boop::TextureComponent(m_CoilyTexturePath, m_CoilyWidth, m_CoilyHeight));
 	auto* transform = new boop::TransformComponent();
 	go->AddComponent(transform);
 
+	go->AddComponent(new QuadDirectionalJumpAnimationComponent(m_CoilyTexturePath, m_CoilySrcWidth, m_CoilySrcHeight,
+		m_CoilyDstWidth, m_CoilyDstHeight));
+	
 	auto* state = new StateComponent();
 	go->AddComponent(state);
 
