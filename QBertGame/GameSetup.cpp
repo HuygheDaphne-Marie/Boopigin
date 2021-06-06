@@ -10,7 +10,6 @@
 #include "ControlledMovementComponent.h"
 
 #include "ScoreDataComponent.h"
-#include "ScoreTrackerComponent.h"
 #include "SpawnComponent.h"
 
 using namespace boop;

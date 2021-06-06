@@ -39,6 +39,7 @@ public:
 	void SetPosition(const glm::ivec2& coordinate);
 
 	glm::ivec2 GetCurrentPosition() const;
+	Direction GetLastMovedInDirection() const;
 	const LevelComponent* GetLevel() const;
 	const JumpComponent* GetJumper() const;
 
@@ -48,6 +49,7 @@ public:
 
 protected:
 	glm::ivec2 m_CurrentPos;
+	Direction m_LastMovedInDirection;
 	LevelComponent* m_pLevel;
 	JumpComponent* m_pJumper;
 	

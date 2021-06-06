@@ -39,8 +39,10 @@ private:
 	static glm::ivec2 GetStartPos(const std::vector<glm::ivec2>& possibleStartPositions);
 
 	static void IncrementTimeIfDead(float& timePassedSinceDeath, std::weak_ptr<boop::GameObject>& entityReference);
-	
+
+	/* // such hopeful dreams
 	void SpawnIfDeadForTime(const float timeItTakesToSpawn, float& timePassedSinceDeath, std::weak_ptr<boop::GameObject>& entityReference, 
 		const std::vector<glm::ivec2>& possibleSpawns, std::function<std::shared_ptr<boop::GameObject>> functionToCallWhenSpawning);
+	*/
 };
 

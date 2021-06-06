@@ -89,6 +89,7 @@ bool MovementComponent::MoveTo(const glm::ivec2& tileCoordinate, Direction direc
 		if (m_pJumper->StartJump(newPos))
 		{
 			m_CurrentPos = { newTile->GetColumn(), newTile->GetRow() };
+			m_LastMovedInDirection = direction;
 			return true;
 		}
 		return false;
@@ -109,6 +110,7 @@ bool MovementComponent::MoveTo(const glm::ivec2& tileCoordinate, Direction direc
 				jumpOffset.x = halfTileSize;
 				jumpOffset.y = -halfTileSize;
 				break;
+			case Direction::escheresqueRight:
 			case Direction::right:
 				jumpOffset.x = halfTileSize;
 				jumpOffset.y = halfTileSize;
@@ -117,6 +119,7 @@ bool MovementComponent::MoveTo(const glm::ivec2& tileCoordinate, Direction direc
 				jumpOffset.x = -halfTileSize;
 				jumpOffset.y = halfTileSize;
 				break;
+			case Direction::escheresqueLeft:
 			case Direction::left:
 				jumpOffset.x = -halfTileSize;
 				jumpOffset.y = -halfTileSize;
@@ -128,6 +131,7 @@ bool MovementComponent::MoveTo(const glm::ivec2& tileCoordinate, Direction direc
 			if (m_pJumper->StartJump(jumpOffPoint))
 			{
 				m_CurrentPos = tileCoordinate;
+				m_LastMovedInDirection = direction;
 				// die
 				return true;
 			}
@@ -175,6 +179,10 @@ void MovementComponent::SetPosition(const glm::ivec2& coordinate)
 glm::ivec2 MovementComponent::GetCurrentPosition() const
 {
 	return m_CurrentPos;
+}
+Direction MovementComponent::GetLastMovedInDirection() const
+{
+	return m_LastMovedInDirection;
 }
 const LevelComponent* MovementComponent::GetLevel() const
 {

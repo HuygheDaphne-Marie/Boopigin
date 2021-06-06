@@ -10,7 +10,7 @@ namespace boop
 	public:
 		explicit TextureComponent(const std::string& texturePath);
 		explicit TextureComponent(const std::string& texturePath, float width, float height);
-		~TextureComponent() = default;
+		~TextureComponent() override = default;
 		TextureComponent(const TextureComponent& other) = delete;
 		TextureComponent(TextureComponent&& other) = delete;
 		TextureComponent& operator=(const TextureComponent& other) = delete;
