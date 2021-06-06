@@ -123,6 +123,9 @@
     <ClCompile Include="QuadDirectionalJumpAnimationComponent.cpp">
       <Filter>Components\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="BiDirectionalJumpAnimationComponent.cpp">
+      <Filter>Components\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSetup.h">
@@ -207,6 +210,9 @@
       <Filter>AI\Behaviors</Filter>
     </ClInclude>
     <ClInclude Include="QuadDirectionalJumpAnimationComponent.h">
+      <Filter>Components\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="BiDirectionalJumpAnimationComponent.h">
       <Filter>Components\Animation</Filter>
     </ClInclude>
   </ItemGroup>

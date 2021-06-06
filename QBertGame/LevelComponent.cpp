@@ -46,6 +46,7 @@ LevelComponent::LevelComponent(const std::string& sceneName, const glm::vec2& le
 {
 	LoadLevel(m_LevelNumber);
 	EventQueue::GetInstance().Subscribe("PlayerDied", this);
+	EventQueue::GetInstance().Subscribe("PlayerTakeDamage", this);
 	EventQueue::GetInstance().Subscribe("JumpCompleted", this);
 }
 
@@ -87,18 +88,19 @@ void LevelComponent::Update()
 {
 	if (AreAllTilesFlipped())
 	{
-		// if all tiles are flipped
-		// load next level
 		LoadNextLevel();
 	}
-
-	//const auto removeItr = std::remove_if(m_Entities.begin(), m_Entities.end(),
-	//	[](std::weak_ptr<boop::GameObject>& entity)
-	//	{
-	//		return entity.expired();
-	//	}
-	//);
-	//m_Entities.erase(removeItr);
+	
+	/* // having trouble deleting this damn reference and cleaning up the list
+	for (int index = 0; index < m_Entities.size(); index++)
+	{
+		if (m_Entities[index].expired())
+		{
+			m_Entities[index] = m_Entities[m_Entities.size() - 1];
+			index--;
+		}
+	}
+	*/
 }
 
 bool LevelComponent::OnEvent(const Event& event)
@@ -120,6 +122,11 @@ bool LevelComponent::OnEvent(const Event& event)
 		}
 		m_LevelNumber = 0;
 		LoadNextLevel();
+		return true;
+	}
+	if (event.message == "PlayerTakeDamage")
+	{
+		ResetEnemyEntities();
 		return true;
 	}
 	// Todo: reset entities, put players back in startPos & delete all other entities when player takes damage
@@ -152,19 +159,32 @@ std::shared_ptr<boop::Scene> LevelComponent::GetLevelScene() const
 
 std::shared_ptr<boop::GameObject> LevelComponent::GetQbertClosestTo(const glm::ivec2& pos)
 {
-	int x = pos.x; // Todo: make this actually get the closest qbert
-	x++;
+	std::shared_ptr<boop::GameObject> closestQbert = nullptr;
+	
 	for (auto& entity : m_Entities)
 	{
 		if (auto lockedEntity = entity.lock())
 		{
 			if (lockedEntity->HasTag("qbert"))
 			{
-				return lockedEntity;
+				if (closestQbert == nullptr)
+				{
+					closestQbert = lockedEntity;
+					continue;
+				}
+
+				glm::ivec2 lockedPos = lockedEntity->GetComponentOfType<MovementComponent>()->GetCurrentPosition();
+				glm::ivec2 myDeltaPos = lockedPos - pos;
+				glm::ivec2 currentClosestDeltaPos = lockedEntity->GetComponentOfType<MovementComponent>()->GetCurrentPosition() - pos;
+
+				if (myDeltaPos.length() < currentClosestDeltaPos.length())
+				{
+					closestQbert = lockedEntity;
+				}
 			}
 		}
 	}
-	return nullptr;
+	return closestQbert;
 }
 
 int LevelComponent::GetLevelSize() const
@@ -215,6 +235,20 @@ void LevelComponent::LoadNextLevel()
 	m_LevelNumber++;
 	LoadLevel(m_LevelNumber);
 	EventQueue::GetInstance().Broadcast(new Event("NewLevelLoaded"));
+}
+
+void LevelComponent::ResetEnemyEntities()
+{
+	for (auto& weak : m_Entities)
+	{
+		if (auto locked = weak.lock())
+		{
+			if (!locked->HasTag("qbert"))
+			{
+				locked->MarkForDelete();
+			}
+		}
+	}
 }
 
 std::shared_ptr<boop::GameObject> LevelComponent::GetSharedFromRawPointer(boop::GameObject* gameObject)

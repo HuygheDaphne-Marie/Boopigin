@@ -175,6 +175,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BiDirectionalJumpAnimationComponent.cpp" />
     <ClCompile Include="ChaseQbertBehavior.cpp" />
     <ClCompile Include="QuadDirectionalJumpAnimationComponent.cpp" />
     <ClCompile Include="EnemyFactory.cpp" />
@@ -203,6 +204,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="TumbleBehavior.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BiDirectionalJumpAnimationComponent.h" />
     <ClInclude Include="ChaseQbertBehavior.h" />
     <ClInclude Include="QuadDirectionalJumpAnimationComponent.h" />
     <ClInclude Include="EnemyFactory.h" />

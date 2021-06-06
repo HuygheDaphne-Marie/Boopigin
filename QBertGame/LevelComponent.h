@@ -21,6 +21,7 @@ public:
 
 	void Update() override;
 
+	
 	bool OnEvent(const Event& event) override;
 
 	void AddEntity(std::shared_ptr<boop::GameObject> player);
@@ -42,6 +43,8 @@ private:
 	void LoadLevel(int levelNumber);
 	void ClearLevel();
 	void LoadNextLevel();
+
+	void ResetEnemyEntities();
 
 	std::shared_ptr<boop::GameObject> GetSharedFromRawPointer(boop::GameObject* gameObject);
 	void DoCollisionCheck(boop::GameObject* jumpedEntity);

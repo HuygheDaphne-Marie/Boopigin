@@ -1,24 +1,25 @@
 #include "StateComponent.h"
 #include "JumpComponent.h"
 #include <iostream>
+#include <Timer.h>
 
 StateComponent::StateComponent()
-	: m_CurrentState(State::standing),
-	m_pMyJumpComponent(nullptr)
+	: m_JumpCooldownTime(0.f),
+	m_CurrentState(State::standing),
+	m_pMyJumpComponent(nullptr),
+	m_JumpCooldownTimer(0.f)
 {
-	//if (m_pOwner != nullptr)
-	//	SetJumpComponent(m_pOwner->GetComponentOfType<JumpComponent>());
-
-	//if (m_pMyJumpComponent == nullptr)
-	//{
-	//	std::cerr << "StateComponent could not find a JumpComponent, it will need to be set!\n";
-	//}
 }
 
 void StateComponent::Update()
 {
 	if (m_pMyJumpComponent == nullptr) // Needed for any work to be done
 		return;
+
+	if (m_CurrentState == State::standing)
+	{
+		m_JumpCooldownTimer += boop::Timer::GetInstance().GetElapsedSec();
+	}
 	
 	if (m_CurrentState == State::jumping)
 	{
@@ -44,7 +45,7 @@ void StateComponent::SetJumpComponent(JumpComponent* jumper)
 
 bool StateComponent::CanJump() const
 {
-	return m_CurrentState == State::standing;
+	return m_CurrentState == State::standing && m_JumpCooldownTimer > m_JumpCooldownTime;
 }
 
 bool StateComponent::GoJump()
@@ -52,6 +53,7 @@ bool StateComponent::GoJump()
 	if (CanJump())
 	{
 		m_CurrentState = State::jumping;
+		m_JumpCooldownTimer = 0.f;
 		return true;
 	}
 	return false;

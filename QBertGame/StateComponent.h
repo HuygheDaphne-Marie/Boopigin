@@ -23,8 +23,12 @@ public:
 	bool GoJump();
 	void ResetState();
 
+	float m_JumpCooldownTime;
+
 private:
 	State m_CurrentState;
 	JumpComponent* m_pMyJumpComponent;
+
+	float m_JumpCooldownTimer;
 };
 

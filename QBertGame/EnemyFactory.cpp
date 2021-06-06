@@ -11,14 +11,17 @@
 #include "ChaseQbertBehavior.h"
 #include "EscheresqueTumbleBehavior.h"
 #include "QuadDirectionalJumpAnimationComponent.h"
+#include "BiDirectionalJumpAnimationComponent.h"
 
 float EnemyFactory::m_LeapTime = 1.0f;
+float EnemyFactory::m_LeapCooldownTime = 0.5f;
 unsigned int EnemyFactory::m_Depth = 1;
 
 int EnemyFactory::m_SlickSamScoreGain = 300;
-float EnemyFactory::m_SquareEnemySize = 24.f;
-std::string EnemyFactory::m_SlickTexturePath = "textures/slickFrame.png"; // Todo: this must become an animation
-std::string EnemyFactory::m_SamTexturePath = "textures/samFrame.png";
+int EnemyFactory::m_SquareSrcSize = 16;
+int EnemyFactory::m_SquareEnemyDstSize = 24;
+std::string EnemyFactory::m_SlickTexturePath = "textures/slick.png";
+std::string EnemyFactory::m_SamTexturePath = "textures/sam.png";
 
 int EnemyFactory::m_CoilySrcWidth = 16;
 int EnemyFactory::m_CoilySrcHeight = 32;
@@ -62,6 +65,7 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeCoily(boop::Scene& scene, Le
 		m_CoilyDstWidth, m_CoilyDstHeight));
 	
 	auto* state = new StateComponent();
+	state->m_JumpCooldownTime = m_LeapCooldownTime;
 	go->AddComponent(state);
 
 	auto* jumper = new JumpComponent(transform, state, m_LeapTime);
@@ -101,11 +105,15 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeTumbler(boop::Scene& scene, 
                                                             const glm::ivec2& startCoordinate)
 {
 	auto go = std::make_shared<boop::GameObject>();
-	go->AddComponent(new boop::TextureComponent(texturePath, m_SquareEnemySize, m_SquareEnemySize));
+	//go->AddComponent(new boop::TextureComponent(texturePath, m_SquareEnemyDstSize, m_SquareEnemyDstSize));
 	auto* transform = new boop::TransformComponent();
 	go->AddComponent(transform);
 
+	go->AddComponent(new BiDirectionalJumpAnimationComponent(texturePath, m_SquareSrcSize, m_SquareSrcSize,
+		m_SquareEnemyDstSize, m_SquareEnemyDstSize));
+
 	auto* state = new StateComponent();
+	state->m_JumpCooldownTime = m_LeapCooldownTime;
 	go->AddComponent(state);
 
 	auto* jumper = new JumpComponent(transform, state, m_LeapTime);
@@ -122,11 +130,13 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeEscheresqueTumbler(boop::Sce
 	const std::string& texturePath, bool standOnLeftSideOfTile, const glm::ivec2& startCoordinate)
 {
 	auto go = std::make_shared<boop::GameObject>();
-	go->AddComponent(new boop::TextureComponent(texturePath, m_SquareEnemySize, m_SquareEnemySize));
+	go->AddComponent(new boop::TextureComponent(texturePath, static_cast<float>(m_SquareEnemyDstSize),
+	                                            static_cast<float>(m_SquareEnemyDstSize)));
 	auto* transform = new boop::TransformComponent();
 	go->AddComponent(transform);
 
 	auto* state = new StateComponent();
+	state->m_JumpCooldownTime = m_LeapCooldownTime;
 	go->AddComponent(state);
 
 	auto* jumper = new JumpComponent(transform, state, m_LeapTime);

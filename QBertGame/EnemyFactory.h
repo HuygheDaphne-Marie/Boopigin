@@ -34,10 +34,12 @@ public:
 		const glm::ivec2& startCoordinate = { 0,0 });
 
 	static float m_LeapTime;
+	static float m_LeapCooldownTime;
 	static unsigned int m_Depth;
 
 	static int m_SlickSamScoreGain;
-	static float m_SquareEnemySize;
+	static int m_SquareSrcSize;
+	static int m_SquareEnemyDstSize;
 	static std::string m_SlickTexturePath;
 	static std::string m_SamTexturePath;
 
