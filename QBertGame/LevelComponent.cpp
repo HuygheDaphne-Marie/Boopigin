@@ -8,6 +8,9 @@
 #include "BehaviorMovementComponent.h"
 #include "CollisionComponent.h"
 #include "ScoreDataComponent.h"
+#include "QBertFactory.h"
+#include <TextComponent.h>
+#include "SpawnComponent.h"
 
 /*
 
@@ -38,11 +41,37 @@ row  +-----+-----+-----+-----+-----+
 	 +-----+
  */
 
-LevelComponent::LevelComponent(const std::string& sceneName, const glm::vec2& levelCenterPos)
+std::vector<boop::KeyInfo> LevelComponent::m_PlayerOneKeys =
+{
+		boop::KeyInfo(SDLK_KP_9),
+		boop::KeyInfo(SDLK_KP_3),
+		boop::KeyInfo(SDLK_KP_1),
+		boop::KeyInfo(SDLK_KP_7)
+};
+std::vector<boop::KeyInfo> LevelComponent::m_PlayerTwoKeys =
+{
+		boop::KeyInfo(SDLK_e),
+		boop::KeyInfo(SDLK_c),
+		boop::KeyInfo(SDLK_z),
+		boop::KeyInfo(SDLK_q)
+};
+/*
+		std::vector<KeyInfo> playerTwoKeys = {
+			KeyInfo(ControllerButton::ButtonB),
+			KeyInfo(ControllerButton::ButtonA),
+			KeyInfo(ControllerButton::ButtonX),
+			KeyInfo(ControllerButton::ButtonY)
+		};
+ */
+
+LevelComponent::LevelComponent(const std::string& sceneName, const glm::vec2& window)
 	: m_Scene(boop::SceneManager::GetInstance().GetScene(sceneName))
-	, m_WindowCenter(levelCenterPos)
+	, m_WindowCenter({ window.x / 2, window.y / 2 })
+	, m_WindowSizes(window)
 	, m_LevelSize(0)
 	, m_LevelNumber(1)
+	, m_HasGameStarted(false)
+	, m_GameMode(GameMode::single)
 {
 	LoadLevel(m_LevelNumber);
 	EventQueue::GetInstance().Subscribe("PlayerDied", this);
@@ -82,6 +111,45 @@ TileComponent* LevelComponent::GetTileWithCoordinate(const glm::ivec2& coordinat
 	}
 
 	return m_LevelTiles[index];
+}
+
+void LevelComponent::Startup()
+{
+	// Setup single, coop, versus here
+	m_HasGameStarted = true;
+
+	// Setup player1 (Always happens)
+	std::vector<glm::ivec2> startPositions;
+	switch (m_GameMode)
+	{
+	case GameMode::coop:
+		startPositions.push_back({ 0, GetLevelSize() - 1 });
+		startPositions.push_back({ GetLevelSize() - 1, 0 });
+		break;
+		default:
+			startPositions.push_back({ 0, 0 });
+			break;
+	}
+
+	const auto playerOne = QBertFactory::MakePlayer(*m_Scene, this, m_PlayerOneKeys, startPositions[0]);
+	const auto lifeTracker = QBertFactory::MakePlayerTracker(*m_Scene, playerOne);
+	AddEntity(playerOne);
+	
+	if (m_GameMode == GameMode::coop)
+	{
+		const auto playerTwo = QBertFactory::MakePlayer(*m_Scene, this, m_PlayerTwoKeys, startPositions[1]);
+		const auto lifeTrackerTwo = QBertFactory::MakePlayerTracker(*m_Scene, playerTwo);
+
+		const auto trackTwoText = lifeTrackerTwo->GetComponentOfType<boop::TextComponent>();
+		lifeTrackerTwo->GetComponentOfType<boop::TransformComponent>()->SetPosition(m_WindowSizes.x - trackTwoText->GetWidth(), 0);
+		
+		AddEntity(playerTwo);
+	}
+	
+	if (m_GameMode == GameMode::versus)
+	{
+		m_pOwner->GetComponentOfType<SpawnComponent>()->SetupVersus(m_PlayerTwoKeys);
+	}
 }
 
 void LevelComponent::Update()
@@ -192,6 +260,14 @@ int LevelComponent::GetLevelSize() const
 	return m_LevelSize;
 }
 
+void LevelComponent::SetGameMode(GameMode mode)
+{
+	if (!m_HasGameStarted)
+	{
+		m_GameMode = mode;
+	}
+}
+
 bool LevelComponent::AreAllTilesFlipped() const
 {
 	if (m_LevelTiles.empty())
@@ -268,7 +344,13 @@ std::shared_ptr<boop::GameObject> LevelComponent::GetSharedFromRawPointer(boop::
 
 void LevelComponent::DoCollisionCheck(boop::GameObject* jumpedEntity)
 {
+	auto currentScene = boop::SceneManager::GetInstance().GetActiveScene();
+	auto myScene = m_Scene;
+	
 	const std::shared_ptr<boop::GameObject> ptrJumped = GetSharedFromRawPointer(jumpedEntity);
+	if (ptrJumped == nullptr)
+		return;
+	
 	MovementComponent* jumpedMovementComp = ptrJumped->GetComponentOfType<MovementComponent>();
 
 	if (jumpedMovementComp == nullptr)

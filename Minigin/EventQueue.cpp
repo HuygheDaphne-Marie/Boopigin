@@ -5,77 +5,118 @@
 void EventQueue::Broadcast(Event* event)
 {
 	const QueuedEvent eventToBroadcast{QueuedEventType::broadcast, event};
-	m_QueuedEvents.push(eventToBroadcast);
+	GetQueuedEventsActiveScene().push(eventToBroadcast);
 }
 void EventQueue::Transmit(Event* event)
 {
 	const QueuedEvent eventToBroadcast{ QueuedEventType::transmit, event };
-	m_QueuedEvents.push(eventToBroadcast);
+	GetQueuedEventsActiveScene().push(eventToBroadcast);
 }
 
 void EventQueue::Subscribe(const std::string& eventType, IEventListener* listener)
 {
-	if (m_Listeners.find(eventType) != m_Listeners.end())
+	auto& listeners = GetListenersActiveScene();
+	
+	if (listeners.find(eventType) != listeners.end())
 	{
 		const auto& itr = std::find(
-			m_Listeners[eventType].begin(), 
-			m_Listeners[eventType].end(), 
+			listeners[eventType].begin(), 
+			listeners[eventType].end(), 
 			listener);
 
-		if (itr == m_Listeners[eventType].end())
+		if (itr == listeners[eventType].end())
 		{
-			m_Listeners[eventType].push_back(listener);
+			listeners[eventType].push_back(listener);
 		}
 	}
 	else
 	{
-		m_Listeners[eventType] = std::vector<IEventListener*>{ listener };
+		listeners[eventType] = std::vector<IEventListener*>{ listener };
 	}
 }
 void EventQueue::Unsubscribe(IEventListener* listener)
 {
-	for (auto& pair : m_Listeners)
+	auto& listeners = GetListenersActiveScene();
+	
+	for (auto& pair : listeners)
 	{
 		Unsubscribe(pair.first, listener);
 	}
 }
 void EventQueue::Unsubscribe(const std::string& eventType, IEventListener* listener)
 {
-	if (m_Listeners.find(eventType) != m_Listeners.end())
+	auto& listeners = GetListenersActiveScene();
+	
+	if (listeners.find(eventType) != listeners.end())
 	{
 		const auto listenerItr = std::find(
-			m_Listeners[eventType].begin(), 
-			m_Listeners[eventType].end(), 
+			listeners[eventType].begin(), 
+			listeners[eventType].end(), 
 			listener);
 		
-		if (listenerItr != m_Listeners[eventType].end())
+		if (listenerItr != listeners[eventType].end())
 		{
-			m_Listeners[eventType].erase(listenerItr);
+			listeners[eventType].erase(listenerItr);
 		}
 	}
 }
 
 void EventQueue::HandleQueue()
 {
-	while (!m_QueuedEvents.empty())
+	auto& queuedEvents = GetQueuedEventsActiveScene();
+	auto& listeners = GetListenersActiveScene();
+	
+	while (!queuedEvents.empty())
 	{
-		auto& e = m_QueuedEvents.front();
+		auto& e = queuedEvents.front();
 		if (e.type == QueuedEventType::broadcast)
 		{
-			for (auto& listener : m_Listeners[e.event->message])
+			for (auto& listener : listeners[e.event->message])
 			{
 				listener->OnEvent(*e.event);
 			}
 		}
 		else
 		{
-			for (auto& listener : m_Listeners[e.event->message])
+			for (auto& listener : listeners[e.event->message])
 			{
 				if (listener->OnEvent(*e.event))
 					break;
 			}
 		}
 		delete e.event;
-		m_QueuedEvents.pop();
+		queuedEvents.pop();
 	}
+}
+
+std::map<std::string, std::vector<IEventListener*>>& EventQueue::GetListenersActiveScene()
+{
+	const auto activeScene = boop::SceneManager::GetInstance().GetActiveScene();
+	return GetListenersForScene(activeScene);
+}
+std::map<std::string, std::vector<IEventListener*>>& EventQueue::GetListenersForScene(std::shared_ptr<boop::Scene> scene)
+{
+	const auto findItr = m_ListenersByScene.find(scene);
+	if (findItr == m_ListenersByScene.end())
+	{
+		m_ListenersByScene[scene] = std::map<std::string, std::vector<IEventListener*>>{};
+	}
+
+	return m_ListenersByScene[scene];
+}
+
+std::queue<QueuedEvent>& EventQueue::GetQueuedEventsActiveScene()
+{
+	const auto activeScene = boop::SceneManager::GetInstance().GetActiveScene();
+	return GetQueuedEventsForScene(activeScene);
+}
+std::queue<QueuedEvent>& EventQueue::GetQueuedEventsForScene(std::shared_ptr<boop::Scene> scene)
+{
+	const auto findItr = m_QueuedEventsByScene.find(scene);
+	if (findItr == m_QueuedEventsByScene.end())
+	{
+		m_QueuedEventsByScene[scene] = std::queue<QueuedEvent>{};
+	}
+
+	return m_QueuedEventsByScene[scene];
 }

@@ -24,6 +24,7 @@ namespace boop
 		void AddObjects();
 
 		[[nodiscard]] std::string GetName() const;
+		[[nodiscard]] unsigned int GetId() const;
 
 		~Scene();
 		Scene(const Scene& other) = delete;
@@ -32,16 +33,16 @@ namespace boop
 		Scene& operator=(Scene&& other) = delete;
 
 	private: 
-		explicit Scene(const std::string& name);
+		explicit Scene(const std::string& name, unsigned int id);
 
 		std::string m_Name;
+		unsigned int m_Id;
 
 		std::vector<std::shared_ptr<GameObject>> m_Objects{};
 		std::map<unsigned int, std::vector<std::shared_ptr<GameObject>>> m_ObjectsByDepth{};
 		std::map<unsigned int, std::vector<std::shared_ptr<GameObject>>> m_ObjectsToAdd{};
-		//bool IsFirstUpdate = true;
 		
-		static unsigned int m_IdCounter; 
+		static unsigned int m_IdCounter;
 	};
 
 }

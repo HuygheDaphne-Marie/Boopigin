@@ -12,7 +12,7 @@ namespace boop
 	{
 	public:
 		TextComponent(const std::string& text, std::shared_ptr<Font> font, const SDL_Color& color = {255, 255, 255});
-		~TextComponent();
+		~TextComponent() override;
 		TextComponent(const TextComponent& other) = delete;
 		TextComponent(TextComponent&& other) = delete;
 		TextComponent& operator=(const TextComponent& other) = delete;
@@ -23,6 +23,9 @@ namespace boop
 
 		void SetText(const std::string& text);
 
+		[[nodiscard]] int GetWidth() const;
+		[[nodiscard]] int GetHeight() const;
+
 	private:
 		std::string m_Text;
 		SDL_Color m_Color;
@@ -30,6 +33,8 @@ namespace boop
 		bool m_NeedsUpdate;
 		std::shared_ptr<Font> m_pFont;
 		Texture2D* m_pTextTexture;
+
+		void UpdateTexture();
 	};
 }
 

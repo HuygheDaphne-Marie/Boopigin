@@ -4,7 +4,7 @@ class MoveCommand;
 #include <Key.h>
 #include <EventQueue.h>
 
-class ControlledMovementComponent final : public MovementComponent//, public IEventListener
+class ControlledMovementComponent final : public MovementComponent
 {
 public:
 	ControlledMovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper, std::vector<boop::KeyInfo>& keys);
@@ -22,6 +22,7 @@ public:
 
 private:
 	std::vector<MoveCommand*> m_MoveCommands{};
+	const glm::ivec2 m_SpawnPos;
 
 	void Reset();
 };

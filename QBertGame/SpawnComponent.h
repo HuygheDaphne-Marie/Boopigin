@@ -6,7 +6,8 @@
 #include <glm/glm.hpp>
 #pragma warning(pop)
 
-#include <functional>
+#include <Key.h>
+
 class LevelComponent;
 
 class SpawnComponent final : public boop::Component
@@ -15,6 +16,8 @@ public:
 	explicit SpawnComponent(LevelComponent* level, float defaultSpawnTime = 10.f);
 
 	void Update() override;
+	void SetupVersus(std::vector<boop::KeyInfo>& coilyKeys);
+	bool IsVersus() const;
 
 	float m_SlickSamSpawnTime;
 	float m_UggWrongwaySpawnTime;
@@ -22,6 +25,7 @@ public:
 	
 private:
 	LevelComponent* m_pLevel;
+	std::vector<boop::KeyInfo> m_CoilyKeys;
 	
 	std::weak_ptr<boop::GameObject> m_pSlick{};
 	std::weak_ptr<boop::GameObject> m_pSam{};

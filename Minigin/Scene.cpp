@@ -6,7 +6,10 @@ using namespace boop;
 
 unsigned int Scene::m_IdCounter = 0;
 
-Scene::Scene(const std::string& name) : m_Name(name) {}
+Scene::Scene(const std::string& name, unsigned int id)
+	: m_Name(name)
+	, m_Id(id)
+{}
 
 Scene::~Scene() = default;
 
@@ -129,5 +132,10 @@ void Scene::AddObjects()
 std::string Scene::GetName() const
 {
 	return m_Name;
+}
+
+unsigned Scene::GetId() const
+{
+	return m_Id;
 }
 

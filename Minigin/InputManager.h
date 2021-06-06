@@ -1,10 +1,12 @@
 #pragma once
 #include "Singleton.h"
 #include <unordered_map>
+//#include <map>
 
 #include "Key.h"
 #include "ControllerManager.h"
 #include "KeyboardManager.h"
+//#include "SceneManager.h"
 
 namespace boop
 {
@@ -14,12 +16,13 @@ namespace boop
 		KeyState KeyStateNeeded;
 		Command* pCommand;
 	};
-
+	
+	
 	class InputManager final : public Singleton<InputManager> 
 	{
 	public:
 		bool ProcessInput();
-		void HandleInput() const;
+		void HandleInput();
 
 		bool AddCommandToButton(KeyInfo keyInfo, Command* pCommand, KeyState neededKeyState);
 		void RemoveCommand(Command* pCommand);
@@ -32,6 +35,13 @@ namespace boop
 		
 		std::unordered_map<KeyInfo, CommandInfo, KeyInfoHasher> m_Commands{};
 
+		/*
+		std::map<unsigned int, std::unordered_map<KeyInfo, CommandInfo, KeyInfoHasher>> m_CommandsByScene{};
+
+		std::unordered_map<KeyInfo, CommandInfo, KeyInfoHasher>& GetCommandsActiveScene();
+		std::unordered_map<KeyInfo, CommandInfo, KeyInfoHasher>& GetCommandsForScene(std::shared_ptr<Scene> scene);
+		*/
+		
 		//Todo: Should get rid of superclass, make ControllerManager actually handle multiple controllers
 		ControllerManager m_Controller;
 		KeyboardManager m_Keyboard;

@@ -17,6 +17,8 @@ namespace boop
 		void SetSceneAsActive(const std::string& name);
 		void SetSceneAsActive(std::shared_ptr<boop::Scene> scene);
 
+		std::shared_ptr<Scene> GetActiveScene();
+
 		void FixedUpdate();
 		void Update();
 		void LateUpdate();

@@ -13,6 +13,6 @@ void LifeTrackerComponent::Update()
 	if (m_pPlayerData->GetLives() != m_Lives)
 	{
 		m_Lives = m_pPlayerData->GetLives();
-		m_pTextDisplay->SetText("Lives left: " + std::to_string(m_Lives));
+		m_pTextDisplay->SetText("Lives: " + std::to_string(m_Lives));
 	}
 }

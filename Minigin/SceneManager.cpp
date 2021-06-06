@@ -36,7 +36,7 @@ void boop::SceneManager::Render()
 
 boop::Scene& boop::SceneManager::CreateScene(const std::string& name)
 {
-	const auto scene = std::shared_ptr<Scene>(new Scene(name));
+	const auto scene = std::shared_ptr<Scene>(new Scene(name, static_cast<unsigned int>(m_Scenes.size())));
 	if (m_Scenes.size() == 0)
 	{
 		m_ActiveScene = scene;
@@ -68,4 +68,9 @@ void boop::SceneManager::SetSceneAsActive(const std::string& name)
 void boop::SceneManager::SetSceneAsActive(std::shared_ptr<boop::Scene> scene)
 {
 	m_ActiveScene = scene;
+}
+
+std::shared_ptr<boop::Scene> boop::SceneManager::GetActiveScene()
+{
+	return m_ActiveScene;
 }

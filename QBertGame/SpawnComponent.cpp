@@ -70,13 +70,31 @@ void SpawnComponent::Update()
 			if (IsPosAtBottomEdgeOfLevel(eggPos))
 			{
 				coily->MarkForDelete();
-				
-				const auto hatchedCoily = EnemyFactory::MakeCoily(*m_pLevel->GetLevelScene(), m_pLevel, eggPos);
+
+				std::shared_ptr<boop::GameObject> hatchedCoily = nullptr;
+				if (IsVersus())
+				{
+					hatchedCoily = EnemyFactory::MakeCoily(*m_pLevel->GetLevelScene(), m_pLevel, m_CoilyKeys, eggPos);
+				}
+				else
+				{
+					hatchedCoily = EnemyFactory::MakeCoily(*m_pLevel->GetLevelScene(), m_pLevel, eggPos);
+				}
 				m_pLevel->AddEntity(hatchedCoily);
 				m_pCoily = hatchedCoily;
 			}
 		}
 	}
+}
+
+void SpawnComponent::SetupVersus(std::vector<boop::KeyInfo>& coilyKeys)
+{
+	m_CoilyKeys = coilyKeys;
+}
+
+bool SpawnComponent::IsVersus() const
+{
+	return m_CoilyKeys.size() > 0;
 }
 
 bool SpawnComponent::IsEntityAlive(const std::weak_ptr<boop::GameObject>& entity)

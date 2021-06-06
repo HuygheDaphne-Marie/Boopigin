@@ -4,6 +4,7 @@
 #include <TransformComponent.h>
 #include "StateComponent.h"
 #include "BehaviorMovementComponent.h"
+#include "ControlledMovementComponent.h"
 #include "TumbleBehavior.h"
 #include "CollisionComponent.h"
 #include "ScoreGainCollision.h"
@@ -12,6 +13,7 @@
 #include "EscheresqueTumbleBehavior.h"
 #include "QuadDirectionalJumpAnimationComponent.h"
 #include "BiDirectionalJumpAnimationComponent.h"
+#include <Key.h>
 
 float EnemyFactory::m_LeapTime = 1.0f;
 float EnemyFactory::m_LeapCooldownTime = 0.5f;
@@ -67,29 +69,24 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeCoilyEgg(boop::Scene& scene,
 }
 
 std::shared_ptr<boop::GameObject> EnemyFactory::MakeCoily(boop::Scene& scene, LevelComponent* pLevel,
-                                                          const glm::ivec2& startCoordinate)
+	const glm::ivec2& startCoordinate)
 {
-	auto go = std::make_shared<boop::GameObject>();
-	auto* transform = new boop::TransformComponent();
-	go->AddComponent(transform);
-
-	go->AddComponent(new QuadDirectionalJumpAnimationComponent(m_CoilyTexturePath, m_CoilySrcWidth, m_CoilySrcHeight,
-		m_CoilyDstWidth, m_CoilyDstHeight));
+	auto go = MakeCoilyBase(scene);
+	auto jumper = go->GetComponentOfType<JumpComponent>();
+	auto state = go->GetComponentOfType<StateComponent>();
 	
-	auto* state = new StateComponent();
-	state->m_JumpCooldownTime = m_LeapCooldownTime;
-	go->AddComponent(state);
-
-	auto* jumper = new JumpComponent(transform, state, m_LeapTime);
-	go->AddComponent(jumper);
 	auto* chaseBehavior = new ChaseQbertBehavior(pLevel);
 	go->AddComponent(new BehaviorMovementComponent(pLevel->GetTileWithCoordinate(startCoordinate), pLevel, jumper, state, chaseBehavior));
-	go->AddComponent(new CollisionComponent(new KillPlayerCollision()));
-	go->AddTag("enemy");
-	go->AddTag("purple");
-	go->AddTag("coily");
 
-	scene.Add(go, m_Depth);
+	return go;
+}
+
+std::shared_ptr<boop::GameObject> EnemyFactory::MakeCoily(boop::Scene& scene, LevelComponent* pLevel, std::vector<boop::KeyInfo>& controlKeys,
+                                                          const glm::ivec2& startCoordinate)
+{
+	auto go = MakeCoilyBase(scene);
+	auto jumper = go->GetComponentOfType<JumpComponent>();
+	go->AddComponent(new ControlledMovementComponent(pLevel->GetTileWithCoordinate(startCoordinate), pLevel, jumper, controlKeys));
 	return go;
 }
 
@@ -157,6 +154,31 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeEscheresqueTumbler(boop::Sce
 	auto* escheresqueTumble = new EscheresqueTumbleBehavior(standOnLeftSideOfTile);
 	go->AddComponent(new BehaviorMovementComponent(pLevel->GetTileWithCoordinate(startCoordinate), pLevel, jumper, state, escheresqueTumble));
 	go->AddTag("enemy");
+
+	scene.Add(go, m_Depth);
+	return go;
+}
+
+std::shared_ptr<boop::GameObject> EnemyFactory::MakeCoilyBase(boop::Scene& scene)
+{
+	auto go = std::make_shared<boop::GameObject>();
+	auto* transform = new boop::TransformComponent();
+	go->AddComponent(transform);
+
+	go->AddComponent(new QuadDirectionalJumpAnimationComponent(m_CoilyTexturePath, m_CoilySrcWidth, m_CoilySrcHeight,
+		m_CoilyDstWidth, m_CoilyDstHeight));
+
+	auto* state = new StateComponent();
+	state->m_JumpCooldownTime = m_LeapCooldownTime;
+	go->AddComponent(state);
+
+	auto* jumper = new JumpComponent(transform, state, m_LeapTime);
+	go->AddComponent(jumper);
+
+	go->AddComponent(new CollisionComponent(new KillPlayerCollision()));
+	go->AddTag("enemy");
+	go->AddTag("purple");
+	go->AddTag("coily");
 
 	scene.Add(go, m_Depth);
 	return go;

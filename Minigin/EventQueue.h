@@ -3,6 +3,7 @@
 #include <queue>
 #include <map>
 #include "Event.h"
+#include "SceneManager.h"
 //#include "IEventListener.h"
 class IEventListener;
 
@@ -33,8 +34,14 @@ public:
 private:
 	friend class Singleton<EventQueue>;
 	EventQueue() = default;
-	
-	std::queue<QueuedEvent> m_QueuedEvents;
-	std::map<std::string, std::vector<IEventListener*>> m_Listeners;
+
+	std::map<std::weak_ptr<boop::Scene>, std::queue<QueuedEvent>, std::owner_less<std::weak_ptr<boop::Scene>>> m_QueuedEventsByScene;
+	std::map<std::weak_ptr<boop::Scene>, std::map<std::string, std::vector<IEventListener*>>, std::owner_less<std::weak_ptr<boop::Scene>>> m_ListenersByScene;
+
+	std::map<std::string, std::vector<IEventListener*>>& GetListenersActiveScene();
+	std::map<std::string, std::vector<IEventListener*>>& GetListenersForScene(std::shared_ptr<boop::Scene> scene);
+
+	std::queue<QueuedEvent>& GetQueuedEventsActiveScene();
+	std::queue<QueuedEvent>& GetQueuedEventsForScene(std::shared_ptr<boop::Scene> scene);
 };
 

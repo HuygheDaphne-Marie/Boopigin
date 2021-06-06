@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "InputManager.h"
 #include "Command.h"
+#include "Scene.h"
 
 boop::InputManager::InputManager()
 	: m_Controller(0)
@@ -15,8 +16,9 @@ bool boop::InputManager::ProcessInput()
 
 	return shouldContinue;
 }
-void boop::InputManager::HandleInput() const
+void boop::InputManager::HandleInput()
 {
+	//auto commands = GetCommandsActiveScene();
 	for (const auto& pair : m_Commands)
 	{
 		if (GetKeyStateFromDevice(pair.first) == pair.second.KeyStateNeeded)
@@ -28,6 +30,7 @@ void boop::InputManager::HandleInput() const
 
 bool boop::InputManager::AddCommandToButton(KeyInfo keyInfo, Command* pCommand, KeyState neededKeyState)
 {
+	//auto commands = GetCommandsActiveScene();
 	CommandInfo info = { neededKeyState, pCommand };
 	return m_Commands.insert({ keyInfo, info }).second;
 }
@@ -35,13 +38,14 @@ bool boop::InputManager::AddCommandToButton(KeyInfo keyInfo, Command* pCommand, 
 void boop::InputManager::RemoveCommand(Command* pCommand)
 {
 	// Won't work, can't figure out why
-	//const auto itr = std::remove_if(m_Commands.begin(), m_Commands.end(), 
+	//const auto itr = std::remove_if(commands.begin(), commands.end(), 
 	//	[pCommand](const std::pair<KeyInfo, CommandInfo>& pair)
 	//	{
 	//		return pair.second.pCommand == pCommand;
 	//    }
 	//);
-	//m_Commands.erase(itr);
+	//commands.erase(itr);
+	//auto commands = GetCommandsActiveScene();
 
 	const KeyInfo* pKey = nullptr;
 	for (auto& pair : m_Commands)
@@ -72,3 +76,21 @@ boop::KeyState boop::InputManager::GetKeyStateFromDevice(KeyInfo keyInfo) const
 		return KeyState::BAD_INPUT;
 	}
 }
+
+/*
+std::unordered_map<boop::KeyInfo, boop::CommandInfo, boop::KeyInfoHasher>& boop::InputManager::GetCommandsActiveScene()
+{
+	const auto activeScene = boop::SceneManager::GetInstance().GetActiveScene();
+	return GetCommandsForScene(activeScene);
+}
+std::unordered_map<boop::KeyInfo, boop::CommandInfo, boop::KeyInfoHasher>& boop::InputManager::GetCommandsForScene(std::shared_ptr<Scene> scene)
+{
+	const auto findItr = m_CommandsByScene.find(scene->GetId());
+	if (findItr == m_CommandsByScene.end())
+	{
+		m_CommandsByScene[scene->GetId()] = std::unordered_map<boop::KeyInfo, boop::CommandInfo, boop::KeyInfoHasher>{};
+	}
+
+	return m_CommandsByScene[scene->GetId()];
+}
+*/

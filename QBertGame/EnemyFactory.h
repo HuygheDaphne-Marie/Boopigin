@@ -3,6 +3,7 @@
 #include <string>
 #include <GameObject.h>
 
+#include <Key.h>
 #include "LevelComponent.h"
 
 class EnemyFactory
@@ -22,10 +23,16 @@ public:
 		boop::Scene& scene,
 		LevelComponent* pLevel,
 		const glm::ivec2& startCoordinate = { 0,0 });
+
+	static std::shared_ptr<boop::GameObject> MakeCoily(
+		boop::Scene& scene,
+		LevelComponent* pLevel,
+		const glm::ivec2& startCoordinate = { 0,0 });
 	
 	static std::shared_ptr<boop::GameObject> MakeCoily(
 		boop::Scene& scene,
 		LevelComponent* pLevel,
+		std::vector<boop::KeyInfo>& controlKeys,
 		const glm::ivec2& startCoordinate = { 0,0 });
 
 	static std::shared_ptr<boop::GameObject> MakeUgg(
@@ -71,5 +78,7 @@ private:
 		const std::string& texturePath,
 		bool standOnLeftSideOfTile,
 		const glm::ivec2& startCoordinate = { 0,0 });
+
+	static std::shared_ptr<boop::GameObject> MakeCoilyBase(boop::Scene& scene);
 };
 

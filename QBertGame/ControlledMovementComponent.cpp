@@ -8,6 +8,7 @@
 ControlledMovementComponent::ControlledMovementComponent(TileComponent* startTile, LevelComponent* level, JumpComponent* jumper,
                                                  std::vector<boop::KeyInfo>& keys)
 	: MovementComponent({ startTile->GetColumn(), startTile->GetRow() }, level, jumper)
+	, m_SpawnPos({ startTile->GetColumn(), startTile->GetRow() })
 {
 	const int upIndex = static_cast<std::underlying_type<Direction>::type>(Direction::up);
 	const int rightIndex = static_cast<std::underlying_type<Direction>::type>(Direction::right);
@@ -51,12 +52,7 @@ void ControlledMovementComponent::Startup()
 
 bool ControlledMovementComponent::Move(Direction movementDirection)
 {
-	//std::cout << "========\n";
-	//std::cout << "x: " << std::to_string(m_pCurrentTile->GetColumn()) << ", y: " << std::to_string(m_pCurrentTile->GetRow()) << std::endl;
-	const bool didMove = MovementComponent::Move(movementDirection);
-	//std::cout << "x: " << std::to_string(m_pCurrentTile->GetColumn()) << ", y: " << std::to_string(m_pCurrentTile->GetRow()) << std::endl;
-	//std::cout << "========\n";
-	return didMove;
+	return MovementComponent::Move(movementDirection);
 }
 
 bool ControlledMovementComponent::OnEvent(const Event& event)
@@ -88,13 +84,6 @@ void ControlledMovementComponent::Reset()
 {
 	auto* myState = m_pOwner->GetComponentOfType<StateComponent>();
 	myState->ResetState();
-	/*
-	auto* myTexture = m_pOwner->GetComponentOfType<boop::TextureComponent>();
-
-	const glm::vec2 newPos = GetTileStandPosition(m_pLevel->GetTileWithCoordinate(newTileCoordinate), GetTextureDimension(m_pOwner));
-	m_pJumper->SetStartPos(newPos);
-	*/
-	const glm::ivec2 newTileCoordinate = { 0,0 };
-	SetPosition(newTileCoordinate);
-	m_CurrentPos = newTileCoordinate;
+	SetPosition(m_SpawnPos);
+	m_CurrentPos = m_SpawnPos;
 }
