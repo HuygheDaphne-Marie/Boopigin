@@ -18,6 +18,11 @@ public:
 		LevelComponent* pLevel,
 		const glm::ivec2& startCoordinate = {0,0});
 
+	static std::shared_ptr<boop::GameObject> MakeCoilyEgg(
+		boop::Scene& scene,
+		LevelComponent* pLevel,
+		const glm::ivec2& startCoordinate = { 0,0 });
+	
 	static std::shared_ptr<boop::GameObject> MakeCoily(
 		boop::Scene& scene,
 		LevelComponent* pLevel,
@@ -47,6 +52,7 @@ public:
 	static int m_CoilySrcHeight;
 	static int m_CoilyDstWidth;
 	static int m_CoilyDstHeight;
+	static std::string m_CoilyEggTexturePath;
 	static std::string m_CoilyTexturePath;
 
 	static std::string m_UggTexturePath;

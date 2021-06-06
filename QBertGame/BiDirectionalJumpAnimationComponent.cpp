@@ -36,10 +36,12 @@ int BiDirectionalJumpAnimationComponent::GetFrameFromDirection(const Direction d
 	switch (direction)
 	{
 	case Direction::escheresqueLeft:
+	case Direction::left:
 	case Direction::down:
 		return 0;
 
 	case Direction::escheresqueRight:
+	case Direction::up:
 	case Direction::right:
 	default:
 		return 2;

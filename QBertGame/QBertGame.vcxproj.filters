@@ -126,6 +126,9 @@
     <ClCompile Include="BiDirectionalJumpAnimationComponent.cpp">
       <Filter>Components\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="SpawnCoilyComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSetup.h">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="BiDirectionalJumpAnimationComponent.h">
       <Filter>Components\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="SpawnCoilyComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

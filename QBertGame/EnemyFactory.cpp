@@ -27,10 +27,11 @@ int EnemyFactory::m_CoilySrcWidth = 16;
 int EnemyFactory::m_CoilySrcHeight = 32;
 int EnemyFactory::m_CoilyDstWidth = 24;
 int EnemyFactory::m_CoilyDstHeight = m_CoilyDstWidth * 2;
+std::string EnemyFactory::m_CoilyEggTexturePath = "textures/coilyEgg.png";
 std::string EnemyFactory::m_CoilyTexturePath = "textures/coily.png";
 
-std::string EnemyFactory::m_UggTexturePath = "textures/uggFrame.png";
-std::string EnemyFactory::m_WrongwayTexturePath = "textures/wrongwayFrame.png";
+std::string EnemyFactory::m_UggTexturePath = "textures/ugg.png";
+std::string EnemyFactory::m_WrongwayTexturePath = "textures/wrongway.png";
 
 std::shared_ptr<boop::GameObject> EnemyFactory::MakeSlick(boop::Scene& scene, LevelComponent* pLevel,
 	const glm::ivec2& startCoordinate)
@@ -54,8 +55,19 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeSam(boop::Scene& scene, Leve
 	return sam;
 }
 
-std::shared_ptr<boop::GameObject> EnemyFactory::MakeCoily(boop::Scene& scene, LevelComponent* pLevel,
+std::shared_ptr<boop::GameObject> EnemyFactory::MakeCoilyEgg(boop::Scene& scene, LevelComponent* pLevel,
 	const glm::ivec2& startCoordinate)
+{
+	auto egg = MakeTumbler(scene, pLevel, m_CoilyEggTexturePath, startCoordinate);
+	egg->AddComponent(new CollisionComponent(new KillPlayerCollision()));
+	egg->AddTag("egg");
+	egg->AddTag("coily");
+	egg->AddTag("purple");
+	return egg;
+}
+
+std::shared_ptr<boop::GameObject> EnemyFactory::MakeCoily(boop::Scene& scene, LevelComponent* pLevel,
+                                                          const glm::ivec2& startCoordinate)
 {
 	auto go = std::make_shared<boop::GameObject>();
 	auto* transform = new boop::TransformComponent();
@@ -130,10 +142,11 @@ std::shared_ptr<boop::GameObject> EnemyFactory::MakeEscheresqueTumbler(boop::Sce
 	const std::string& texturePath, bool standOnLeftSideOfTile, const glm::ivec2& startCoordinate)
 {
 	auto go = std::make_shared<boop::GameObject>();
-	go->AddComponent(new boop::TextureComponent(texturePath, static_cast<float>(m_SquareEnemyDstSize),
-	                                            static_cast<float>(m_SquareEnemyDstSize)));
 	auto* transform = new boop::TransformComponent();
 	go->AddComponent(transform);
+
+	go->AddComponent(new BiDirectionalJumpAnimationComponent(texturePath, m_SquareSrcSize, m_SquareSrcSize,
+		m_SquareEnemyDstSize, m_SquareEnemyDstSize));
 
 	auto* state = new StateComponent();
 	state->m_JumpCooldownTime = m_LeapCooldownTime;

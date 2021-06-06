@@ -50,8 +50,5 @@ void GameSetup::LoadGame() const
 	auto lifeTracker = QBertFactory::MakePlayerTracker(scene, player);
 	auto scoreTracker = QBertFactory::MakeScoreTracker(scene, go);
 
-	auto coily = EnemyFactory::MakeCoily(scene, levelComponent, { 3, 3 });
-
 	levelComponent->AddEntity(player);
-	levelComponent->AddEntity(coily);
 }
